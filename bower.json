@@ -1,0 +1,19 @@
+{
+  "name": "public",
+  "version": "latest",
+  "description": "package manager",
+  "authors": [
+    "R4L"
+  ],
+  "dependencies": {
+    "lodash": "latest",
+    "angular": "~1.4.9"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
