@@ -17,7 +17,9 @@ $(function(){
 */
 
 window.onload = function() {
-  var map = L.map('map').setView([43.07.265, -89.400929], 10);
+  console.log("Leaflet Library", L);
+  var map = L.map('map').setView([51.505, -0.09], 13);
+  console.log("Leaflelt map object", map);
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map); 
