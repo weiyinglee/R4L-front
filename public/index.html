@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="mapApp">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- leaflet -->
@@ -8,10 +8,9 @@
 	<link rel="stylesheet" href="/css/style.css">
 	<title>Map</title>
 </head>
-<body>
-	<div id="map" style="height:500px;width:500px">
-
-	</div>
+<body ng-controller="mainCtr">
+	
+	<leaflet width="100%" height="100%"></leaflet>
 	
 	<!-- Jquery  -->
 	<script src="/vendor/jquery/dist/jquery.min.js"></script>
@@ -19,7 +18,10 @@
 	<script src="/vendor/angular/angular.min.js"></script>
 	<!-- leaflet -->
 	<script src="/vendor/leaflet/dist/leaflet.js"></script>
+	<!-- leaflet-directive -->
+	<script src="/vendor/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
 	<!-- javascript -->
-	<script src="/javascript/leaflet/map.js"></script>
+	<script src="/javascript/angular/angularApp.js"></script>
+	<script src="/javascript/angular/controller/mapCtr.js"></script>
 </body>
 </html>
