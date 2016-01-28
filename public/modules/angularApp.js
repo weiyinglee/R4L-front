@@ -1,1 +1,1 @@
-angular.module('mapApp', ['leaflet-directive']);
+angular.module('mapApp', ['leaflet-directive', 'ui.bootstrap']);
