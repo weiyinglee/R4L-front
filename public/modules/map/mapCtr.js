@@ -20,9 +20,12 @@ angular.module('mapApp')
             opacity: 1,
             color: 'red',
             fillOpacity: 0
+          },
+          onEachFeature: function(feature, layer) {
+            //onclick popup info box
+            layer.bindPopup('This is polygon ( id: ' + feature.id + ' )');
           }
         }
       });
     });
-    
   }]);
