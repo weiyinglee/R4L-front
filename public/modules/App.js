@@ -22,4 +22,4 @@ App.config(["$routeProvider", function($routeProvider){
 			controller  : "MapCtrl"
 		})	
 	}
-])
+]);
