@@ -1,27 +1,38 @@
 <!DOCTYPE html>
-<html ng-app="mapApp">
+<html ng-app="R4LApp">
 <head>
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- leaflet -->
 	<link rel="stylesheet" href="/vendor/leaflet/dist/leaflet.css">
-	<!-- css styles -->
+	<link rel="stylesheet", href="/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/assets/css/style.css">
-	<title>Map</title>
+	<title>Radar For Life</title>
 </head>
-<body ng-controller="mapCtr">
+<body>
 	
-	<leaflet width="100%" height="100%"></leaflet>
-	
-	<!-- Jquery  -->
-	<script src="/vendor/jquery/dist/jquery.min.js"></script>
-	<!-- Angular -->
-	<script src="/vendor/angular/angular.min.js"></script>
-	<!-- leaflet -->
+	<div class="container-fluid">
+		<div ng-view></div>
+	</div>
+
+	<!-- Third Party Dependencies  -->
 	<script src="/vendor/leaflet/dist/leaflet.js"></script>
-	<!-- leaflet-directive -->
+	<script src="/vendor/jquery/dist/jquery.min.js"></script>
+	<script src="/vendor/angular/angular.min.js"></script>
+	<script src="/vendor/angular-route/angular-route.js"></script>
+	<script src="/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script src="/vendor/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
-	<!-- javascript -->
-	<script src="/modules/angularApp.js"></script>
-	<script src="/modules/map/mapCtr.js"></script>
+
+	<!-- dependencies by Main -->
+	<script src="/modules/App.js"></script>
+
+
+	<!-- dependencies by Map -->
+	<script src="/modules/map/controllers/MapCtrl.js"></script>
+	<script src="/modules/map/directives/statusBtn.js"></script>
+
+	<!-- dependencies by user -->
+	<script src="/modules/user/controllers/UserCtrl.js"></script>
+	<script src="/modules/user/controllers/LoginCtrl.js"></script>
 </body>
 </html>
