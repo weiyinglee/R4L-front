@@ -12,6 +12,13 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData'
 
     //get the geojson data from backend API
     $http.get('/assets/libs/polygon_coordinate.json').success(function(data, status){
+      
+      //status buttons (will be put in the pop up)
+      var damageBtn = '<status-button id="damage"></status-button>';
+      var fineBtn = '<status-button id="fine"></status-button>';
+      var unknownBtn = '<status-button id="unknown"></status-button>';
+      var nextBtn = '<status-button id="next"></status-button>';
+      
       angular.extend($scope, {
         geojson: {
           data: data,
@@ -22,10 +29,11 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData'
             fillOpacity: 0
           },
           onEachFeature: function(feature, layer) {
-            layer.bindPopup('This is polygon ( id: ' + feature.id + ' )');
+            layer.bindPopup(damageBtn);
           }
         }
       });
+
     }); 
 
   }]);
