@@ -1,11 +1,11 @@
 var App = window.App = angular.module('R4LApp', [
 		'ngRoute',
-		'leaflet-directive', 
+		'leaflet-directive',
 		'ui.bootstrap'
 	]
 );
 
-// turn off leaflet login 
+// turn off leaflet login
 App.config(function($logProvider){
   	$logProvider.debugEnabled(false);
 });
@@ -20,6 +20,6 @@ App.config(["$routeProvider", function($routeProvider){
 		when('/map', {
 			templateUrl : "/modules/map/views/Map.html",
 			controller  : "MapCtrl"
-		})	
+		})
 	}
 ])
