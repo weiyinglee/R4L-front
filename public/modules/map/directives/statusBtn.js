@@ -1,97 +1,107 @@
 'use strict';
 
-//damage btn
-App.directive('damageButton', function(){
+//status btn
+App.directive('statusButton', function(){
   return {
-    restrict: 'E',
-    template: '<button><img src="/assets/img/damage.png"/></button>',
+    restrict: 'AEC',
+    templateUrl : "/modules/map/views/statusBtn.html",
     controller: 'MapCtrl',
     link: function(scope, element, attrs) {
-      var attrImg = $('damage-button img');
-      var srcPath = '/assets/img/damage';
-      
-      //onclick look
-      element.click(function(){
-        attrImg.attr('src', srcPath + '_click.png');
-      });
-      //hover look
-      element.hover(function(){
-        attrImg.attr('src', srcPath + '_hover.png');
-      }, function(){
-        attrImg.attr('src', srcPath + '.png');
-      });
-    }
-  }
-});
 
-//fine btn
-App.directive('fineButton', function(){
-  return {
-    restrict: 'E',
-    template: '<button><img src="/assets/img/fine.png"/></button>',
-    controller: 'MapCtrl',
-    link: function(scope, element, attrs) {
-      var attrImg = $('fine-button img');
-      var srcPath = '/assets/img/fine';
-      
-      //onclick look
-      element.click(function(){
-        attrImg.attr('src', srcPath + '_click.png');
-      });
-      //hover look
-      element.hover(function(){
-        attrImg.attr('src', srcPath + '_hover.png');
-      }, function(){
-        attrImg.attr('src', srcPath + '.png');
-      });
-    }
-  }
-});
+      //to create te different image src
+      function imgSrc(statusImg) {
+        var imgPath = '/assets/img/';
+        var extension = '.png';
+        return imgPath + statusImg + extension;
+      }
 
-//unknown btn
-App.directive('unknownButton', function(){
-  return {
-    restrict: 'E',
-    template: '<button><img src="/assets/img/unknown.png"/></button>',
-    controller: 'MapCtrl',
-    link: function(scope, element, attrs) {
-      var attrImg = $('unknown-button img');
-      var srcPath = '/assets/img/unknown';
-      
-      //onclick look
-      element.click(function(){
-        attrImg.attr('src', srcPath + '_click.png');
-      });
-      //hover look
-      element.hover(function(){
-        attrImg.attr('src', srcPath + '_hover.png');
-      }, function(){
-        attrImg.attr('src', srcPath + '.png');
-      });
-    }
-  }
-});
+      var damageSrc = imgSrc('damage');
+      var fineSrc = imgSrc('fine');
+      var unknownSrc = imgSrc('unknown');
+      var nextSrc = imgSrc('next');
 
-//next btn
-App.directive('nextButton', function(){
-  return {
-    restrict: 'E',
-    template: '<button><img src="/assets/img/next.png"/></button>',
-    controller: 'MapCtrl',
-    link: function(scope, element, attrs) {
-      var attrImg = $('next-button img');
-      var srcPath = '/assets/img/next';
-      
-      //onclick look
-      element.click(function(){
-        attrImg.attr('src', srcPath + '_click.png');
-      });
-      //hover look
-      element.hover(function(){
-        attrImg.attr('src', srcPath + '_hover.png');
-      }, function(){
-        attrImg.attr('src', srcPath + '.png');
-      });
+      scope.damageImg = damageSrc;
+      scope.fineImg = fineSrc;
+      scope.unknownImg = unknownSrc;
+      scope.nextImg = nextSrc;
+
+      scope.changeColor = function(status){
+        switch(status){
+          case 'damage':
+            break;
+          case 'fine':
+            break;
+          case 'unknown':
+            break;
+          case 'next':
+            break;
+        }
+      };
+
+      scope.clicked = function(status){
+        switch(status){
+          case 'damage':
+            scope.damageImg = imgSrc('damage_click');
+            break;
+          case 'fine':
+            scope.fineImg = imgSrc('fine_click');
+            break;
+          case 'unknown':
+            scope.unknownImg = imgSrc('unknown_click');
+            break;
+          case 'next':
+            scope.nextImg = imgSrc('next_click');
+            break;
+        }
+      };
+      scope.unclicked = function(status){
+        switch(status){
+          case 'damage':
+            scope.damageImg = damageSrc;
+            break;
+          case 'fine':
+            scope.fineImg = fineSrc;
+            break;
+          case 'unknown':
+            scope.unknownImg = unknownSrc;
+            break;
+          case 'next':
+            scope.nextImg = nextSrc;
+            break;
+        }
+      };
+      scope.hovered = function(status){
+        switch(status){
+           case 'damage':
+            scope.damageImg = imgSrc('damage_hover');
+            break;
+          case 'fine':
+            scope.fineImg = imgSrc('fine_hover');
+            break;
+          case 'unknown':
+            scope.unknownImg = imgSrc('unknown_hover');
+            break;
+          case 'next':
+            scope.nextImg = imgSrc('next_hover');
+            break;
+        }
+      };
+      scope.unhovered = function(status){
+        switch(status){
+          case 'damage':
+            scope.damageImg = damageSrc;
+            break;
+          case 'fine':
+            scope.fineImg = fineSrc;
+            break;
+          case 'unknown':
+            scope.unknownImg = unknownSrc;
+            break;
+          case 'next':
+            scope.nextImg = nextSrc;
+            break;
+        }
+      };
     }
   }
 });

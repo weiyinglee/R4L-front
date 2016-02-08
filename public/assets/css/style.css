@@ -42,4 +42,8 @@ h4 {
   height: 90%;
   position: absolute; }
 
+status_button > ul > li {
+  list-style: none;
+  display: inline-block; }
+
 /*# sourceMappingURL=style.css.map */
