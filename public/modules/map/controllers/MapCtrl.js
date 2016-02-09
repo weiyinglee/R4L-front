@@ -16,8 +16,8 @@ var tilesDict = {
   }
 }
 
-var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData', '$compile',
-  function($scope, $http, leafletData, $compile){
+var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData', '$timeout', '$compile',
+  function($scope, $http, leafletData, $timeout, $compile){
     angular.extend($scope, {
       center: {
         lng: 124.671876,

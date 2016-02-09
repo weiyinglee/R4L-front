@@ -1,22 +1,12 @@
-<ul>
-	<li>
-		<button ng-click="changeColor('damage')" ng-mousedown="clicked('damage')" ng-mouseup="unclicked('damage')" ng-mouseover="hovered('damage')" ng-mouseout="unhovered('damage')">
-			<img ng-src="{{ damageImg }}"/>
-		</button>
-	</li>
-	<li>
-		<button ng-mousedown="clicked('fine')" ng-mouseup="unclicked('fine')" ng-mouseover="hovered('fine')" ng-mouseout="unhovered('fine')">
-			<img ng-src="{{ fineImg }}"/>
-		</button>
-	</li>
-	<li>
-		<button ng-mousedown="clicked('unknown')" ng-mouseup="unclicked('unknown')" ng-mouseover="hovered('unknown')" ng-mouseout="unhovered('unknown')">
-			<img ng-src="{{ unknownImg }}"/>
-		</button>
-	</li>
-	<li>
-		<button ng-mousedown="clicked('next')" ng-mouseup="unclicked('next')" ng-mouseover="hovered('next')" ng-mouseout="unhovered('next')">
-			<img ng-src="{{ nextImg }}"/>
-		</button>
-	</li>
-</ul>
+<button ng-click="changeColor('damage')" ng-disabled="rest" ng-mousedown="clicked('damage')" ng-mouseup="unclicked('damage')" ng-mouseover="hovered('damage')" ng-mouseout="unhovered('damage')">
+	<img ng-src="{{ damageImg }}"/>
+</button>
+<button ng-click="changeColor('fine')" ng-disabled="rest" ng-mousedown="clicked('fine')" ng-mouseup="unclicked('fine')" ng-mouseover="hovered('fine')" ng-mouseout="unhovered('fine')">
+	<img ng-src="{{ fineImg }}"/>
+</button>
+<button ng-click="changeColor('unknown')" ng-disabled="rest" ng-mousedown="clicked('unknown')" ng-mouseup="unclicked('unknown')" ng-mouseover="hovered('unknown')" ng-mouseout="unhovered('unknown')">
+	<img ng-src="{{ unknownImg }}"/>
+</button>
+<button ng-click="changeColor('next')" ng-disabled="rest" ng-mousedown="clicked('next')" ng-mouseup="unclicked('next')" ng-mouseover="hovered('next')" ng-mouseout="unhovered('next')">
+	<img ng-src="{{ nextImg }}"/>
+</button>
