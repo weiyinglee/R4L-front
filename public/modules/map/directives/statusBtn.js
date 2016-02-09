@@ -31,15 +31,36 @@ App.directive('statusButton', function($timeout){
         scope.rest = true;
         switch(status){
           case 'damage':
+            scope.layer.setStyle({
+              color: null,
+              fillColor: 'red',
+              fillOpacity: 1.0,
+              Opacity: 0.0
+            });
+            console.log('damage save to DataBase!');
             break;
           case 'fine':
+            scope.layer.setStyle({
+                color: null,
+                fillColor: 'blue',
+                fillOpacity: 1.0,
+                Opacity: 0.0
+              });
+              console.log('fine save to DataBase!');
             break;
           case 'unknown':
+            scope.layer.setStyle({
+                color: null,
+                fillColor: 'purple',
+                fillOpacity: 1.0,
+                Opacity: 0.0
+              });
+              console.log('unknown save to DataBase!');
             break;
           case 'next':
+            alert('You completed the map!');
             break;
         }
-        console.log('save to DataBase!');
         //After click, wait for three seconds to be function again
         $timeout(function(){
           scope.rest = false;

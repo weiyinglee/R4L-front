@@ -35,11 +35,20 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData'
           style: {
             weight: 2,
             opacity: 1,
-            color: 'red',
+            color: 'black',
             fillOpacity: 0
           },
           onEachFeature: function(feature, layer) {
-            //console.log(layer);
+            
+            layer.on('click', function(){
+              layer.setStyle({
+                weight: 2,
+                opacity: 1,
+                color: 'black',
+                fillOpacity: 0
+              });
+            });
+
             layer.bindPopup('<status-button></status-button>', {
               feature : feature,
               layer: layer
@@ -54,11 +63,11 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData'
 
         // Create the popup view when is opened
         var feature = leafletEvent.leafletEvent.popup.options.feature;
-        var style = leafletEvent.leafletEvent.popup.options.layer.options.style;
+        var layer = leafletEvent.leafletEvent.popup.options.layer;
 
         var newScope = $scope.$new();
         newScope.feature = feature;
-        newScope.style = style;
+        newScope.layer = layer;
 
         // compile actuall html with angular property
         $compile(leafletEvent.leafletEvent.popup._contentNode)(newScope);
