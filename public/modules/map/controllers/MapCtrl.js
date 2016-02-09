@@ -1,17 +1,28 @@
 'use strict';
 
 var tilesDict = {
-  opencyclemap: {
-    url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
-    options: {
-        attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
-    }
-  },
-  digital_gobel_map: {
+  digital_gobel_base_map: {
     url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
     options: {
       apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
-      mapid: 'digitalglobe.n6nhn7mg'
+      mapid: 'digitalglobe.nmghof7o',
+      minZoom: 2
+    }
+  },
+  digital_gobel_base_map_street: {
+    url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+    options: {
+      apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
+      mapid: 'digitalglobe.nmgi4k9c',
+      minZoom: 2
+    }
+  },
+  digital_gobel_open_street_map: {
+    url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+    options: {
+      apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
+      mapid: 'digitalglobe.n6nhn7mg',
+      minZoom: 2
     }
   }
 }
@@ -24,7 +35,9 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData'
         lat: 10.9578115,
         zoom: 14
       },
-      tiles: tilesDict.digital_gobel_map
+      default: {
+      },
+      tiles: tilesDict.digital_gobel_base_map_street
     });
 
     //get the geojson data from backend API
@@ -33,9 +46,9 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData'
         geojson: {
           data: data,
           style: {
-            weight: 2,
+            weight: 3,
             opacity: 1,
-            color: 'black',
+            color: 'darkred',
             fillOpacity: 0
           },
           onEachFeature: function(feature, layer) {
@@ -44,7 +57,7 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData'
               layer.setStyle({
                 weight: 2,
                 opacity: 1,
-                color: 'black',
+                color: 'darkred',
                 fillOpacity: 0
               });
             });

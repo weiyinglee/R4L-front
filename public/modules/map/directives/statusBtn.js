@@ -8,26 +8,36 @@ App.directive('statusButton', function($timeout){
     controller: 'MapCtrl',
     link: function(scope, element, attrs) {
 
-      //to create te different image src
-      function imgSrc(statusImg) {
-        var imgPath = '/assets/img/';
-        var extension = '.png';
-        return imgPath + statusImg + extension;
-      }
-
-      var damageSrc = imgSrc('damage');
-      var fineSrc = imgSrc('fine');
-      var unknownSrc = imgSrc('unknown');
-      var nextSrc = imgSrc('next');
-
-      scope.damageImg = damageSrc;
-      scope.fineImg = fineSrc;
-      scope.unknownImg = unknownSrc;
-      scope.nextImg = nextSrc;
+      //default images for each status button
+      scope.damageImg = '/assets/img/damage.png';
+      scope.fineImg = '/assets/img/fine.png';
+      scope.unknownImg = '/assets/img/unknown.png';
+      scope.nextImg = '/assets/img/next.png';
 
       scope.rest = false; //for set timeout to make button pause a little after clicked
 
-      scope.changeColor = function(status){
+      //create te different image src
+      scope.imgSrc = function(status, action){
+        var statusImg = status + action;
+        var src = '/assets/img/' + statusImg + '.png';
+        switch(status){
+          case 'damage':
+            scope.damageImg = src;
+            break;
+          case 'fine':
+            scope.fineImg = src;
+            break;
+          case 'unknown':
+            scope.unknownImg = src;
+            break;
+          case 'next':
+            scope.nextImg = src;
+            break;
+        }
+      };
+
+      //status buttons onclick
+      scope.btnAction = function(status){
         scope.rest = true;
         switch(status){
           case 'damage':
@@ -57,9 +67,6 @@ App.directive('statusButton', function($timeout){
               });
               console.log('unknown save to DataBase!');
             break;
-          case 'next':
-            alert('You completed the map!');
-            break;
         }
         //After click, wait for three seconds to be function again
         $timeout(function(){
@@ -67,70 +74,11 @@ App.directive('statusButton', function($timeout){
         }, 3000);
       };
 
-      scope.clicked = function(status){
-        switch(status){
-          case 'damage':
-            scope.damageImg = imgSrc('damage_click');
-            break;
-          case 'fine':
-            scope.fineImg = imgSrc('fine_click');
-            break;
-          case 'unknown':
-            scope.unknownImg = imgSrc('unknown_click');
-            break;
-          case 'next':
-            scope.nextImg = imgSrc('next_click');
-            break;
-        }
+      //next btn onclick: go to next area
+      scope.nextArea = function(){
+        alert('You completed the map!');
       };
-      scope.unclicked = function(status){
-        switch(status){
-          case 'damage':
-            scope.damageImg = damageSrc;
-            break;
-          case 'fine':
-            scope.fineImg = fineSrc;
-            break;
-          case 'unknown':
-            scope.unknownImg = unknownSrc;
-            break;
-          case 'next':
-            scope.nextImg = nextSrc;
-            break;
-        }
-      };
-      scope.hovered = function(status){
-        switch(status){
-           case 'damage':
-            scope.damageImg = imgSrc('damage_hover');
-            break;
-          case 'fine':
-            scope.fineImg = imgSrc('fine_hover');
-            break;
-          case 'unknown':
-            scope.unknownImg = imgSrc('unknown_hover');
-            break;
-          case 'next':
-            scope.nextImg = imgSrc('next_hover');
-            break;
-        }
-      };
-      scope.unhovered = function(status){
-        switch(status){
-          case 'damage':
-            scope.damageImg = damageSrc;
-            break;
-          case 'fine':
-            scope.fineImg = fineSrc;
-            break;
-          case 'unknown':
-            scope.unknownImg = unknownSrc;
-            break;
-          case 'next':
-            scope.nextImg = nextSrc;
-            break;
-        }
-      };
+
     }
   }
 });
