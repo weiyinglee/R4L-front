@@ -1,7 +1,7 @@
 'use strict';
 
 //status btn
-App.directive('statusButton', function($timeout){
+App.directive('statusButton', function($http, leafletData, $timeout){
   return {
     restrict: 'AEC',
     templateUrl : "/modules/map/views/statusBtn.html",
@@ -76,9 +76,21 @@ App.directive('statusButton', function($timeout){
 
       //next btn onclick: go to next area
       scope.nextArea = function(){
-        alert('You completed the map!');
-      };
 
+        var currentId = parseInt(scope.feature.id); //current polygon position
+        var nextId = currentId + 1;
+
+        $http.get('/assets/libs/polygon_coordinate.json').success(function(data, status){
+          var nextPolygon = data.features[nextId].properties.centroid;
+          var nextLatLng = new L.LatLng(nextPolygon.lat, nextPolygon.lng);
+          //change the center of next polygon
+          leafletData.getMap('map').then(function(map){
+            map.setView(nextLatLng, 18);
+          });
+        });
+
+      };
+    
     }
   }
 });

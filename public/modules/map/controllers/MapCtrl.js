@@ -27,17 +27,17 @@ var tilesDict = {
   }
 }
 
-var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData', '$timeout', '$compile',
-  function($scope, $http, leafletData, $timeout, $compile){
+var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 'leafletData', '$timeout', '$compile',
+  function($scope, $location, $http, leafletData, $timeout, $compile){
     angular.extend($scope, {
       center: {
-        lng: 124.671876,
-        lat: 10.9578115,
+        lng: 124.740348,
+        lat: 11.379895,
         zoom: 14
       },
       default: {
       },
-      tiles: tilesDict.digital_gobel_base_map_street
+      tiles: tilesDict.digital_gobel_open_street_map
     });
 
     //get the geojson data from backend API
@@ -52,12 +52,14 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData'
             fillOpacity: 0
           },
           onEachFeature: function(feature, layer) {
-            
+
+            var defaultColor = 'darkred';
+
             layer.on('click', function(){
               layer.setStyle({
-                weight: 2,
+                weight: 3,
                 opacity: 1,
-                color: 'darkred',
+                color: defaultColor,
                 fillOpacity: 0
               });
             });
@@ -81,6 +83,7 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$http', 'leafletData'
         var newScope = $scope.$new();
         newScope.feature = feature;
         newScope.layer = layer;
+        newScope.map = leafletEvent.leafletEvent.target;
 
         // compile actuall html with angular property
         $compile(leafletEvent.leafletEvent.popup._contentNode)(newScope);
