@@ -64,14 +64,18 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
               });
             });
 
-            layer.bindPopup('<status-button></status-button>', {
+            layer.bindPopup('<status-button statusOnClick="handlerclick(id, color)"></status-button>', {
               feature : feature,
               layer: layer
             });
           }
         }
       });
-    }); 
+    });
+
+    $scope.handlerclick = function(id, color){
+      console.log(id);
+    };
 
     //compile directive on popup open
     $scope.$on('leafletDirectiveMap.map.popupopen', function(event, leafletEvent){
@@ -83,7 +87,6 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
         var newScope = $scope.$new();
         newScope.feature = feature;
         newScope.layer = layer;
-        newScope.map = leafletEvent.leafletEvent.target;
 
         // compile actuall html with angular property
         $compile(leafletEvent.leafletEvent.popup._contentNode)(newScope);

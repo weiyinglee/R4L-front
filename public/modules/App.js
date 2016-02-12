@@ -13,7 +13,7 @@ App.config(function($logProvider){
 // url routing
 App.config(["$routeProvider", function($routeProvider){
 	$routeProvider.
-		when('/signin', {
+		when('/', {
 			templateUrl : "/modules/user/views/Login.html",
 			controller  : "LoginCtrl"
 		}).
