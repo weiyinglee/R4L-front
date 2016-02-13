@@ -1,12 +1,12 @@
-<button ng-click="btnAction('damage')" ng-disabled="rest" ng-mousedown="imgSrc('damage', '_click')" ng-mouseup="imgSrc('damage', '')" ng-mouseover="imgSrc('damage', '_hover')" ng-mouseout="imgSrc('damage', '')">
+<button ng-click="btnAction('damage')" ng-mousedown="damageImg = '/assets/img/damage_click.png'" ng-mouseup="damageImg = '/assets/img/damage.png'" ng-mouseover="damageImg = '/assets/img/damage_hover.png'" ng-mouseout="damageImg = '/assets/img/damage.png'">
 	<img ng-src="{{ damageImg }}"/>
 </button>
-<button ng-click="btnAction('fine')" ng-disabled="rest" ng-mousedown="imgSrc('fine', '_click')" ng-mouseup="imgSrc('fine', '')" ng-mouseover="imgSrc('fine', '_hover')" ng-mouseout="imgSrc('fine', '')">
+<button ng-click="btnAction('fine')" ng-mousedown="fineImg = '/assets/img/fine_click.png'" ng-mouseup="fineImg = '/assets/img/fine.png'" ng-mouseover="fineImg = '/assets/img/fine_hover.png'" ng-mouseout="fineImg = '/assets/img/fine.png'">
 	<img ng-src="{{ fineImg }}"/>
 </button>
-<button ng-click="btnAction('unknown')" ng-disabled="rest" ng-mousedown="imgSrc('unknown', '_click')" ng-mouseup="imgSrc('unknown', '')" ng-mouseover="imgSrc('unknown', '_hover')" ng-mouseout="imgSrc('unknown', '')">
+<button ng-click="btnAction('unknown')" ng-mousedown="unknownImg = '/assets/img/unknown_click.png'" ng-mouseup="unknownImg = '/assets/img/unknown.png'" ng-mouseover="unknownImg = '/assets/img/unknown_hover.png'" ng-mouseout="unknownImg = '/assets/img/unknown.png'">
 	<img ng-src="{{ unknownImg }}"/>
 </button>
-<button ng-click="nextArea()" ng-mousedown="imgSrc('next', '_click')" ng-mouseup="imgSrc('next', '')" ng-mouseover="imgSrc('next', '_hover')" ng-mouseout="imgSrc('next', '')">
+<button ng-click="btnAction('next')" ng-mousedown="nextImg = '/assets/img/next_click.png'" ng-mouseup="nextImg = '/assets/img/next.png'" ng-mouseover="nextImg = '/assets/img/next_hover.png'" ng-mouseout="nextImg = '/assets/img/next.png'">
 	<img ng-src="{{ nextImg }}"/>
 </button>

@@ -64,14 +64,50 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
               });
             });
 
-            layer.bindPopup('<status-button></status-button>', {
+            layer.bindPopup('<status-button statusOnClick="handlerclick(object)"></status-button>', {
               feature : feature,
               layer: layer
             });
           }
         }
       });
-    }); 
+    });
+
+    $scope.handlerclick = function(object) {
+      var status = object.status;
+      var id = object.id;
+      var nextId = id + 1;
+      var fillColor = object.color;
+      
+      if(status != 'next'){
+        //do the logic for non-next buttons
+        $scope.$parent.layer.setStyle({
+          color: null,
+          fillColor: fillColor,
+          fillOpacity: 1.0,
+          Opacity: 0.0
+        });
+      }else{
+        //do the logic for next button
+        if($scope.$parent.geojson.data.features[nextId] === undefined){
+          console.log('not exist');
+        }
+        console.log($scope.$parent.geojson.data.features[id]);
+        //when the I proceed to click more polygons, the program will crash somehow.
+
+
+        /*
+          var nextPolygon = data.features[nextId].properties.centroid;
+          var nextLatLng = new L.LatLng(nextPolygon.lat, nextPolygon.lng);
+          //change the center of next polygon
+          leafletData.getMap('map').then(function(map){
+            map.setView(nextLatLng, 18);
+          });
+        */
+      }
+ 
+
+    };
 
     //compile directive on popup open
     $scope.$on('leafletDirectiveMap.map.popupopen', function(event, leafletEvent){
@@ -83,7 +119,6 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
         var newScope = $scope.$new();
         newScope.feature = feature;
         newScope.layer = layer;
-        newScope.map = leafletEvent.leafletEvent.target;
 
         // compile actuall html with angular property
         $compile(leafletEvent.leafletEvent.popup._contentNode)(newScope);
