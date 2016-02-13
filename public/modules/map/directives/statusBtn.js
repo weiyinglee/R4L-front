@@ -17,17 +17,43 @@ App.directive('statusButton', function($http, leafletData, $timeout){
       scope.unknownImg = '/assets/img/unknown.png';
       scope.nextImg = '/assets/img/next.png';
 
+      var timer = null;
+
       //status buttons onclick
       scope.btnAction = function(status){
 
         switch(status){
           case 'damage':
+            if(timer){
+              $timeout.cancel(timer);
+              timer = null;
+            }
+            timer = $timeout(function(){
+              //save the data to database
+              console.log('damage saved to database');
+            }, 3000);
             scope.handlerclick({status: 'damage', id: scope.$parent.feature.id, color: "red"});
             break;
           case 'fine':
-              scope.handlerclick({status: 'fine', id: scope.$parent.feature.id, color: "blue"});
+            if(timer){
+              $timeout.cancel(timer);
+              timer = null;
+            }
+            timer = $timeout(function(){
+              //save the data to database
+              console.log('fine saved to database');
+            }, 3000);
+            scope.handlerclick({status: 'fine', id: scope.$parent.feature.id, color: "blue"});
             break;
           case 'unknown':
+            if(timer){
+              $timeout.cancel(timer);
+              timer = null;
+            }
+            timer = $timeout(function(){
+              //save the data to database
+              console.log('unknown saved to database');
+            }, 3000);
             scope.handlerclick({status: 'unknown', id: scope.$parent.feature.id, color: "purple"});
             break;
           case 'next':
