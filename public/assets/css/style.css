@@ -46,4 +46,7 @@ status_button > ul > li {
   list-style: none;
   display: inline-block; }
 
+.badge {
+  border-radius: 10px; }
+
 /*# sourceMappingURL=style.css.map */

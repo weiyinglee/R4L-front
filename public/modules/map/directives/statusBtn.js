@@ -17,70 +17,77 @@ App.directive('statusButton', function($http, leafletData, $timeout){
       scope.unknownImg = '/assets/img/unknown.png';
       scope.nextImg = '/assets/img/next.png';
 
+      var timer = null;
+
       //status buttons onclick
       scope.btnAction = function(status){
 
-        //counter for three seconds
-        console.log(scope.feature);
-        switch(status){
-          case 'damage':
-            /*
-            scope.layer.setStyle({
-              color: null,
-              fillColor: 'red',
-              fillOpacity: 1.0,
-              Opacity: 0.0
-            });
-            */
-            scope.handlerclick({id: scope.feature.id, color: 'red'});
+        var thisFeature = scope.$parent.feature;
+        var thisLayer = scope.$parent.layer;
+        var originColor = null;
+
+        //decrease the original status badge since it's been updated/changed
+        switch(thisLayer.options.fillColor){
+          case 'red':
+            scope.damageBadge--;
             break;
-          case 'fine':
-          /*
-            scope.layer.setStyle({
-                color: null,
-                fillColor: 'blue',
-                fillOpacity: 1.0,
-                Opacity: 0.0
-              });
-          */
-            scope.handlerclick({id: scope.feature.id, color: 'blue'});
+          case 'blue':
+            scope.fineBadge--;
             break;
-          case 'unknown':
-          /*
-            scope.layer.setStyle({
-                color: null,
-                fillColor: 'purple',
-                fillOpacity: 1.0,
-                Opacity: 0.0
-              });
-          */
-            scope.handlerclick({id: scope.feature.id, color: 'purple'});
+          case 'purple':
+            scope.unknownBadge--;
             break;
-          case 'next':
-            scope.handlerclick({id: scope.feature.id, color: null});
+          default:
+            scope.nextBadge--
             break;
         }
-        
+
+        switch(status){
+          case 'damage':
+            
+            if(timer){
+              $timeout.cancel(timer);
+              timer = null;
+            }
+
+            timer = $timeout(function(){
+              //save the data to database
+              console.log('damage saved to database');
+            }, 3000);
+
+            scope.handlerclick({status: 'damage', id: thisFeature.id, color: "red"});
+            
+            break;
+          case 'fine':
+            
+            if(timer){
+              $timeout.cancel(timer);
+              timer = null;
+            }
+            timer = $timeout(function(){
+              console.log('fine saved to database');
+            }, 3000);
+            scope.handlerclick({status: 'fine', id: thisFeature.id, color: "blue"});
+            
+            break;
+          case 'unknown':
+            
+            if(timer){
+              $timeout.cancel(timer);
+              timer = null;
+            }
+            timer = $timeout(function(){
+              //save the data to database
+              console.log('unknown saved to database');
+            }, 3000);
+            scope.handlerclick({status: 'unknown', id: thisFeature.id, color: "purple"});
+            
+            break;
+          case 'next':
+            scope.handlerclick({status: 'next', id: thisFeature.id, color: null});
+            break;
+        }
       };
-
-      //next btn onclick: go to next area
-      scope.nextArea = function(){
-
-        var currentId = parseInt(scope.feature.id); //current polygon position
-        var nextId = currentId + 1;
-
-        $http.get('/assets/libs/polygon_coordinate.json').success(function(data, status){
-
-          var nextPolygon = data.features[nextId].properties.centroid;
-          var nextLatLng = new L.LatLng(nextPolygon.lat, nextPolygon.lng);
-          //change the center of next polygon
-          leafletData.getMap('map').then(function(map){
-            map.setView(nextLatLng, 18);
-          });
-        });
-
-      };
-    
     }
   }
 });

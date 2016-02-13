@@ -49,6 +49,7 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
             weight: 3,
             opacity: 1,
             color: 'darkred',
+            fillColor: null,
             fillOpacity: 0
           },
           onEachFeature: function(feature, layer) {
@@ -60,11 +61,12 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
                 weight: 3,
                 opacity: 1,
                 color: defaultColor,
+                fillColor: null,
                 fillOpacity: 0
               });
             });
 
-            layer.bindPopup('<status-button statusOnClick="handlerclick(id, color)"></status-button>', {
+            layer.bindPopup('<status-button statusOnClick="handlerclick(object)"></status-button>', {
               feature : feature,
               layer: layer
             });
@@ -73,8 +75,61 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
       });
     });
 
-    $scope.handlerclick = function(id, color){
-      console.log(id);
+    //default badges for each status (should get from database later)
+    $scope.damageBadge = 0;
+    $scope.fineBadge = 0;
+    $scope.unknownBadge = 0;
+    $scope.nextBadge = 20;
+
+    $scope.handlerclick = function(object) {
+      var status = object.status;
+      var id = object.id;
+      var nextId = id + 1;
+      var fillColor = object.color;
+
+      if(status != 'next'){
+        
+        //add the status badge
+        switch(fillColor){
+          case 'red':
+            $scope.damageBadge++;
+            break;
+          case 'blue':
+            $scope.fineBadge++;
+            break;
+          case 'purple':
+            $scope.unknownBadge++;
+            break;
+          default:
+            $scope.nextBadge++;
+            break;
+        }
+
+        //do the logic for non-next buttons
+        $scope.$parent.layer.setStyle({
+          color: null,
+          fillColor: fillColor,
+          fillOpacity: 1.0,
+          Opacity: 0.0
+        });
+      }else{
+        //do the logic for next button
+        if($scope.$parent.geojson.data.features[nextId] === undefined){
+          console.log('not exist');
+        }
+        console.log($scope.$parent.geojson.data.features[id]);
+        //when the I proceed to click more polygons, the program will crash somehow.
+
+
+        /*
+          var nextPolygon = data.features[nextId].properties.centroid;
+          var nextLatLng = new L.LatLng(nextPolygon.lat, nextPolygon.lng);
+          //change the center of next polygon
+          leafletData.getMap('map').then(function(map){
+            map.setView(nextLatLng, 18);
+          });
+        */
+      }
     };
 
     //compile directive on popup open
