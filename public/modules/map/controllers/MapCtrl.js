@@ -27,8 +27,8 @@ var tilesDict = {
   }
 }
 
-var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 'leafletData', '$timeout', '$compile',
-  function($scope, $location, $http, leafletData, $timeout, $compile){
+var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 'leafletData', '$timeout', '$compile', 'badgeService',
+  function($scope, $location, $http, leafletData, $timeout, $compile, badgeService){
     angular.extend($scope, {
       center: {
         lng: 124.740348,
@@ -75,11 +75,9 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
       });
     });
 
-    //default badges for each status (should get from database later)
-    $scope.damageBadge = 0;
-    $scope.fineBadge = 0;
-    $scope.unknownBadge = 0;
-    $scope.nextBadge = 20;
+    $scope.badge = badgeService;
+
+    //$scope.handleBadge = badgeService.handleBadge;
 
     $scope.handlerclick = function(object) {
       var status = object.status;
@@ -92,16 +90,16 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
         //add the status badge
         switch(fillColor){
           case 'red':
-            $scope.damageBadge++;
+            $scope.badge.damageBadge++;
             break;
           case 'blue':
-            $scope.fineBadge++;
+            $scope.badge.fineBadge++;
             break;
           case 'purple':
-            $scope.unknownBadge++;
+            $scope.badge.unknownBadge++;
             break;
           default:
-            $scope.nextBadge++;
+            $scope.badge.nextBadge++;
             break;
         }
 

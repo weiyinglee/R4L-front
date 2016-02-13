@@ -1,13 +1,13 @@
 'use strict';
 
 //status btn
-App.directive('statusButton', function($http, leafletData, $timeout){
+App.directive('statusButton', function($http, leafletData, $timeout, badgeService){
   return {
     restrict: 'AEC',
     templateUrl : "/modules/map/views/statusBtn.html",
     controller: 'MapCtrl',
     scope: {
-      handlerclick: '&'
+      handlerclick: '&',
     },
     link: function(scope, element, attrs) {
 
@@ -29,16 +29,16 @@ App.directive('statusButton', function($http, leafletData, $timeout){
         //decrease the original status badge since it's been updated/changed
         switch(thisLayer.options.fillColor){
           case 'red':
-            scope.damageBadge--;
+            scope.badge.damageBadge--;
             break;
           case 'blue':
-            scope.fineBadge--;
+            scope.badge.fineBadge--;
             break;
           case 'purple':
-            scope.unknownBadge--;
+            scope.badge.unknownBadge--;
             break;
           default:
-            scope.nextBadge--
+            scope.badge.nextBadge--;
             break;
         }
 
