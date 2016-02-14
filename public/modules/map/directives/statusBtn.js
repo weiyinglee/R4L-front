@@ -38,7 +38,9 @@ App.directive('statusButton', function($http, leafletData, $timeout, badgeServic
             scope.badge.unknownBadge--;
             break;
           default:
-            scope.badge.nextBadge--;
+              if(status != 'next'){
+                scope.badge.nextBadge--;
+              }
             break;
         }
 

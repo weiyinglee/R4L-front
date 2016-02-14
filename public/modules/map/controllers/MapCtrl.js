@@ -128,19 +128,16 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
         //do the logic for next button
         if($scope.$parent.geojson.data.features[nextId] === undefined){
           console.log('not exist');
-        }
-        console.log($scope.$parent.geojson.data.features[id]);
-        //when the I proceed to click more polygons, the program will crash somehow.
-
-
-        /*
-          var nextPolygon = data.features[nextId].properties.centroid;
+        }else{
+          //when the I proceed to click more polygons, the program will crash somehow.
+          var nextPolygon = $scope.$parent.geojson.data.features[nextId].properties.centroid;
           var nextLatLng = new L.LatLng(nextPolygon.lat, nextPolygon.lng);
           //change the center of next polygon
           leafletData.getMap('map').then(function(map){
             map.setView(nextLatLng, 18);
           });
-        */
+        }
+
       }
     };
 
