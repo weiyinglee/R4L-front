@@ -7,11 +7,11 @@
 	<link rel="stylesheet", href="/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/assets/css/style.css">
-	
+
 	<title>Radar For Life</title>
 </head>
 <body>
-	
+
 	<div class="container-fluid">
 		<div ng-view></div>
 	</div>
@@ -30,10 +30,14 @@
 
 	<!-- dependencies by Map -->
 	<script src="/modules/map/controllers/MapCtrl.js"></script>
+	<script src="/modules/map/directives/statusBtn.js"></script>
+  	<script src="/modules/map/directives/popup.js"></script>
+  	<script src="/modules/map/services/service.js"></script>
 
-	<!-- dependencies by Map -->
+	<!-- dependencies by user -->
 	<script src="/modules/user/controllers/UserCtrl.js"></script>
 	<script src="/modules/user/controllers/LoginCtrl.js"></script>
+
 
 </body>
 </html>
