@@ -27,10 +27,29 @@ var tilesDict = {
   }
 }
 
-var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 'leafletData', '$timeout', '$compile', 'badgeService',
-  function($scope, $location, $http, leafletData, $timeout, $compile, badgeService){
-    
-    $scope.badge = badgeService;
+var MapController = App.controller('MapCtrl', [
+    '$scope',
+    '$location',
+    '$http',
+    'leafletData',
+    '$timeout',
+    '$compile',
+    'BadgeFactory',
+  function(
+    $scope,
+    $location,
+    $http,
+    leafletData,
+    $timeout,
+    $compile,
+    BadgeFactory
+     ){
+
+    var COLORSTATUS = {
+      damage   : 'RED',
+      undamage : 'BLUE',
+      unknown  : 'PURPLE'
+    }
 
     angular.extend($scope, {
       center: {
@@ -43,8 +62,10 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
       tiles: tilesDict.digital_gobel_open_street_map
     });
 
+    var layerMap = {};
+
     //get the geojson data from backend API
-    $http.get('/assets/libs/polygon_coordinate.json').success(function(data, status){      
+    $http.get('/assets/libs/polygon_coordinate.json').success(function(data, status){
       angular.extend($scope, {
         geojson: {
           data: data,
@@ -56,101 +77,75 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
             fillOpacity: 0
           },
           onEachFeature: function(feature, layer) {
+            layerMap[feature.id] = layer;
 
             var defaultColor = 'darkred';
 
-            layer.on('click', function(){
-              switch(layer.options.fillColor){
-                case 'red':
-                  $scope.badge.damageBadge--;
-                  $scope.badge.nextBadge++;
-                  break;
-                case 'blue':
-                  $scope.badge.fineBadge--;
-                  $scope.badge.nextBadge++;
-                  break;
-                case 'purple':
-                  $scope.badge.unknownBadge--;
-                  $scope.badge.nextBadge++;
-                  break;            
-              }
-              layer.setStyle({
-                weight: 3,
-                opacity: 1,
-                color: defaultColor,
-                fillColor: null,
-                fillOpacity: 0
-              });
-            });
-
-            layer.bindPopup('<status-button statusOnClick="handlerclick(object)"></status-button>', {
-              feature : feature,
-              layer: layer
-            });
+            // statusOnClick on directive will turned to lowercase. I warned you about this, you can look at directive and see
+            // i did the mapping &statusonclick
+            layer.bindPopup('<status-button statusOnClick="handlerclick(object)" featureid='+feature.id+'></status-button>');
           }
         }
       });
     });
 
 
+
+    var setStyle = function(layer, status) {
+      layer.setStyle({
+        fillColor : COLORSTATUS[status],
+        fillOpacity : 1.0
+      })
+    };
+
     $scope.handlerclick = function(object) {
-      var status = object.status;
-      var id = object.id;
-      var nextId = id + 1;
+      var featureId = object.featureId;
+      var status    = object.status;
+
+      var nextId = featureId + 1;
       var fillColor = object.color;
 
-      if(status != 'next'){
-        
-        //add the status badge
-        switch(fillColor){
-          case 'red':
-            $scope.badge.damageBadge++;
-            break;
-          case 'blue':
-            $scope.badge.fineBadge++;
-            break;
-          case 'purple':
-            $scope.badge.unknownBadge++;
-            break;
-          default:
-            $scope.badge.nextBadge++;
-            break;
-        }
+      var layer = layerMap[featureId];
+      var changeColor = null;
 
-        //do the logic for non-next buttons
-        $scope.$parent.layer.setStyle({
-          color: null,
-          fillColor: fillColor,
-          fillOpacity: 1.0,
-          Opacity: 0.0
+      // check if current feature has been colored
+      // if the polygon has not been filled, then do the counting
+      // if already fill, then decrese the count by 1
+      // and increate remian by 1
+      if (layer.options.fillColor) {
+        var currentStatus;
+        angular.forEach(COLORSTATUS, function(v, k ){
+          if (v == layer.options.fillColor) currentStatus = k;
         });
-      }else{
-        //do the logic for next button
-        if($scope.$parent.geojson.data.features[nextId] === undefined){
-          console.log('not exist');
-        }else{
-          //when the I proceed to click more polygons, the program will crash somehow.
-          var nextPolygon = $scope.$parent.geojson.data.features[nextId].properties.centroid;
-          var nextLatLng = new L.LatLng(nextPolygon.lat, nextPolygon.lng);
-          //change the center of next polygon
-          leafletData.getMap('map').then(function(map){
-            map.setView(nextLatLng, 18);
-          });
-        }
-
+        BadgeFactory.decStatus(currentStatus);
       }
+
+      switch(status) {
+        case 'damage' : {
+          BadgeFactory.incDamage();
+          break;
+        }
+        case 'undamage' : {
+          BadgeFactory.incUnDamage();
+          break;
+        }
+        case 'unknown' : {
+          BadgeFactory.incUnKnown();
+          break;
+        }
+        default : {
+          console.log('next');
+          return;
+        }
+      }
+
+      setStyle(layer, status);
+
     };
 
     //compile directive on popup open
     $scope.$on('leafletDirectiveMap.map.popupopen', function(event, leafletEvent){
-
-        // Create the popup view when is opened
-        var feature = leafletEvent.leafletEvent.popup.options.feature;
-        var layer = leafletEvent.leafletEvent.popup.options.layer;
-
         var newScope = $scope.$new();
-        newScope.feature = feature;
-        newScope.layer = layer;
 
         // compile actuall html with angular property
         $compile(leafletEvent.leafletEvent.popup._contentNode)(newScope);
