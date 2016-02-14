@@ -72,7 +72,7 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
                 case 'purple':
                   $scope.badge.unknownBadge--;
                   $scope.badge.nextBadge++;
-                  break;            
+                  break;        
               }
               layer.setStyle({
                 weight: 3,
@@ -126,18 +126,24 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
         });
       }else{
         //do the logic for next button
-        if($scope.$parent.geojson.data.features[nextId] === undefined){
-          console.log('not exist');
-        }else{
-          //when the I proceed to click more polygons, the program will crash somehow.
-          var nextPolygon = $scope.$parent.geojson.data.features[nextId].properties.centroid;
-          var nextLatLng = new L.LatLng(nextPolygon.lat, nextPolygon.lng);
-          //change the center of next polygon
-          leafletData.getMap('map').then(function(map){
-            map.setView(nextLatLng, 18);
+          console.log(L.featureGroup());
+          console.log($scope.geojson.data.features.find(id));
+          console.log(L.featureGroup().getLayer);
+          console.log(leafletData);
+          leafletData.getLayers().then(function(layers){
+            console.log(layers);
           });
-        }
+          //var layer = leafletData.tileLayer('map');
+          //var group = leafletData.layerGroup([layer]);
 
+          //when the I proceed to click more polygons, the program will crash somehow.
+          //var nextPolygon = $scope.$parent.geojson.data.features[nextId].properties.centroid;
+          //var nextLatLng = new L.LatLng(nextPolygon.lat, nextPolygon.lng);
+          //change the center of next polygon
+
+          leafletData.getMap('map').then(function(map){
+            //map.setView(nextLatLng, 18);
+          });
       }
     };
 
