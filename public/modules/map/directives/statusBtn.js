@@ -27,21 +27,21 @@ App.directive('statusButton', function($http, leafletData, $timeout, badgeServic
         var originColor = null;
 
         //decrease the original status badge since it's been updated/changed
-        switch(thisLayer.options.fillColor){
-          case 'red':
-            scope.badge.damageBadge--;
-            break;
-          case 'blue':
-            scope.badge.fineBadge--;
-            break;
-          case 'purple':
-            scope.badge.unknownBadge--;
-            break;
-          default:
-              if(status != 'next'){
-                scope.badge.nextBadge--;
-              }
-            break;
+        if(status != 'next'){
+          switch(thisLayer.options.fillColor){
+            case 'red':
+              scope.badge.damageBadge--;
+              break;
+            case 'blue':
+              scope.badge.fineBadge--;
+              break;
+            case 'purple':
+              scope.badge.unknownBadge--;
+              break;
+            default:
+              scope.badge.nextBadge--;
+              break;
+          }
         }
 
         switch(status){
