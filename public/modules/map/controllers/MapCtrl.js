@@ -29,6 +29,9 @@ var tilesDict = {
 
 var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 'leafletData', '$timeout', '$compile', 'badgeService',
   function($scope, $location, $http, leafletData, $timeout, $compile, badgeService){
+    
+    $scope.badge = badgeService;
+
     angular.extend($scope, {
       center: {
         lng: 124.740348,
@@ -57,6 +60,20 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
             var defaultColor = 'darkred';
 
             layer.on('click', function(){
+              switch(layer.options.fillColor){
+                case 'red':
+                  $scope.badge.damageBadge--;
+                  $scope.badge.nextBadge++;
+                  break;
+                case 'blue':
+                  $scope.badge.fineBadge--;
+                  $scope.badge.nextBadge++;
+                  break;
+                case 'purple':
+                  $scope.badge.unknownBadge--;
+                  $scope.badge.nextBadge++;
+                  break;            
+              }
               layer.setStyle({
                 weight: 3,
                 opacity: 1,
@@ -75,9 +92,6 @@ var MapController = App.controller('MapCtrl', [ '$scope', '$location', '$http', 
       });
     });
 
-    $scope.badge = badgeService;
-
-    //$scope.handleBadge = badgeService.handleBadge;
 
     $scope.handlerclick = function(object) {
       var status = object.status;
