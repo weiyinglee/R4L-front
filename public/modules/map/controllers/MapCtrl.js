@@ -93,7 +93,7 @@ var MapController = App.controller('MapCtrl', [
 
             // statusOnClick on directive will turned to lowercase. I warned you about this, you can look at directive and see
             // i did the mapping &statusonclick
-            layer.bindPopup('<status-button statusOnClick="handlerclick(object)" featureid='+feature.id+'></status-button>');
+            layer.bindPopup('<status-button statusonclick="handlerclick(object)" featureid='+feature.id+'></status-button>');
           }
         }
       });
@@ -146,7 +146,31 @@ var MapController = App.controller('MapCtrl', [
           break;
         }
         default : {
-          console.log('next');
+          //handle the jump next polygon
+          var nextLayer;
+          var nextLng;
+          var nextLat;
+          var nextPolygon;
+          var zoom;
+          
+          if(nextId < Object.keys(layerMap).length){
+            nextLayer = layerMap[nextId];
+            nextLng = nextLayer.feature.properties.centroid.lng;
+            nextLat = nextLayer.feature.properties.centroid.lat;
+            zoom = 18;
+          }else{
+            //last polygon, next jump back to first layer
+            nextLng = 124.740348;
+            nextLat = 11.379895;
+            zoom = 14;
+          }
+
+          nextPolygon = new L.LatLng(nextLat, nextLng);
+          
+          leafletData.getMap('map').then(function(map){
+            map.setView(nextPolygon, zoom);
+          });
+          
           return;
         }
       }
