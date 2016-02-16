@@ -79,23 +79,41 @@ var MapController = App.controller('MapCtrl', [
           onEachFeature: function(feature, layer) {
             layerMap[feature.id] = layer;
 
-            var defaultColor = 'darkred';
+            layer.on('click', function(){
+              if(layer.options.fillColor){
+                
+                handleCurrentStatus(layer, 'status');
+                
+                layer.setStyle({
+                  fillColor: null,
+                  fillOpacity: 0
+                });
+              }
+            });
 
             // statusOnClick on directive will turned to lowercase. I warned you about this, you can look at directive and see
             // i did the mapping &statusonclick
-            layer.bindPopup('<status-button statusOnClick="handlerclick(object)" featureid='+feature.id+'></status-button>');
+            layer.bindPopup('<status-button statusonclick="handlerclick(object)" featureid='+feature.id+'></status-button>');
           }
         }
       });
     });
-
-
 
     var setStyle = function(layer, status) {
       layer.setStyle({
         fillColor : COLORSTATUS[status],
         fillOpacity : 1.0
       })
+    };
+
+    var handleCurrentStatus = function(layer, status){
+      if (layer.options.fillColor && status != 'next') {
+        var currentStatus;
+        angular.forEach(COLORSTATUS, function(v, k){
+          if (v == layer.options.fillColor) currentStatus = k;
+        });
+        BadgeFactory.decStatus(currentStatus);
+      }
     };
 
     $scope.handlerclick = function(object) {
@@ -112,13 +130,7 @@ var MapController = App.controller('MapCtrl', [
       // if the polygon has not been filled, then do the counting
       // if already fill, then decrese the count by 1
       // and increate remian by 1
-      if (layer.options.fillColor) {
-        var currentStatus;
-        angular.forEach(COLORSTATUS, function(v, k ){
-          if (v == layer.options.fillColor) currentStatus = k;
-        });
-        BadgeFactory.decStatus(currentStatus);
-      }
+      handleCurrentStatus(layer, status);
 
       switch(status) {
         case 'damage' : {
@@ -134,7 +146,56 @@ var MapController = App.controller('MapCtrl', [
           break;
         }
         default : {
-          console.log('next');
+          //handle the jump next polygon
+
+          var nextLayer;
+          var nextLng;
+          var nextLat;
+          var nextLayer;
+          var nextPolygon;
+          
+          /*
+          var nextLayer = layerMap[nextId];
+
+          var nextLng = nextLayer.feature.properties.centroid.lng;
+          var nextLat = nextLayer.feature.properties.centroid.lat;
+
+          var currentLng = layer.feature.properties.centroid.lng;
+          var currentLat = layer.feature.properties.centroid.lat;
+
+          var nextPolygon = new L.LatLng(nextLat, nextLng);
+          var currentPolygon = new L.LatLng(currentLat, currentLng);
+
+          console.log(nextPolygon);
+          console.log(currentPolygon);
+
+          //check if the polygon is too far by 300 meters to improve use visibility
+          if(currentPolygon.distanceTo(nextPolygon) > 300){
+            leafletData.getMap('map').then(function(map){
+              console.log(nextPolygon);
+              map.panTo(nextPolygon, 18);
+            });
+          }
+
+          layerMap[nextId].fire('click');
+          */
+          
+          if(nextId < Object.keys(layerMap).length){
+            nextLayer = layerMap[nextId];
+            nextLng = nextLayer.feature.properties.centroid.lng;
+            nextLat = nextLayer.feature.properties.centroid.lat;
+          }else{
+            //last polygon, next jump back to first layer
+            nextLng = 124.740348;
+            nextLat = 11.379895;
+          }
+
+          nextPolygon = new L.LatLng(nextLat, nextLng);
+          
+          leafletData.getMap('map').then(function(map){
+            map.setView(nextPolygon, 18);
+          });
+
           return;
         }
       }
