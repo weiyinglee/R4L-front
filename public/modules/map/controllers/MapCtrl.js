@@ -147,30 +147,55 @@ var MapController = App.controller('MapCtrl', [
         }
         default : {
           //handle the jump next polygon
+
           var nextLayer;
           var nextLng;
           var nextLat;
+          var nextLayer;
           var nextPolygon;
-          var zoom;
+          
+          /*
+          var nextLayer = layerMap[nextId];
+
+          var nextLng = nextLayer.feature.properties.centroid.lng;
+          var nextLat = nextLayer.feature.properties.centroid.lat;
+
+          var currentLng = layer.feature.properties.centroid.lng;
+          var currentLat = layer.feature.properties.centroid.lat;
+
+          var nextPolygon = new L.LatLng(nextLat, nextLng);
+          var currentPolygon = new L.LatLng(currentLat, currentLng);
+
+          console.log(nextPolygon);
+          console.log(currentPolygon);
+
+          //check if the polygon is too far by 300 meters to improve use visibility
+          if(currentPolygon.distanceTo(nextPolygon) > 300){
+            leafletData.getMap('map').then(function(map){
+              console.log(nextPolygon);
+              map.panTo(nextPolygon, 18);
+            });
+          }
+
+          layerMap[nextId].fire('click');
+          */
           
           if(nextId < Object.keys(layerMap).length){
             nextLayer = layerMap[nextId];
             nextLng = nextLayer.feature.properties.centroid.lng;
             nextLat = nextLayer.feature.properties.centroid.lat;
-            zoom = 18;
           }else{
             //last polygon, next jump back to first layer
             nextLng = 124.740348;
             nextLat = 11.379895;
-            zoom = 14;
           }
 
           nextPolygon = new L.LatLng(nextLat, nextLng);
           
           leafletData.getMap('map').then(function(map){
-            map.setView(nextPolygon, zoom);
+            map.setView(nextPolygon, 18);
           });
-          
+
           return;
         }
       }
