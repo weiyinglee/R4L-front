@@ -6,8 +6,7 @@ App.directive('statusButton', [ '$timeout', 'BadgeFactory', "$rootScope", functi
     restrict: 'AEC',
     templateUrl : "/modules/map/views/statusBtn.html",
     scope: {
-      statusOnClick: '&statusonclick',
-      leaflet_feature_id : '=featureid'
+      statusOnClick: '&statusonclick'
     },
     link: function(scope, element, attrs) {
       scope.badge = BadgeFactory.getBadges();
@@ -61,7 +60,6 @@ App.directive('statusButton', [ '$timeout', 'BadgeFactory', "$rootScope", functi
         }
         scope.statusOnClick({
           object : {
-            featureId : scope.leaflet_feature_id,
             status    : status
           }
         });
