@@ -1,7 +1,8 @@
 var App = window.App = angular.module('R4LApp', [
 		'ngRoute',
 		'leaflet-directive',
-		'ui.bootstrap'
+		'ui.bootstrap',
+		'ngMaterial'
 	]
 );
 

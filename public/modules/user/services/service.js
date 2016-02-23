@@ -1,3 +1,5 @@
+'use strict';
+
 App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
   
   var userData = {
