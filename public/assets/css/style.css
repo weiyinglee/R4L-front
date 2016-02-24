@@ -5,10 +5,10 @@ body {
   font: normal 14px Roboto,arial,sans-serif; }
 
 .login-container {
-  padding-top: 10%;
+  padding-top: 15%;
   padding-left: auto;
   padding-right: auto;
-  margin-left: 25%;
+  margin-left: 10%;
   width: 80%; }
 
 .form-login {
@@ -21,6 +21,7 @@ body {
   border-color: #d2d2d2;
   border-width: 5px;
   box-shadow: 0 1px 0 #cfcfcf;
+  margin-left: 18%;
   width: 60%; }
 
 h4 {
@@ -48,5 +49,32 @@ status_button > ul > li {
 
 .badge {
   border-radius: 10px; }
+
+.jumbotron {
+  border: 1px solid black;
+  border-radius: 15px;
+  box-shadow: 2px 2px 2px #888;
+  background-color: lightblue;
+  padding: 5%;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  color: #555;
+  text-align: center; }
+
+#earthquake_img {
+  background: url("/assets/img/earthquake.jpg") no-repeat center; }
+
+#flood_img {
+  background: url("/assets/img/flood.jpg") no-repeat top; }
+
+#hurricane_img {
+  background: url("/assets/img/hurricane.jpg") no-repeat center; }
+
+.register-container {
+  padding-top: 15%;
+  padding-left: auto;
+  padding-right: auto;
+  margin-left: 10%;
+  width: 80%; }
 
 /*# sourceMappingURL=style.css.map */

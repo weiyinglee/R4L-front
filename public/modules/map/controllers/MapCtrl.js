@@ -71,7 +71,9 @@ var MapController = App.controller('MapCtrl', [
     var layerMap = {};
 
     //get the geojson data from backend API
-    $http.get('/assets/libs/polygon_coordinate.json').success(function(data, status){
+    $http.get('http://52.8.54.187/polygons/100', {
+      headers: {'Content-Type' : 'application/json'}
+    }).success(function(data, status){
 
       var marker = null;
       var popup = null;

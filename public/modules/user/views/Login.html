@@ -1,9 +1,9 @@
-
 <div class="login-container" ng-controller="LoginCtrl">
     <div class="row">
         <div class="col-md-offset-5 col-md-3 text-center">
             <div class="form-login">
                 <h4>Welcome To Radar for Life</h4>
+                <h5>Please login to continue</h5>
                 <input type="text" ng-model="userName" id="userName" class="form-control input-sm chat-input" placeholder="username" />
                 </br>
                 <input type="text" ng-model="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
@@ -13,6 +13,11 @@
                         <button ng-click="auth()" ng-disabled="userName == '' || userPassword == ''" class="btn btn-primary btn-md">
                             login <i class="fa fa-sign-in"></i>
                         </button>
+                    </span>
+                    <span>
+                        <a href="/#/signup" role="button" class="btn btn-primary btn-md">
+                            Sign up
+                        </a>
                     </span>
                 </div>
             </div>

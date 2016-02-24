@@ -16,19 +16,6 @@ var LoginController = App.controller('LoginCtrl', [
 
 	  $scope.userName = "";
 	  $scope.userPassword = "";
-	  $scope.signName = "";
-	  $scope.signPassword = "";
-	  
-	  //Create an user
-	  $scope.signUp = function(){
-
-	  	var inputData = {
-	  	  user: $scope.signName,
-	  	  password: $scope.signPassword
-	  	}
-
-	  	UserFactory.userCreate(inputData);
-	  };
 
 	  //Authentication for login
 	  $scope.auth = function(){
