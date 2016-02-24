@@ -29,20 +29,24 @@ var tilesDict = {
 
 var MapController = App.controller('MapCtrl', [
     '$scope',
+    '$rootScope',
     '$location',
     '$http',
     'leafletData',
     '$timeout',
     '$compile',
     'BadgeFactory',
+    'EventFactory',
   function(
     $scope,
+    $rootScope,
     $location,
     $http,
     leafletData,
     $timeout,
     $compile,
-    BadgeFactory
+    BadgeFactory,
+    EventFactory
      ){
 
     var COLORSTATUS = {
@@ -70,8 +74,10 @@ var MapController = App.controller('MapCtrl', [
 
     var layerMap = {};
 
+    $scope.polygonUrl = EventFactory.getPolygon();
+
     //get the geojson data from backend API
-    $http.get('http://52.8.54.187/polygons/100', {
+    $http.get($scope.polygonUrl, {
       headers: {'Content-Type' : 'application/json'}
     }).success(function(data, status){
 
@@ -83,6 +89,13 @@ var MapController = App.controller('MapCtrl', [
         popup = L.popup().setContent('<status-button statusonclick="handlerclick(object)"></status-button>');
         marker.bindPopup(popup);   
       });
+
+      /*
+      data.features.forEach(function(data){
+        data.geometry = JSON.parse(data.geometry);
+        data.type = "Feature";
+      });
+      */
 
       angular.extend($scope, {
         geojson: {
@@ -215,4 +228,8 @@ var MapController = App.controller('MapCtrl', [
         console.log(leafletEvent.leafletEvent.popup._contentNode);
         $compile(leafletEvent.leafletEvent.popup._contentNode)(newScope);
       });
+
+    $rootScope.$on('event_update', function(){
+      $scope.polygonUrl = EventFactory.getPolygon();
+    });
   }]);
