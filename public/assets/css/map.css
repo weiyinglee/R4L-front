@@ -1,8 +1,14 @@
 #map {
-  margin-top: 2.5%;
+  margin-top: 0.5%;
   margin-left: 2.5%;
-  width: 95%;
+  width: 90%;
   height: 90%;
   position: absolute; }
+
+#map .leaflet-popup-content-wrapper {
+  background: rgba(0, 0, 0, 0.5); }
+
+.button-section {
+  margin-left: 80%; }
 
 /*# sourceMappingURL=map.css.map */

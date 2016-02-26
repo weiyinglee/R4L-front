@@ -2,5 +2,4 @@
 
 var UserController = App.controller('UserCtrl', [ '$scope', 
   function($scope, $http, leafletData){
-
   }]);

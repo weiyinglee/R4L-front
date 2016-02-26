@@ -66,7 +66,8 @@ var MapController = App.controller('MapCtrl', [
       marker: {
         newMarker: {
           lng: 124.740348,
-          lat: 11.379895
+          lat: 11.379895,
+          opacity:0.0
         }
       },
       tiles: tilesDict.digital_gobel_open_street_map
@@ -160,6 +161,9 @@ var MapController = App.controller('MapCtrl', [
     };
 
     $scope.handlerclick = function(object) {
+
+      console.log("HIII");
+
       var featureId = $scope.marker.newMarker.layer_featureId
       var status    = object.status;
 

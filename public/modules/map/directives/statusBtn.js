@@ -6,7 +6,8 @@ App.directive('statusButton', [ '$timeout', 'BadgeFactory', "$rootScope", functi
     restrict: 'AEC',
     templateUrl : "/modules/map/views/statusBtn.html",
     scope: {
-      statusOnClick: '&statusonclick'
+      statusOnClick: '&statusonclick',
+      handlerclick: '&handlerclick'
     },
     link: function(scope, element, attrs) {
       scope.badge = BadgeFactory.getBadges();
