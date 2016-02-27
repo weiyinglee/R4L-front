@@ -36,20 +36,24 @@ App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
 
   //create
   service.userCreate = function(data){
-  	$http.post('/users/create', data).then(function(response){
+  	$http.post('/user/create', data).then(function(response){
   	   userData = response;
+       console.log(userData);
     }, function(error){
-  		console.log('Create failed' + error);
+  		console.log('Create failed');
+      console.log(error);
   	});
     this.update();
   }
 
   //login
   service.userLogin = function(data){
-  	$http.post('/users/login', data).then(function(response){
+  	$http.post('/user/login', data).then(function(response){
         userData = response;
+        console.log(userData);
   	}, function(error){
-  		console.log('login failed' + error);
+  		console.log('login failed');
+      console.log(error);
   	});
     this.update();
   }
