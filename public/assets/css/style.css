@@ -66,10 +66,13 @@ button {
   box-shadow: 2px 2px 2px #888;
   background-color: lightblue;
   padding: 5%;
+  padding-top: 1%;
   margin-top: 2%;
   margin-bottom: 1%;
   color: #555;
   text-align: center; }
+  .jumbotron .button_section {
+    margin-left: 95%; }
 
 #earthquake_img {
   background: url("/assets/img/earthquake.jpg") no-repeat center; }

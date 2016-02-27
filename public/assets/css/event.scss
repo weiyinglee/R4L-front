@@ -1,14 +1,17 @@
-
 .jumbotron {
 	border: 1px solid black;
 	border-radius: 15px;
 	box-shadow: 2px 2px 2px #888;
 	background-color: lightblue;
 	padding: 5%;
+	padding-top: 1%;
 	margin-top: 2%;
 	margin-bottom: 1%;
 	color: #555;
 	text-align: center;
+	.button_section {
+		margin-left: 95%;
+	}
 }
 
 #earthquake_img {
