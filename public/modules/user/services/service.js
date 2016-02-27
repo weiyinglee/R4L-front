@@ -39,9 +39,12 @@ App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
   	$http.post('/user/create', data).then(function(response){
   	   userData = response;
        console.log(userData);
+       //enter the event page
+       location.replace('/#/events');
     }, function(error){
-  		console.log('Create failed');
       console.log(error);
+      alert('Username/Password has already existed. Please try again!');
+      location.reload();
   	});
     this.update();
   }
@@ -51,9 +54,12 @@ App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
   	$http.post('/user/login', data).then(function(response){
         userData = response;
         console.log(userData);
+        //enter the event page
+        location.replace('/#/events');
   	}, function(error){
-  		console.log('login failed');
       console.log(error);
+      alert('Username/Password is invalid. Please try again!');
+      location.reload();
   	});
     this.update();
   }
