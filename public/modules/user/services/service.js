@@ -39,8 +39,11 @@ App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
   	$http.post('/user/create', data).then(function(response){
   	   userData = response;
        console.log(userData);
-       //enter the event page
-       location.replace('/#/events');
+       if(userData.data.success){
+          //enter the event page
+          location.replace('/#/events');
+       }
+
     }, function(error){
       console.log(error);
       alert('Username/Password has already existed. Please try again!');
@@ -54,8 +57,11 @@ App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
   	$http.post('/user/login', data).then(function(response){
         userData = response;
         console.log(userData);
-        //enter the event page
-        location.replace('/#/events');
+        if(userData.data.success){
+          //enter the event page
+          location.replace('/#/events');
+        }
+
   	}, function(error){
       console.log(error);
       alert('Username/Password is invalid. Please try again!');
