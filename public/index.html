@@ -4,7 +4,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/vendor/leaflet/dist/leaflet.css">
-	<link rel="stylesheet", href="/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/vendor/angular-material/angular-material.css">
 	<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/assets/css/style.css">
 
@@ -20,6 +21,9 @@
 	<script src="/vendor/leaflet/dist/leaflet.js"></script>
 	<script src="/vendor/jquery/dist/jquery.min.js"></script>
 	<script src="/vendor/angular/angular.min.js"></script>
+	<script src="/vendor/angular-aria/angular-aria.js"></script>
+	<script src="/vendor/angular-animate/angular-animate.js"></script>
+	<script src="/vendor/angular-material/angular-material.js"></script>
 	<script src="/vendor/angular-route/angular-route.js"></script>
 	<script src="/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script src="/vendor/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
@@ -37,7 +41,12 @@
 	<!-- dependencies by user -->
 	<script src="/modules/user/controllers/UserCtrl.js"></script>
 	<script src="/modules/user/controllers/LoginCtrl.js"></script>
+	<script src="/modules/user/controllers/RegisterCtrl.js"></script>
+	<script src="/modules/user/services/service.js"></script>
 
+	<!-- dependencies by event -->
+	<script src="/modules/event/controllers/EventCtrl.js"></script>
+	<script src="/modules/event/services/services.js"></script>
 
 </body>
 </html>

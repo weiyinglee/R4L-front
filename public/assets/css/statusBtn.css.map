@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAAA,uBAAwB;EACvB,UAAU,EAAE,IAAI;EAChB,OAAO,EAAE,YAAY;;AAEtB,MAAM;EACJ,aAAa,EAAE,IAAI",
+"mappings": "AAAA,MAAM;EACJ,aAAa,EAAE,GAAG;EAClB,UAAU,EAAE,kBAAkB;;AAEhC,MAAM;EACL,MAAM,EAAE,EAAE;EACV,cAAc,EAAE,EAAE;EAClB,aAAa,EAAE,GAAG;EAClB,UAAU,EAAE,KAAsB;EAClC,OAAO,EAAE,MAAM",
 "sources": ["statusBtn.scss"],
 "names": [],
 "file": "statusBtn.css"

@@ -1,24 +1,35 @@
 'use strict';
 
-var LoginController = App.controller('LoginCtrl', [ '$scope', '$http',
-	function($scope, $http){
+var LoginController = App.controller('LoginCtrl', [ 
+	'$scope',
+	'$http',
+	'UserFactory',
+	'$rootScope',
+	function(
+	  $scope,
+	  $http,
+	  UserFactory,
+	  $rootScope
+	  ){
+	  
+	  $scope.userData = UserFactory.getUserData();
+
 	  $scope.userName = "";
 	  $scope.userPassword = "";
-	  
+
 	  //Authentication for login
 	  $scope.auth = function(){
 	  	
-	  	//authentication backend API
 	  	var inputData = {
-	  		name: userName,
-	  		password: userPassword
+	  	  user: $scope.userName,
+	  	  password: $scope.userPassword
 	  	};
 
-	  	$http.post('', inputData).then(function(response){
-	  		//Do something
-	  	}, function(error){
-	  		console.error(error);
-	  	});
+	  	UserFactory.userLogin(inputData);
 	  };
+
+	  $rootScope.$on('user_update', function(){
+        $scope.userData = UserFactory.getUserData();
+      });
 
   	}]);

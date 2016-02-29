@@ -29,20 +29,24 @@ var tilesDict = {
 
 var MapController = App.controller('MapCtrl', [
     '$scope',
+    '$rootScope',
     '$location',
     '$http',
     'leafletData',
     '$timeout',
     '$compile',
     'BadgeFactory',
+    'EventFactory',
   function(
     $scope,
+    $rootScope,
     $location,
     $http,
     leafletData,
     $timeout,
     $compile,
-    BadgeFactory
+    BadgeFactory,
+    EventFactory
      ){
 
     var COLORSTATUS = {
@@ -59,13 +63,41 @@ var MapController = App.controller('MapCtrl', [
       },
       default: {
       },
+      marker: {
+        newMarker: {
+          lng: 124.740348,
+          lat: 11.379895,
+          opacity:0.0
+        }
+      },
       tiles: tilesDict.digital_gobel_open_street_map
     });
 
     var layerMap = {};
 
+    $scope.polygonUrl = EventFactory.getPolygon();
+
     //get the geojson data from backend API
-    $http.get('/assets/libs/polygon_coordinate.json').success(function(data, status){
+    $http.get($scope.polygonUrl, {
+      headers: {'Content-Type' : 'application/json'}
+    }).success(function(data, status){
+
+      var marker = null;
+      var popup = null;
+
+      leafletData.getMarkers().then(function(leafletMarkers){
+        marker = leafletMarkers.newMarker;
+        popup = L.popup().setContent('<status-button statusonclick="handlerclick(object)"></status-button>');
+        marker.bindPopup(popup);   
+      });
+
+      /*
+      data.features.forEach(function(data){
+        data.geometry = JSON.parse(data.geometry);
+        data.type = "Feature";
+      });
+      */
+
       angular.extend($scope, {
         geojson: {
           data: data,
@@ -79,7 +111,21 @@ var MapController = App.controller('MapCtrl', [
           onEachFeature: function(feature, layer) {
             layerMap[feature.id] = layer;
 
-            layer.on('click', function(){
+            layer.on('click', function(e){
+              
+              var lat = (e.latlng.lat);
+              var lng = (e.latlng.lng);
+
+              //marker move to centroid of polygon
+              $scope.marker.newMarker = {
+                lng: lng,
+                lat: lat
+              };
+
+              $scope.marker.newMarker.layer_featureId = feature.id;
+
+              marker.openPopup();
+
               if(layer.options.fillColor){
                 
                 handleCurrentStatus(layer, 'status');
@@ -90,11 +136,9 @@ var MapController = App.controller('MapCtrl', [
                 });
               }
             });
-
-            // statusOnClick on directive will turned to lowercase. I warned you about this, you can look at directive and see
-            // i did the mapping &statusonclick
-            layer.bindPopup('<status-button statusonclick="handlerclick(object)" featureid='+feature.id+'></status-button>');
           }
+
+
         }
       });
     });
@@ -117,7 +161,10 @@ var MapController = App.controller('MapCtrl', [
     };
 
     $scope.handlerclick = function(object) {
-      var featureId = object.featureId;
+
+      console.log("HIII");
+
+      var featureId = $scope.marker.newMarker.layer_featureId
       var status    = object.status;
 
       var nextId = featureId + 1;
@@ -148,54 +195,27 @@ var MapController = App.controller('MapCtrl', [
         default : {
           //handle the jump next polygon
 
-          var nextLayer;
-          var nextLng;
-          var nextLat;
-          var nextLayer;
-          var nextPolygon;
-          
-          /*
+
           var nextLayer = layerMap[nextId];
 
-          var nextLng = nextLayer.feature.properties.centroid.lng;
-          var nextLat = nextLayer.feature.properties.centroid.lat;
+          var nextPolygon = new L.LatLng(
+            nextLayer.feature.properties.centroid.lat,
+            nextLayer.feature.properties.centroid.lng);
 
-          var currentLng = layer.feature.properties.centroid.lng;
-          var currentLat = layer.feature.properties.centroid.lat;
-
-          var nextPolygon = new L.LatLng(nextLat, nextLng);
-          var currentPolygon = new L.LatLng(currentLat, currentLng);
-
-          console.log(nextPolygon);
-          console.log(currentPolygon);
+          var currentPolygon = new L.LatLng(
+            layer.feature.properties.centroid.lat,
+            layer.feature.properties.centroid.lng);
 
           //check if the polygon is too far by 300 meters to improve use visibility
           if(currentPolygon.distanceTo(nextPolygon) > 300){
             leafletData.getMap('map').then(function(map){
-              console.log(nextPolygon);
-              map.panTo(nextPolygon, 18);
+              map.setView(nextPolygon, 17);
+              setTimeout(function(){
+                map.closePopup();
+                map._layers[72].fire('click');
+              }, 3000);
             });
           }
-
-          layerMap[nextId].fire('click');
-          */
-          
-          if(nextId < Object.keys(layerMap).length){
-            nextLayer = layerMap[nextId];
-            nextLng = nextLayer.feature.properties.centroid.lng;
-            nextLat = nextLayer.feature.properties.centroid.lat;
-          }else{
-            //last polygon, next jump back to first layer
-            nextLng = 124.740348;
-            nextLat = 11.379895;
-          }
-
-          nextPolygon = new L.LatLng(nextLat, nextLng);
-          
-          leafletData.getMap('map').then(function(map){
-            map.setView(nextPolygon, 18);
-          });
-
           return;
         }
       }
@@ -209,6 +229,11 @@ var MapController = App.controller('MapCtrl', [
         var newScope = $scope.$new();
 
         // compile actuall html with angular property
+        console.log(leafletEvent.leafletEvent.popup._contentNode);
         $compile(leafletEvent.leafletEvent.popup._contentNode)(newScope);
       });
+
+    $rootScope.$on('event_update', function(){
+      $scope.polygonUrl = EventFactory.getPolygon();
+    });
   }]);

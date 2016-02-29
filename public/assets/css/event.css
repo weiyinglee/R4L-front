@@ -1,0 +1,24 @@
+.jumbotron {
+  border: 1px solid black;
+  border-radius: 15px;
+  box-shadow: 2px 2px 2px #888;
+  background-color: lightblue;
+  padding: 5%;
+  padding-top: 1%;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  color: #555;
+  text-align: center; }
+  .jumbotron .button_section {
+    margin-left: 95%; }
+
+#earthquake_img {
+  background: url("/assets/img/earthquake.jpg") no-repeat center; }
+
+#flood_img {
+  background: url("/assets/img/flood.jpg") no-repeat top; }
+
+#hurricane_img {
+  background: url("/assets/img/hurricane.jpg") no-repeat center; }
+
+/*# sourceMappingURL=event.css.map */
