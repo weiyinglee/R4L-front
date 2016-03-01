@@ -3,13 +3,15 @@ var App = window.App = angular.module('R4LApp', [
 		'leaflet-directive',
 		'ui.bootstrap',
 		'ngMaterial',
-		'ngAnimate'
+		'ngAnimate',
+		'ngResource'
 	]
 );
 
 // turn off leaflet login
-App.config(function($logProvider){
+App.config(function($logProvider, $resourceProvider){
   	$logProvider.debugEnabled(false);
+  	$resourceProvider.defaults.stripTrailingSlashes = false;
 });
 
 // url routing

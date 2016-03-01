@@ -1,6 +1,6 @@
 'use strict';
 
-App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
+App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootScope, $http){
   
   var userData = {
     user_id: 0,
@@ -36,19 +36,30 @@ App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
 
   //create
   service.userCreate = function(data){
+
+    var User = $resource('/user/create:port', {port: ':3000'});
+
+    var user = User.save(data, function(){
+      console.log(data);
+    });
+
+    /*
   	$http.post('/user/create', data).then(function(response){
   	   userData = response;
        console.log(userData);
        if(userData.data.success){
           //enter the event page
           location.replace('/#/events');
+       }else{
+          alert('Username/Password has already existed. Please try again!');
+          location.reload();
        }
 
     }, function(error){
       console.log(error);
-      alert('Username/Password has already existed. Please try again!');
-      location.reload();
+
   	});
+    */
     this.update();
   }
 
@@ -60,12 +71,13 @@ App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
         if(userData.data.success){
           //enter the event page
           location.replace('/#/events');
+        }else{
+          alert("Username/Password is invalid. Please try again!");
+          location.reload();
         }
 
   	}, function(error){
       console.log(error);
-      alert('Username/Password is invalid. Please try again!');
-      location.reload();
   	});
     this.update();
   }
