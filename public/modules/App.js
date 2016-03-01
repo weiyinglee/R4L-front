@@ -36,6 +36,8 @@ App.config(["$routeProvider", function($routeProvider){
 ]);
 
 // Fix strip trailing slashes for ngResource
+/*
 App.config(["$resourceProvider", function($resourceProvider){
 	$resourceProvider.defaults.stripTrailingSlashes = false;
 }]);
+*/
