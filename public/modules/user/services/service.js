@@ -1,6 +1,6 @@
 'use strict';
 
-App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootScope, $http){
+App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootScope, $http, $resource){
   
   var userData = {
     user_id: 0,
