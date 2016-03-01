@@ -9,9 +9,8 @@ var App = window.App = angular.module('R4LApp', [
 );
 
 // turn off leaflet login
-App.config(function($logProvider, $resourceProvider){
+App.config(function($logProvider){
   	$logProvider.debugEnabled(false);
-  	$resourceProvider.defaults.stripTrailingSlashes = false;
 });
 
 // url routing
@@ -35,3 +34,8 @@ App.config(["$routeProvider", function($routeProvider){
 		})
 	}
 ]);
+
+// Fix strip trailing slashes for ngResource
+App.config(["$resourceProvider", function($resourceProvider){
+	$resourceProvider.defaults.stripTrailingSlashes = false;
+}]);
