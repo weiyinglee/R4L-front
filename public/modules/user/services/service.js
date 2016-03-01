@@ -44,7 +44,7 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootSc
           location.replace('/#/events');
        }else{
           alert('Username/Password has already existed. Please try again!');
-          location.reload();
+          //location.reload();
        }
     }, function(error){
       console.log(error);
