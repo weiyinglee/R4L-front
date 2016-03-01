@@ -5,19 +5,19 @@ App.factory('EventFactory', ['$rootScope', '$http', function($rootScope, $http){
   var service = {};
 
   //default path
-  var polygonPath = '/assets/libs/polygon_coordinate.json';
+  var eventId = 0;
 
-  service.setPolygon = function(path){
-  	polygonPath = path;
-  	this.eventUpdate();
+  service.setEventId = function(Id){
+    eventId = Id;
+    this.eventUpdate();
   }
 
   service.eventUpdate = function() {
     $rootScope.$emit('event_update');
   }
 
-  service.getPolygon = function(){
-  	return polygonPath;
+  service.getEventId = function(){
+    return eventId;
   }
 
   return service;

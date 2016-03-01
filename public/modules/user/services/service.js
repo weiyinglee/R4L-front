@@ -23,11 +23,7 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootSc
   }
 
   service.getUserData = function(){
-    return {
-      user_id: userData.user_id,
-      success: userData.success,
-      message: userData.message
-    }
+    return userData;
   }
 
   service.update = function() {
@@ -44,7 +40,7 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootSc
           location.replace('/#/events');
        }else{
           alert('Username/Password has already existed. Please try again!');
-          //location.reload();
+          location.reload();
        }
     }, function(error){
       console.log(error);
@@ -54,7 +50,7 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootSc
 
   //login
   service.userLogin = function(data){
-  	$http.post('/user/login', data).then(function(response){
+  	$http.post('http://52.8.54.187:3000/user/login', data).then(function(response){
         userData = response;
         console.log(userData);
         if(userData.data.success){

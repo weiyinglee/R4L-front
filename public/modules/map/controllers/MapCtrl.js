@@ -37,6 +37,7 @@ var MapController = App.controller('MapCtrl', [
     '$compile',
     'BadgeFactory',
     'EventFactory',
+    'PolygonFactory',
   function(
     $scope,
     $rootScope,
@@ -46,7 +47,8 @@ var MapController = App.controller('MapCtrl', [
     $timeout,
     $compile,
     BadgeFactory,
-    EventFactory
+    EventFactory,
+    PolygonFactory
      ){
 
     var COLORSTATUS = {
@@ -75,10 +77,11 @@ var MapController = App.controller('MapCtrl', [
 
     var layerMap = {};
 
-    $scope.polygonUrl = EventFactory.getPolygon();
+    $scope.eventId = EventFactory.getEventId();
+    var path = 'http://52.8.54.187:3000/event/' + $scope.eventId;
 
     //get the geojson data from backend API
-    $http.get($scope.polygonUrl, {
+    $http.get(path, {
       headers: {'Content-Type' : 'application/json'}
     }).success(function(data, status){
 
@@ -91,12 +94,10 @@ var MapController = App.controller('MapCtrl', [
         marker.bindPopup(popup);   
       });
 
-      /*
       data.features.forEach(function(data){
         data.geometry = JSON.parse(data.geometry);
         data.type = "Feature";
-      });
-      */
+      });      
 
       angular.extend($scope, {
         geojson: {
@@ -112,6 +113,8 @@ var MapController = App.controller('MapCtrl', [
             layerMap[feature.id] = layer;
 
             layer.on('click', function(e){
+
+              PolygonFactory.setFeature(feature);
               
               var lat = (e.latlng.lat);
               var lng = (e.latlng.lng);
@@ -137,8 +140,6 @@ var MapController = App.controller('MapCtrl', [
               }
             });
           }
-
-
         }
       });
     });
@@ -234,6 +235,7 @@ var MapController = App.controller('MapCtrl', [
       });
 
     $rootScope.$on('event_update', function(){
-      $scope.polygonUrl = EventFactory.getPolygon();
+      $scope.eventId = EventFactory.getEventId();
     });
+
   }]);

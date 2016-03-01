@@ -65,3 +65,24 @@ App.factory('BadgeFactory', ['$rootScope', function($rootScope){
   return service;
 }]);
 
+App.factory('PolygonFactory', ["$rootScope", function($rootScope){
+  
+  var service = {};
+  var feature = {};
+
+  service.setFeature = function(object) {
+    feature = object;
+    this.update();
+  }
+
+  service.update = function() {
+    $rootScope.$emit('Polygon_update');
+  }
+
+  service.getFeature = function() {
+    return feature;
+  }
+
+  return service;
+}]);
+
