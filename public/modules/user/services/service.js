@@ -36,15 +36,7 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootSc
 
   //create
   service.userCreate = function(data){
-
-    var User = $resource('/user/create:port', {port: ':3000'});
-
-    var user = User.save(data, function(){
-      console.log(data);
-    });
-
-    /*
-  	$http.post('/user/create', data).then(function(response){
+  	$http.post('http://52.8.54.187:3000/user/create', data).then(function(response){
   	   userData = response;
        console.log(userData);
        if(userData.data.success){
@@ -54,12 +46,9 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootSc
           alert('Username/Password has already existed. Please try again!');
           location.reload();
        }
-
     }, function(error){
       console.log(error);
-
   	});
-    */
     this.update();
   }
 
@@ -75,7 +64,6 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootSc
           alert("Username/Password is invalid. Please try again!");
           location.reload();
         }
-
   	}, function(error){
       console.log(error);
   	});
