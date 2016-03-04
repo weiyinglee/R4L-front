@@ -14,7 +14,10 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  
 	  $scope.userData = UserFactory.getUserData();
 
-	  $scope.signName = "";
+	  $scope.userId = "";
+	  $scope.firstName = "";
+	  $scope.lastName = "";
+	  $scope.userEmail = "";
 	  $scope.signPassword = "";
 	  $scope.reSignPassword = "";
 	  
@@ -27,7 +30,7 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  	}
 
 	  	var inputData = {
-	  	  username: $scope.signName,
+	  	  username: $scope.userId,
 	  	  password: $scope.signPassword
 	  	}
 

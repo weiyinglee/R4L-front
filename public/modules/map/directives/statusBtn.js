@@ -49,7 +49,7 @@ App.directive('statusButton', [
             console.log(username);
 
             var data = {
-              username: username,
+              username: username.toString(),
               status: status
             }
 
