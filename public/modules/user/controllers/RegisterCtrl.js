@@ -31,6 +31,9 @@ var RegisterController = App.controller('RegisterCtrl', [
 
 	  	var inputData = {
 	  	  username: $scope.userId,
+	  	  firstName: $scope.firstName,
+	  	  lastName: $scope.lastName,
+	  	  email: $scope.userEmail,
 	  	  password: $scope.signPassword
 	  	}
 

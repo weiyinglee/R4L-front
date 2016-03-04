@@ -57,6 +57,18 @@ var MapController = App.controller('MapCtrl', [
       unknown  : 'PURPLE'
     }
 
+    $scope.mapType = "Satellite Images";
+    $scope.tiles = tilesDict.digital_gobel_open_street_map;
+    $scope.changeMap = function(){
+      if($scope.mapType === "Satellite Images"){
+        $scope.mapType = "Base Map";
+        $scope.tiles = tilesDict.digital_gobel_base_map_street;
+      }else{
+        $scope.mapType = "Satellite Images";
+        $scope.tiles = tilesDict.digital_gobel_open_street_map;
+      }
+    }
+
     angular.extend($scope, {
       center: {
         lng: 124.740348,
@@ -72,7 +84,7 @@ var MapController = App.controller('MapCtrl', [
           opacity:0.0
         }
       },
-      tiles: tilesDict.digital_gobel_open_street_map
+      tiles: $scope.tiles
     });
 
     var layerMap = {};
