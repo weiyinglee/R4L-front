@@ -44,12 +44,10 @@ App.directive('statusButton', [
           function saveStatus(status){
             var eventId = scope.eventId;
             var polygonId = scope.feature.id;
-            var username = UserFactory.getUserData().data.user_id;
-
-            console.log(username);
+            var username = UserFactory.getUserData().data.username;
 
             var data = {
-              username: username.toString(),
+              username: username,
               status: status
             }
 

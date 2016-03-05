@@ -1,32 +1,5 @@
 'use strict';
 
-var tilesDict = {
-  digital_gobel_base_map: {
-    url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-    options: {
-      apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
-      mapid: 'digitalglobe.nmghof7o',
-      minZoom: 2
-    }
-  },
-  digital_gobel_base_map_street: {
-    url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-    options: {
-      apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
-      mapid: 'digitalglobe.nmgi4k9c',
-      minZoom: 2
-    }
-  },
-  digital_gobel_open_street_map: {
-    url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-    options: {
-      apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
-      mapid: 'digitalglobe.n6nhn7mg',
-      minZoom: 2
-    }
-  }
-}
-
 var MapController = App.controller('MapCtrl', [
     '$scope',
     '$rootScope',
@@ -38,6 +11,7 @@ var MapController = App.controller('MapCtrl', [
     'BadgeFactory',
     'EventFactory',
     'PolygonFactory',
+    'UserFactory',
   function(
     $scope,
     $rootScope,
@@ -48,25 +22,14 @@ var MapController = App.controller('MapCtrl', [
     $compile,
     BadgeFactory,
     EventFactory,
-    PolygonFactory
+    PolygonFactory,
+    UserFactory
      ){
 
     var COLORSTATUS = {
       damage   : 'RED',
       undamage : 'BLUE',
       unknown  : 'PURPLE'
-    }
-
-    $scope.mapType = "Satellite Images";
-    $scope.tiles = tilesDict.digital_gobel_open_street_map;
-    $scope.changeMap = function(){
-      if($scope.mapType === "Satellite Images"){
-        $scope.mapType = "Base Map";
-        $scope.tiles = tilesDict.digital_gobel_base_map_street;
-      }else{
-        $scope.mapType = "Satellite Images";
-        $scope.tiles = tilesDict.digital_gobel_open_street_map;
-      }
     }
 
     angular.extend($scope, {
@@ -77,20 +40,60 @@ var MapController = App.controller('MapCtrl', [
       },
       default: {
       },
+      layercontrol: {
+        icons: {
+          uncheck: "fa fa-toggle-off",
+          check: "fa fa-toggle-on"
+        }
+      },
+      layers: {
+        baselayers: {
+          oms: {
+            name: "Base Map",
+            type: "xyz",
+            url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+            layerOptions: {
+              apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
+              mapid: 'digitalglobe.n6nhn7mg',
+              minZoom: 2
+            } 
+          },
+          cycle: {
+            name: "Satellite Images",
+            type: "xyz",
+            url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+            layerOptions: {
+              apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
+              mapid: 'digitalglobe.nmgi4k9c',
+              minZoom: 2
+            } 
+          }
+
+        },
+        overlays: {
+          after: {
+            name: "After disaster",
+            type: "xyz",
+            url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png"
+          }
+        }
+      },
       marker: {
         newMarker: {
           lng: 124.740348,
           lat: 11.379895,
           opacity:0.0
         }
-      },
-      tiles: $scope.tiles
+      }
     });
 
     var layerMap = {};
 
     $scope.eventId = EventFactory.getEventId();
-    var path = 'http://52.8.54.187:3000/event/' + $scope.eventId;
+    $scope.username = UserFactory.getUserData().data.username;
+    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
+
+    console.log(path);
 
     //get the geojson data from backend API
     $http.get(path, {

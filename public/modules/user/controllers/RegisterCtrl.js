@@ -20,6 +20,19 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  $scope.userEmail = "";
 	  $scope.signPassword = "";
 	  $scope.reSignPassword = "";
+
+	  $scope.fieldIncompleted = function(){
+	  	var id = $scope.userId;
+	  	var first = $scope.firstName;
+	  	var last = $scope.lastName;
+	  	var email = $scope.userEmail;
+	  	var pw = $scope.signPassword;
+	  	var rePw = $scope.reSignPassword;
+
+	  	return id == "" || first == "" ||
+	  		   last == "" || email == "" ||
+	  		   pw == "" || rePw == "";	
+	  }
 	  
 	  //Create an user
 	  $scope.signUp = function(){

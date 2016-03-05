@@ -16,11 +16,9 @@
                 <input type="password" ng-model="reSignPassword" class="form-control input-sm chat-input" placeholder="re-type password"/>
                 <div class="wrapper">
                     <span class="group-btn">
-                        <button ng-click="signUp()" ng-disabled="signName == '' || signPassword == '' || reSignPassword == ''" class="btn btn-primary btn-md">
+                        <a role="button" ng-disabled="fieldIncompleted()" ng-click="fieldIncompleted() || signUp()"  class="btn btn-primary btn-md">
                             Register <i class="fa fa-sign-in"></i>
-                        </button>
-                    </span>
-                    <span>
+                        </a>
                         <a href="/#/" role="button" class="btn btn-primary btn-md">
                             Already a user ?
                         </a>
