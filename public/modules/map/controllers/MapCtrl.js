@@ -38,7 +38,14 @@ var MapController = App.controller('MapCtrl', [
         lat: 11.379895,
         zoom: 14
       },
-      default: {
+      defaults: {
+        controls: {
+          layers: {
+            visible: true,
+            position: "topright",
+            collapsed: false
+          }
+        }
       },
       layercontrol: {
         icons: {
@@ -77,6 +84,9 @@ var MapController = App.controller('MapCtrl', [
             url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png"
           }
         }
+      },
+      controls: {
+        scale: true
       },
       marker: {
         newMarker: {
