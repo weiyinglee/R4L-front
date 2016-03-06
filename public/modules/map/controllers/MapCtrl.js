@@ -63,7 +63,7 @@ var MapController = App.controller('MapCtrl', [
               apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
               mapid: 'digitalglobe.n6nhn7mg',
               minZoom: 2
-            } 
+            }
           },
           cycle: {
             name: "Satellite Images",
@@ -73,7 +73,7 @@ var MapController = App.controller('MapCtrl', [
               apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
               mapid: 'digitalglobe.nmgi4k9c',
               minZoom: 2
-            } 
+            }
           }
 
         },
@@ -92,7 +92,6 @@ var MapController = App.controller('MapCtrl', [
         newMarker: {
           lng: 124.740348,
           lat: 11.379895,
-          opacity:0.0
         }
       }
     });
@@ -100,29 +99,26 @@ var MapController = App.controller('MapCtrl', [
     var layerMap = {};
 
     $scope.eventId = EventFactory.getEventId();
-    $scope.username = UserFactory.getUserData().data.username;
-    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
-
-    console.log(path);
+    //$scope.username = UserFactory.getUserData().data.username;
+    //var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
 
     //get the geojson data from backend API
-    $http.get(path, {
+    $http.get('/assets/libs/polygon_coordinate.json', {
       headers: {'Content-Type' : 'application/json'}
     }).success(function(data, status){
 
       var marker = null;
-      var popup = null;
+      var popup = L.popup().setContent('<status-button></status-button>');
 
       leafletData.getMarkers().then(function(leafletMarkers){
         marker = leafletMarkers.newMarker;
-        popup = L.popup().setContent('<status-button statusonclick="handlerclick(object)"></status-button>');
-        marker.bindPopup(popup);   
+        marker.bindPopup(popup);
       });
 
-      data.features.forEach(function(data){
+      /*data.features.forEach(function(data){
         data.geometry = JSON.parse(data.geometry);
         data.type = "Feature";
-      });      
+      });*/
 
       angular.extend($scope, {
         geojson: {
@@ -134,13 +130,19 @@ var MapController = App.controller('MapCtrl', [
             fillColor: null,
             fillOpacity: 0
           },
+          markers : {
+            cursor : {
+              lat : 0,
+              lng : 0
+            }
+          },
           onEachFeature: function(feature, layer) {
             layerMap[feature.id] = layer;
 
             layer.on('click', function(e){
 
               PolygonFactory.setFeature(feature);
-              
+
               var lat = (e.latlng.lat);
               var lng = (e.latlng.lng);
 
@@ -155,9 +157,9 @@ var MapController = App.controller('MapCtrl', [
               marker.openPopup();
 
               if(layer.options.fillColor){
-                
+
                 handleCurrentStatus(layer, 'status');
-                
+
                 layer.setStyle({
                   fillColor: null,
                   fillOpacity: 0
@@ -188,9 +190,7 @@ var MapController = App.controller('MapCtrl', [
 
     $scope.handlerclick = function(object) {
 
-      console.log("HIII");
-
-      var featureId = $scope.marker.newMarker.layer_featureId
+      var featureId = $scope.marker.newMarker.layer_featureId;
       var status    = object.status;
 
       var nextId = featureId + 1;
@@ -220,7 +220,6 @@ var MapController = App.controller('MapCtrl', [
         }
         default : {
           //handle the jump next polygon
-
 
           var nextLayer = layerMap[nextId];
 
@@ -252,15 +251,18 @@ var MapController = App.controller('MapCtrl', [
 
     //compile directive on popup open
     $scope.$on('leafletDirectiveMap.map.popupopen', function(event, leafletEvent){
-        var newScope = $scope.$new();
+      var newScope = $scope.$new();
 
-        // compile actuall html with angular property
-        console.log(leafletEvent.leafletEvent.popup._contentNode);
-        $compile(leafletEvent.leafletEvent.popup._contentNode)(newScope);
-      });
+      // compile actuall html with angular property
+      $compile(leafletEvent.leafletEvent.popup._contentNode)(newScope);
+    });
 
     $rootScope.$on('event_update', function(){
       $scope.eventId = EventFactory.getEventId();
     });
+
+    $rootScope.$on('featureStatusChange', function(event, data){
+      $scope.handlerclick(data);
+    })
 
   }]);

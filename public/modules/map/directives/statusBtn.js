@@ -2,16 +2,16 @@
 
 //status btn
 App.directive('statusButton', [
-  '$timeout', 
-  'BadgeFactory', 
-  'EventFactory', 
+  '$timeout',
+  'BadgeFactory',
+  'EventFactory',
   'PolygonFactory',
-  'UserFactory', 
+  'UserFactory',
   '$rootScope',
-  '$http', 
+  '$http',
   function(
     $timeout,
-    BadgeFactory, 
+    BadgeFactory,
     EventFactory,
     PolygonFactory,
     UserFactory,
@@ -23,9 +23,10 @@ App.directive('statusButton', [
       templateUrl : "/modules/map/views/statusBtn.html",
       scope: {
         statusOnClick: '&statusonclick',
-        handlerclick: '&handlerclick'
+        handlerclick: '&'
       },
       link: function(scope, element, attrs) {
+        console.log(scope)
         scope.badge = BadgeFactory.getBadges();
         scope.eventId = EventFactory.getEventId();
         scope.feature = PolygonFactory.getFeature();
@@ -61,9 +62,9 @@ App.directive('statusButton', [
               });
           }
 
-          switch(status){
+          switch(status + 'no save'){
             case 'damage':
-              
+
               if(timer){
                 $timeout.cancel(timer);
                 timer = null;
@@ -72,10 +73,10 @@ App.directive('statusButton', [
               timer = $timeout(function(){
                 saveStatus('DAMAGE');
               }, 3000);
-              
+
               break;
             case 'undamage':
-              
+
               if(timer){
                 $timeout.cancel(timer);
                 timer = null;
@@ -83,10 +84,10 @@ App.directive('statusButton', [
               timer = $timeout(function(){
                 saveStatus('NO_DAMAGE');
               }, 3000);
-              
+
               break;
             case 'unknown':
-              
+
               if(timer){
                 $timeout.cancel(timer);
                 timer = null;
@@ -94,14 +95,11 @@ App.directive('statusButton', [
               timer = $timeout(function(){
                 saveStatus('UNSURE');
               }, 3000);
-              
+
               break;
           }
-          scope.statusOnClick({
-            object : {
-              status    : status
-            }
-          });
+
+          $rootScope.$emit('featureStatusChange', {status : status});
         }
 
         $rootScope.$on('badge_update', function(){
