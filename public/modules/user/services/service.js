@@ -1,12 +1,8 @@
 'use strict';
 
-App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
+App.factory('UserFactory', ['$rootScope', '$http', '$resource', function($rootScope, $http, $resource){
   
-  var userData = {
-    user_id: 0,
-    success: false,
-    message: ""
-  }
+  var userData = {}
 
   var service = {};
 
@@ -23,11 +19,7 @@ App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
   }
 
   service.getUserData = function(){
-    return {
-      user_id: userData.user_id,
-      success: userData.success,
-      message: userData.message
-    }
+    return userData;
   }
 
   service.update = function() {
@@ -36,36 +28,34 @@ App.factory('UserFactory', ['$rootScope', '$http', function($rootScope, $http){
 
   //create
   service.userCreate = function(data){
-  	$http.post('/user/create', data).then(function(response){
+  	$http.post('http://52.8.54.187:3000/user/create', data).then(function(response){
   	   userData = response;
-       console.log(userData);
        if(userData.data.success){
           //enter the event page
           location.replace('/#/events');
+       }else{
+          alert('Username has already existed. Please try again!');
+          location.reload();
        }
-
     }, function(error){
       console.log(error);
-      alert('Username/Password has already existed. Please try again!');
-      location.reload();
   	});
     this.update();
   }
 
   //login
   service.userLogin = function(data){
-  	$http.post('/user/login', data).then(function(response){
+  	$http.post('http://52.8.54.187:3000/user/login', data).then(function(response){
         userData = response;
-        console.log(userData);
         if(userData.data.success){
           //enter the event page
           location.replace('/#/events');
+        }else{
+          alert("Username/Password is invalid. Please try again!");
+          location.reload();
         }
-
   	}, function(error){
       console.log(error);
-      alert('Username/Password is invalid. Please try again!');
-      location.reload();
   	});
     this.update();
   }

@@ -1,32 +1,5 @@
 'use strict';
 
-var tilesDict = {
-  digital_gobel_base_map: {
-    url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-    options: {
-      apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
-      mapid: 'digitalglobe.nmghof7o',
-      minZoom: 2
-    }
-  },
-  digital_gobel_base_map_street: {
-    url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-    options: {
-      apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
-      mapid: 'digitalglobe.nmgi4k9c',
-      minZoom: 2
-    }
-  },
-  digital_gobel_open_street_map: {
-    url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-    options: {
-      apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
-      mapid: 'digitalglobe.n6nhn7mg',
-      minZoom: 2
-    }
-  }
-}
-
 var MapController = App.controller('MapCtrl', [
     '$scope',
     '$rootScope',
@@ -37,6 +10,8 @@ var MapController = App.controller('MapCtrl', [
     '$compile',
     'BadgeFactory',
     'EventFactory',
+    'PolygonFactory',
+    'UserFactory',
   function(
     $scope,
     $rootScope,
@@ -46,7 +21,9 @@ var MapController = App.controller('MapCtrl', [
     $timeout,
     $compile,
     BadgeFactory,
-    EventFactory
+    EventFactory,
+    PolygonFactory,
+    UserFactory
      ){
 
     var COLORSTATUS = {
@@ -61,7 +38,55 @@ var MapController = App.controller('MapCtrl', [
         lat: 11.379895,
         zoom: 14
       },
-      default: {
+      defaults: {
+        controls: {
+          layers: {
+            visible: true,
+            position: "topright",
+            collapsed: false
+          }
+        }
+      },
+      layercontrol: {
+        icons: {
+          uncheck: "fa fa-toggle-off",
+          check: "fa fa-toggle-on"
+        }
+      },
+      layers: {
+        baselayers: {
+          oms: {
+            name: "Base Map",
+            type: "xyz",
+            url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+            layerOptions: {
+              apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
+              mapid: 'digitalglobe.n6nhn7mg',
+              minZoom: 2
+            } 
+          },
+          cycle: {
+            name: "Satellite Images",
+            type: "xyz",
+            url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+            layerOptions: {
+              apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
+              mapid: 'digitalglobe.nmgi4k9c',
+              minZoom: 2
+            } 
+          }
+
+        },
+        overlays: {
+          after: {
+            name: "After disaster",
+            type: "xyz",
+            url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png"
+          }
+        }
+      },
+      controls: {
+        scale: true
       },
       marker: {
         newMarker: {
@@ -69,16 +94,19 @@ var MapController = App.controller('MapCtrl', [
           lat: 11.379895,
           opacity:0.0
         }
-      },
-      tiles: tilesDict.digital_gobel_open_street_map
+      }
     });
 
     var layerMap = {};
 
-    $scope.polygonUrl = EventFactory.getPolygon();
+    $scope.eventId = EventFactory.getEventId();
+    $scope.username = UserFactory.getUserData().data.username;
+    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
+
+    console.log(path);
 
     //get the geojson data from backend API
-    $http.get($scope.polygonUrl, {
+    $http.get(path, {
       headers: {'Content-Type' : 'application/json'}
     }).success(function(data, status){
 
@@ -91,12 +119,10 @@ var MapController = App.controller('MapCtrl', [
         marker.bindPopup(popup);   
       });
 
-      /*
       data.features.forEach(function(data){
         data.geometry = JSON.parse(data.geometry);
         data.type = "Feature";
-      });
-      */
+      });      
 
       angular.extend($scope, {
         geojson: {
@@ -112,6 +138,8 @@ var MapController = App.controller('MapCtrl', [
             layerMap[feature.id] = layer;
 
             layer.on('click', function(e){
+
+              PolygonFactory.setFeature(feature);
               
               var lat = (e.latlng.lat);
               var lng = (e.latlng.lng);
@@ -137,8 +165,6 @@ var MapController = App.controller('MapCtrl', [
               }
             });
           }
-
-
         }
       });
     });
@@ -234,6 +260,7 @@ var MapController = App.controller('MapCtrl', [
       });
 
     $rootScope.$on('event_update', function(){
-      $scope.polygonUrl = EventFactory.getPolygon();
+      $scope.eventId = EventFactory.getEventId();
     });
+
   }]);

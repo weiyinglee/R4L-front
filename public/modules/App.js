@@ -3,7 +3,8 @@ var App = window.App = angular.module('R4LApp', [
 		'leaflet-directive',
 		'ui.bootstrap',
 		'ngMaterial',
-		'ngAnimate'
+		'ngAnimate',
+		'ngResource'
 	]
 );
 

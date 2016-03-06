@@ -14,9 +14,25 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  
 	  $scope.userData = UserFactory.getUserData();
 
-	  $scope.signName = "";
+	  $scope.userId = "";
+	  $scope.firstName = "";
+	  $scope.lastName = "";
+	  $scope.userEmail = "";
 	  $scope.signPassword = "";
 	  $scope.reSignPassword = "";
+
+	  $scope.fieldIncompleted = function(){
+	  	var id = $scope.userId;
+	  	var first = $scope.firstName;
+	  	var last = $scope.lastName;
+	  	var email = $scope.userEmail;
+	  	var pw = $scope.signPassword;
+	  	var rePw = $scope.reSignPassword;
+
+	  	return id == "" || first == "" ||
+	  		   last == "" || email == "" ||
+	  		   pw == "" || rePw == "";	
+	  }
 	  
 	  //Create an user
 	  $scope.signUp = function(){
@@ -27,7 +43,10 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  	}
 
 	  	var inputData = {
-	  	  user: $scope.signName,
+	  	  username: $scope.userId,
+	  	  firstName: $scope.firstName,
+	  	  lastName: $scope.lastName,
+	  	  email: $scope.userEmail,
 	  	  password: $scope.signPassword
 	  	}
 

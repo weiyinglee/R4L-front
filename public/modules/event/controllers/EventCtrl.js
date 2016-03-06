@@ -23,8 +23,7 @@ var EventController = App.controller('EventCtrl', [
 	  }
 
 	  $scope.enterMap = function(eventId){
-	  	var path = '/event/' + eventId;
-	  	EventFactory.setPolygon(path);
+	  	EventFactory.setEventId(eventId);
 	  	location.replace('/#/map');
 	  }
 

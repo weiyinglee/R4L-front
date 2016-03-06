@@ -7,6 +7,8 @@
 
 #map .leaflet-popup-content-wrapper {
   background: rgba(0, 0, 0, 0.5); }
+#map .angular-leaflet-control-layers {
+  visibility: hidden; }
 
 .button-section {
   margin-left: 80%; }

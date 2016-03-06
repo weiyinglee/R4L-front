@@ -17,11 +17,17 @@ var LoginController = App.controller('LoginCtrl', [
 	  $scope.userName = "";
 	  $scope.userPassword = "";
 
+	  $scope.fieldIncompleted = function(){
+	  	var name = $scope.userName;
+	  	var pw = $scope.userPassword;
+	  	return name == "" || pw == "";
+	  }
+
 	  //Authentication for login
 	  $scope.auth = function(){
 	  	
 	  	var inputData = {
-	  	  user: $scope.userName,
+	  	  username: $scope.userName,
 	  	  password: $scope.userPassword
 	  	};
 
