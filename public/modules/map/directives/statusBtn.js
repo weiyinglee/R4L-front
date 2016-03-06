@@ -54,15 +54,12 @@ App.directive('statusButton', [
 
             console.log(status +  ' saved to database');
 
-            $http.post('http://52.8.54.187:3000/event/' + eventId + '/polygon/' + polygonId, data)
-              .then(function(response){
-                console.log(response);
-              }, function(error){
-                console.log(error);
-              });
+            var path = 'http://52.8.54.187:3000/event/' + eventId + '/polygon/' + polygonId;
+
+            PolygonFactory.savePolygon(path, data);
           }
 
-          switch(status + 'no save'){
+          switch(status + "no save"){
             case 'damage':
 
               if(timer){
@@ -110,7 +107,7 @@ App.directive('statusButton', [
           scope.eventId = EventFactory.getEventId();
         });
 
-        $rootScope.$on('Polygon_update', function(){
+        $rootScope.$on('Feature_update', function(){
           scope.feature = PolygonFactory.getFeature();
         });
       }

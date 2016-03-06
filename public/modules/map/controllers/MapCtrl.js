@@ -103,9 +103,7 @@ var MapController = App.controller('MapCtrl', [
     //var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
 
     //get the geojson data from backend API
-    $http.get('/assets/libs/polygon_coordinate.json', {
-      headers: {'Content-Type' : 'application/json'}
-    }).success(function(data, status){
+    $http.get('/assets/libs/polygon_coordinate.json').success(function(data, status){
 
       var marker = null;
       var popup = L.popup().setContent('<status-button></status-button>');
@@ -235,9 +233,9 @@ var MapController = App.controller('MapCtrl', [
           if(currentPolygon.distanceTo(nextPolygon) > 300){
             leafletData.getMap('map').then(function(map){
               map.setView(nextPolygon, 17);
+              //console.log(map._layers);
               setTimeout(function(){
                 map.closePopup();
-                map._layers[72].fire('click');
               }, 3000);
             });
           }
