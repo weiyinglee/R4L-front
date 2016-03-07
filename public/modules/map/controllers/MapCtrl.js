@@ -92,6 +92,7 @@ var MapController = App.controller('MapCtrl', [
         newMarker: {
           lng: 124.740348,
           lat: 11.379895,
+          opacity: 0.0
         }
       }
     });
@@ -99,12 +100,12 @@ var MapController = App.controller('MapCtrl', [
     var layerMap = {};
 
     $scope.eventId = EventFactory.getEventId();
+    
     //$scope.username = UserFactory.getUserData().data.username;
     //var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
 
     //get the geojson data from backend API
-    $http.get('/assets/libs/polygon_coordinate.json').success(function(data, status){
-
+    PolygonFactory.getGeojson('/assets/libs/polygon_coordinate.json').async().then(function(data){
       var marker = null;
       var popup = L.popup().setContent('<status-button></status-button>');
 
@@ -120,7 +121,7 @@ var MapController = App.controller('MapCtrl', [
 
       angular.extend($scope, {
         geojson: {
-          data: data,
+          data: data.data,
           style: {
             weight: 3,
             opacity: 1,
@@ -165,7 +166,7 @@ var MapController = App.controller('MapCtrl', [
               }
             });
           }
-        }
+        } 
       });
     });
 
@@ -261,6 +262,6 @@ var MapController = App.controller('MapCtrl', [
 
     $rootScope.$on('featureStatusChange', function(event, data){
       $scope.handlerclick(data);
-    })
+    });
 
   }]);

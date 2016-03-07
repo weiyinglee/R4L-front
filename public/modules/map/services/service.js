@@ -84,6 +84,21 @@ App.factory('PolygonFactory', ["$rootScope", "$http", function($rootScope, $http
     return feature;
   }
 
+  service.getGeojson = function(path) {
+    var promise;
+    var polygons = {
+      async: function() {
+        if(!promise) {
+          promise = $http.get(path).then(function(data){
+            return data;
+          });
+        }
+        return promise;
+      }
+    };
+    return polygons;
+  }
+
   service.savePolygon = function(path, data) {
     $http.post(path, data).then(function(response){
         console.log(response);
