@@ -219,7 +219,6 @@ var MapController = App.controller('MapCtrl', [
         }
         default : {
           //handle the jump next polygon
-
           var nextLayer = layerMap[nextId];
 
           var nextPolygon = new L.LatLng(
@@ -234,7 +233,7 @@ var MapController = App.controller('MapCtrl', [
           if(currentPolygon.distanceTo(nextPolygon) > 300){
             leafletData.getMap('map').then(function(map){
               map.setView(nextPolygon, 17);
-              //console.log(map._layers);
+              nextLayer.fire('click', { latlng: nextPolygon });
               setTimeout(function(){
                 map.closePopup();
               }, 3000);
