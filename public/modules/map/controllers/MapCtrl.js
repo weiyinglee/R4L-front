@@ -192,11 +192,37 @@ var MapController = App.controller('MapCtrl', [
       var featureId = $scope.marker.newMarker.layer_featureId;
       var status    = object.status;
 
-      var nextId = featureId + 1;
+      //var nextId = featureId + 1;
       var fillColor = object.color;
 
       var layer = layerMap[featureId];
       var changeColor = null;
+
+      function findNextLayer() {
+        var nextLayer;
+        var nextId = featureId + 1;
+        var found = false;
+
+        //if there is no polygon left
+        if(BadgeFactory.getTotal() == 0){
+          return -1;
+        }
+        while(!found){
+          nextLayer = layerMap[nextId];
+          //if the next layer is not exist
+          if(!nextLayer){
+            nextId = 0;
+            continue;
+          }
+
+          if(nextLayer.options.fillColor){
+            nextId++;
+          }else{
+            found = true;
+          }
+        }
+        return nextLayer;
+      }
 
       // check if current feature has been colored
       // if the polygon has not been filled, then do the counting
@@ -219,15 +245,24 @@ var MapController = App.controller('MapCtrl', [
         }
         default : {
           //handle the jump next polygon
-          var nextLayer = layerMap[nextId];
+          var nextLayer = findNextLayer();
+          var nextPolygon, currentPolygon;
 
-          var nextPolygon = new L.LatLng(
-            nextLayer.feature.properties.centroid.lat,
-            nextLayer.feature.properties.centroid.lng);
+          if(nextLayer == layerMap[0]){
+            nextPolygon = new L.LatLng(11.379895, 124.740348);
+            currentPolygon = new L.LatLng(11.379895, 124.740348);
+          }else if(nextLayer == -1){
+            alert("You completed the map!");
+            return;
+          }else{  
+            nextPolygon = new L.LatLng(
+              nextLayer.feature.properties.centroid.lat,
+              nextLayer.feature.properties.centroid.lng);
 
-          var currentPolygon = new L.LatLng(
-            layer.feature.properties.centroid.lat,
-            layer.feature.properties.centroid.lng);
+            currentPolygon = new L.LatLng(
+              layer.feature.properties.centroid.lat,
+              layer.feature.properties.centroid.lng);
+          }
 
           //check if the polygon is too far by 300 meters to improve use visibility
           if(currentPolygon.distanceTo(nextPolygon) > 300){
