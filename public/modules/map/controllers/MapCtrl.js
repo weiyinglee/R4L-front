@@ -138,8 +138,29 @@ var MapController = App.controller('MapCtrl', [
           onEachFeature: function(feature, layer) {
             layerMap[feature.id] = layer;
 
-            layer.on('click', function(e){
+            //obtain the saved color
+            switch(feature.status){
+              case 'DAMAGE':
+                layer.setStyle({
+                  fillColor: 'RED', 
+                  fillOpacity: 1.0
+                });
+                break;
+              case 'NO_DAMAGE':
+                layer.setStyle({
+                  fillColor: 'BLUE', 
+                  fillOpacity: 1.0
+                });
+                break;
+              case 'UNSURE':
+                layer.setStyle({
+                  fillColor: 'PURPLE', 
+                  fillOpacity: 1.0
+                });
+                break;
+            }
 
+            layer.on('click', function(e){
               PolygonFactory.setFeature(feature);
 
               var lat = (e.latlng.lat);
@@ -155,14 +176,22 @@ var MapController = App.controller('MapCtrl', [
 
               marker.openPopup();
 
+              //if(feature.status != 'NOT_EVALUATED')
               if(layer.options.fillColor){
-
                 handleCurrentStatus(layer, 'status');
 
                 layer.setStyle({
                   fillColor: null,
                   fillOpacity: 0
                 });
+
+                //save the data
+                var path = 'http://52.8.54.187:3000/event/' + $scope.eventId + '/polygon/' + feature.id;
+                var data = {
+                  username: $scope.username,
+                  status: 'NOT_EVALUATED'
+                }
+                PolygonFactory.savePolygon(path, data);
               }
             });
           }
