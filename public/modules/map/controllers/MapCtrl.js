@@ -101,11 +101,11 @@ var MapController = App.controller('MapCtrl', [
 
     $scope.eventId = EventFactory.getEventId();
     
-    //$scope.username = UserFactory.getUserData().data.username;
-    //var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
+    $scope.username = UserFactory.getUserData().data.username;
+    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
 
     //get the geojson data from backend API
-    PolygonFactory.getGeojson('/assets/libs/polygon_coordinate.json').async().then(function(data){
+    PolygonFactory.getGeojson(path).async().then(function(data){
       var marker = null;
       var popup = L.popup().setContent('<status-button></status-button>');
 
@@ -114,10 +114,10 @@ var MapController = App.controller('MapCtrl', [
         marker.bindPopup(popup);
       });
 
-      /*data.features.forEach(function(data){
+      data.data.features.forEach(function(data){
         data.geometry = JSON.parse(data.geometry);
         data.type = "Feature";
-      });*/
+      });
 
       angular.extend($scope, {
         geojson: {

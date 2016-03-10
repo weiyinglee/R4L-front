@@ -59,7 +59,7 @@ App.directive('statusButton', [
             PolygonFactory.savePolygon(path, data);
           }
 
-          switch(status + "no save"){
+          switch(status){
             case 'damage':
 
               if(timer){
