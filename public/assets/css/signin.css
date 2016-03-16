@@ -36,4 +36,11 @@ h4 {
 .wrapper {
   text-align: center; }
 
+@media screen and (max-width: 768px) {
+  .group-btn a {
+    margin-bottom: 4%; }
+
+  input {
+    width: 90%; } }
+
 /*# sourceMappingURL=signin.css.map */
