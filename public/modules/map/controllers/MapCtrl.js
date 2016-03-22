@@ -4,9 +4,7 @@ var MapController = App.controller('MapCtrl', [
     '$scope',
     '$rootScope',
     '$location',
-    '$http',
     'leafletData',
-    '$timeout',
     '$compile',
     'BadgeFactory',
     'EventFactory',
@@ -16,9 +14,7 @@ var MapController = App.controller('MapCtrl', [
     $scope,
     $rootScope,
     $location,
-    $http,
     leafletData,
-    $timeout,
     $compile,
     BadgeFactory,
     EventFactory,
@@ -92,6 +88,7 @@ var MapController = App.controller('MapCtrl', [
         newMarker: {
           lng: 124.740348,
           lat: 11.379895,
+          opacity: 0.0
         }
       }
     });
@@ -99,14 +96,12 @@ var MapController = App.controller('MapCtrl', [
     var layerMap = {};
 
     $scope.eventId = EventFactory.getEventId();
-    //$scope.username = UserFactory.getUserData().data.username;
-    //var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
+    
+    $scope.username = UserFactory.getUserData().data.username;
+    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
 
     //get the geojson data from backend API
-    $http.get('/assets/libs/polygon_coordinate.json', {
-      headers: {'Content-Type' : 'application/json'}
-    }).success(function(data, status){
-
+    PolygonFactory.getGeojson(path).async().then(function(data){
       var marker = null;
       var popup = L.popup().setContent('<status-button></status-button>');
 
@@ -115,14 +110,14 @@ var MapController = App.controller('MapCtrl', [
         marker.bindPopup(popup);
       });
 
-      /*data.features.forEach(function(data){
+      data.data.features.forEach(function(data){
         data.geometry = JSON.parse(data.geometry);
         data.type = "Feature";
-      });*/
+      });
 
       angular.extend($scope, {
         geojson: {
-          data: data,
+          data: data.data,
           style: {
             weight: 3,
             opacity: 1,
@@ -139,8 +134,32 @@ var MapController = App.controller('MapCtrl', [
           onEachFeature: function(feature, layer) {
             layerMap[feature.id] = layer;
 
-            layer.on('click', function(e){
+            //obtain the saved color
+            switch(feature.properties.status){
+              case 'DAMAGE':
+                layer.setStyle({
+                  fillColor: 'RED', 
+                  fillOpacity: 1.0
+                });
+                BadgeFactory.incDamage();
+                break;
+              case 'NO_DAMAGE':
+                layer.setStyle({
+                  fillColor: 'BLUE', 
+                  fillOpacity: 1.0
+                });
+                BadgeFactory.incUnDamage();
+                break;
+              case 'UNSURE':
+                layer.setStyle({
+                  fillColor: 'PURPLE', 
+                  fillOpacity: 1.0
+                });
+                BadgeFactory.incUnKnown();
+                break;
+            }
 
+            layer.on('click', function(e){
               PolygonFactory.setFeature(feature);
 
               var lat = (e.latlng.lat);
@@ -156,7 +175,7 @@ var MapController = App.controller('MapCtrl', [
 
               marker.openPopup();
 
-              if(layer.options.fillColor){
+              if(feature.properties.status != 'NOT_EVALUATED') {
 
                 handleCurrentStatus(layer, 'status');
 
@@ -164,10 +183,18 @@ var MapController = App.controller('MapCtrl', [
                   fillColor: null,
                   fillOpacity: 0
                 });
+
+                //save the data
+                var path = 'http://52.8.54.187:3000/event/' + $scope.eventId + '/polygon/' + feature.id;
+                var data = {
+                  username: $scope.username,
+                  status: 'NOT_EVALUATED'
+                }
+                PolygonFactory.savePolygon(path, data);
               }
             });
           }
-        }
+        } 
       });
     });
 
@@ -193,11 +220,37 @@ var MapController = App.controller('MapCtrl', [
       var featureId = $scope.marker.newMarker.layer_featureId;
       var status    = object.status;
 
-      var nextId = featureId + 1;
+      //var nextId = featureId + 1;
       var fillColor = object.color;
 
       var layer = layerMap[featureId];
       var changeColor = null;
+
+      function findNextLayer() {
+        var nextLayer;
+        var nextId = featureId + 1;
+        var found = false;
+
+        //if there is no polygon left
+        if(BadgeFactory.getTotal() == 0){
+          return -1;
+        }
+        while(!found){
+          nextLayer = layerMap[nextId];
+          //if the next layer is not exist
+          if(!nextLayer){
+            nextId = 0;
+            continue;
+          }
+
+          if(nextLayer.options.fillColor){
+            nextId++;
+          }else{
+            found = true;
+          }
+        }
+        return nextLayer;
+      }
 
       // check if current feature has been colored
       // if the polygon has not been filled, then do the counting
@@ -220,27 +273,33 @@ var MapController = App.controller('MapCtrl', [
         }
         default : {
           //handle the jump next polygon
+          var nextLayer = findNextLayer();
+          var nextPolygon, currentPolygon;
 
-          var nextLayer = layerMap[nextId];
+          if(nextLayer == layerMap[0]){
+            nextPolygon = new L.LatLng(11.379895, 124.740348);
+            currentPolygon = new L.LatLng(11.379895, 124.740348);
+          }else if(nextLayer == -1){
+            alert("You completed the map!");
+            return;
+          }else{  
+            nextPolygon = new L.LatLng(
+              nextLayer.feature.properties.centroid.lat,
+              nextLayer.feature.properties.centroid.lng);
 
-          var nextPolygon = new L.LatLng(
-            nextLayer.feature.properties.centroid.lat,
-            nextLayer.feature.properties.centroid.lng);
-
-          var currentPolygon = new L.LatLng(
-            layer.feature.properties.centroid.lat,
-            layer.feature.properties.centroid.lng);
+            currentPolygon = new L.LatLng(
+              layer.feature.properties.centroid.lat,
+              layer.feature.properties.centroid.lng);
+          }
 
           //check if the polygon is too far by 300 meters to improve use visibility
-          if(currentPolygon.distanceTo(nextPolygon) > 300){
-            leafletData.getMap('map').then(function(map){
+          leafletData.getMap('map').then(function(map){
+            map.closePopup();
+            if(currentPolygon.distanceTo(nextPolygon) > 300){
               map.setView(nextPolygon, 17);
-              setTimeout(function(){
-                map.closePopup();
-                map._layers[72].fire('click');
-              }, 3000);
-            });
-          }
+            }
+            nextLayer.fire('click', { latlng: nextPolygon });
+          });
           return;
         }
       }
@@ -263,6 +322,6 @@ var MapController = App.controller('MapCtrl', [
 
     $rootScope.$on('featureStatusChange', function(event, data){
       $scope.handlerclick(data);
-    })
+    });
 
   }]);

@@ -3,14 +3,14 @@
 	border-radius: 15px;
 	box-shadow: 2px 2px 2px #888;
 	background-color: lightblue;
-	padding: 5%;
-	padding-top: 1%;
+	padding-top: 5%;
 	margin-top: 2%;
 	margin-bottom: 1%;
 	color: #555;
 	text-align: center;
 	.button_section {
-		margin-left: 95%;
+		margin-left: 85%;
+		margin-bottom: 1%;
 	}
 }
 
@@ -24,4 +24,15 @@
 
 #hurricane_img {
     background: url('/assets/img/hurricane.jpg') no-repeat center;
+}
+
+@media screen and (max-width: 768px) {
+	.jumbotron > .button_section {
+		margin-left: 0;
+		margin-bottom: 2%;
+	}
+
+	.md-headline {
+		font-size: 14px;
+	}
 }

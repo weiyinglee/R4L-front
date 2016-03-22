@@ -4,7 +4,8 @@ var EventController = App.controller('EventCtrl', [
 	'$scope',
 	'$http',
 	'EventFactory',
-	function($scope, $http, EventFactory){
+	'PolygonFactory',
+	function($scope, $http, EventFactory, PolygonFactory){
 
   	  $scope.showEarthquakeTxt = false;
   	  $scope.showFloodTxt = false;

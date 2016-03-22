@@ -65,22 +65,46 @@ App.factory('BadgeFactory', ['$rootScope', function($rootScope){
   return service;
 }]);
 
-App.factory('PolygonFactory', ["$rootScope", function($rootScope){
+App.factory('PolygonFactory', ["$rootScope", "$http", function($rootScope, $http){
   
   var service = {};
+
   var feature = {};
 
   service.setFeature = function(object) {
     feature = object;
-    this.update();
+    this.featureUpdate();
   }
 
-  service.update = function() {
-    $rootScope.$emit('Polygon_update');
+  service.featureUpdate = function() {
+    $rootScope.$emit('Feature_update');
   }
 
   service.getFeature = function() {
     return feature;
+  }
+
+  service.getGeojson = function(path) {
+    var promise;
+    var polygons = {
+      async: function() {
+        if(!promise) {
+          promise = $http.get(path).then(function(data){
+            return data;
+          });
+        }
+        return promise;
+      }
+    };
+    return polygons;
+  }
+
+  service.savePolygon = function(path, data) {
+    $http.post(path, data).then(function(response){
+        console.log(response);
+      }, function(error){
+        console.log(error);
+    });
   }
 
   return service;

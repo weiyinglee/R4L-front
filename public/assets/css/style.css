@@ -36,6 +36,12 @@ h4 {
 .wrapper {
   text-align: center; }
 
+@media screen and (max-width: 768px) {
+  .group-btn a {
+    margin-bottom: 4%; }
+
+  input {
+    width: 90%; } }
 #map {
   margin-top: 0.5%;
   margin-left: 2.5%;
@@ -48,9 +54,12 @@ h4 {
 #map .angular-leaflet-control-layers {
   visibility: hidden; }
 
-.button-section {
+.map-button {
   margin-left: 80%; }
 
+@media screen and (max-width: 768px) {
+  .map-button {
+    margin-left: 0; } }
 .badge {
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.9); }
@@ -67,14 +76,14 @@ button {
   border-radius: 15px;
   box-shadow: 2px 2px 2px #888;
   background-color: lightblue;
-  padding: 5%;
-  padding-top: 1%;
+  padding-top: 5%;
   margin-top: 2%;
   margin-bottom: 1%;
   color: #555;
   text-align: center; }
   .jumbotron .button_section {
-    margin-left: 95%; }
+    margin-left: 85%;
+    margin-bottom: 1%; }
 
 #earthquake_img {
   background: url("/assets/img/earthquake.jpg") no-repeat center; }
@@ -85,6 +94,13 @@ button {
 #hurricane_img {
   background: url("/assets/img/hurricane.jpg") no-repeat center; }
 
+@media screen and (max-width: 768px) {
+  .jumbotron > .button_section {
+    margin-left: 0;
+    margin-bottom: 2%; }
+
+  .md-headline {
+    font-size: 14px; } }
 .register-container {
   padding-top: 10%;
   padding-left: auto;

@@ -4,10 +4,11 @@
             <div class="form-login">
                 <h4>Welcome To Radar for Life</h4>
                 <h5>Please login to continue</h5>
-                <input type="text" ng-model="userName" id="userName" class="form-control input-sm chat-input" placeholder="User ID or Username" />
+                <div class="input-section">
+                    <input type="text" ng-model="userName" id="userName" class="form-control input-sm chat-input" placeholder="User ID or Username" />
+                    <input type="password" ng-model="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
                 </br>
-                <input type="password" ng-model="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
-                </br>
+                </div>
                 <div class="wrapper">
                     <span class="group-btn">
                         <a role="button" ng-disabled="fieldIncompleted()" ng-click="fieldIncompleted() || auth()" class="btn btn-primary btn-md">

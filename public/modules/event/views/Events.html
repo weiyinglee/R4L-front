@@ -1,11 +1,11 @@
 <div class="event-container" ng-controller="EventCtrl">
     <div class="jumbotron">
-        <div class="button_section">
-          <md-button ng-click="" class="md-raised">Sign out</md-button>
-        </div>
         <h1>Welcome to Radar for life</h1>
         </br>
         <h5>Choose a event below to proceed</h5>
+        <div class="button_section">
+          <md-button ng-click="" class="md-raised md-primary">Sign out</md-button>
+        </div>
     </div>
     <md-content class="md-padding" layout-xs="column" layout="row">
         <div flex-xs flex-gt-xs="50" layout="column">
@@ -20,11 +20,11 @@
                 </span>
               </md-card-title-text>
               <md-card-title-media>
-                <div class="md-media-lg card-media" id="earthquake_img"></div>
+                <div class="md-media-lg card-media" id="earthquake_img"></div>   
               </md-card-title-media>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="earthquakeToggle()" class="md-raised">Description</md-button>
+                <md-button ng-click="earthquakeToggle()" class="md-raised">Info</md-button>
                 <md-button ng-click="enterMap(100)" class="md-raised">Enter</md-button>
             </md-card-actions>
           </md-card>
@@ -41,12 +41,11 @@
                 </span>
               </md-card-title-text>
               <md-card-title-media>
-                <div class="md-media-lg card-media" id="flood_img">
-                </div>
+                <div class="md-media-lg card-media" id="flood_img"></div>
               </md-card-title-media>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="floodToggle()" class="md-raised">Description</md-button>
+                <md-button ng-click="floodToggle()" class="md-raised">Info</md-button>
                 <md-button ng-click="enterMap('flood')" class="md-raised">Enter</md-button>
             </md-card-actions>
           </md-card>
@@ -67,7 +66,7 @@
               </md-card-title-media>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="hurricaneToggle()" class="md-raised">Description</md-button>
+                <md-button ng-click="hurricaneToggle()" class="md-raised">Info</md-button>
                 <md-button ng-click="enterMap('hurricane')" class="md-raised">Enter</md-button>
             </md-card-actions>
           </md-card>
