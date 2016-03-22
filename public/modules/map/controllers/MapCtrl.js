@@ -95,6 +95,11 @@ var MapController = App.controller('MapCtrl', [
 
     var layerMap = {};
 
+    $scope.signOut = function(){
+      UserFactory.signout();
+      $location.path('/');
+    }
+
     $scope.eventId = EventFactory.getEventId();
     
     $scope.username = UserFactory.getUserData().data.username;

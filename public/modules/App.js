@@ -4,7 +4,8 @@ var App = window.App = angular.module('R4LApp', [
 		'ui.bootstrap',
 		'ngMaterial',
 		'ngAnimate',
-		'ngResource'
+		'ngResource',
+		'ngCookies'
 	]
 );
 
@@ -16,16 +17,16 @@ App.config(function($logProvider){
 // url routing
 App.config(["$routeProvider", function($routeProvider){
 
-	var checkLoggedIn = function($location, UserFactory){
-		var userData = UserFactory.getUserData();
-		if(userData.data === undefined || !userData.data.success){
+	var checkLoggedIn = function($location, $cookieStore){
+		var userData = $cookieStore.get('userData');
+		if(userData === undefined || !userData.data.success){
 			$location.path('/');
 		}
 	}
 
-	var notLoggedIn = function($location, UserFactory){
-		var userData = UserFactory.getUserData();
-		if(userData.data != undefined){
+	var notLoggedIn = function($location, $cookieStore){
+		var userData = $cookieStore.get('userData');
+		if(userData != undefined){
 			$location.path('/events');
 		}
 	}

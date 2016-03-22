@@ -1,26 +1,12 @@
 'use strict';
 
-App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location",
-  function($rootScope, $http, $resource, $location){
-  
-    var userData = {}
+App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$cookieStore",
+  function($rootScope, $http, $resource, $location, $cookieStore){
 
     var service = {}
 
-    service.getUserId = function(){
-      return userData.user_id;
-    }
-
-    service.getSuccess = function(){
-      return userData.success;
-    }
-
-    service.getMessage = function(){
-      return userData.message;
-    }
-
     service.getUserData = function(){
-      return userData;
+      return $cookieStore.get('userData');
     }
 
     service.update = function() {
@@ -30,7 +16,8 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location",
     //create
     service.userCreate = function(data){
     	$http.post('http://52.8.54.187:3000/user/create', data).then(function(response){
-    	   userData = response;
+         $cookieStore.put('userData', response);
+         var userData = $cookieStore.get('userData');
          if(userData.data.success){
             //enter the event page
             $location.path('/events');
@@ -47,7 +34,9 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location",
     //login
     service.userLogin = function(data){
     	$http.post('http://52.8.54.187:3000/user/login', data).then(function(response){
-          userData = response;
+          $cookieStore.put('userData', response);
+          var userData = $cookieStore.get('userData');
+          console.log(userData);
           if(userData.data.success){
             //enter the event page
             $location.path('/events');
@@ -59,6 +48,11 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location",
         console.log(error);
     	});
       this.update();
+    }
+
+    //signout
+    service.signout = function(){
+      $cookieStore.remove('userData');
     }
 
     return service;

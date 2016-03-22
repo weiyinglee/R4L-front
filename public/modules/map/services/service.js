@@ -65,7 +65,7 @@ App.factory('BadgeFactory', ['$rootScope', function($rootScope){
   return service;
 }]);
 
-App.factory('PolygonFactory', ["$rootScope", "$http", function($rootScope, $http){
+App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($rootScope, $http, UserFactory){
   
   var service = {};
 
@@ -89,7 +89,10 @@ App.factory('PolygonFactory', ["$rootScope", "$http", function($rootScope, $http
     var polygons = {
       async: function() {
         if(!promise) {
-          promise = $http.get(path).then(function(data){
+          promise = $http.get(path, { headers: {
+            "Content-Type": 'application/json',
+            "Authorization": 'Bearer' + UserFactory.getUserData().data.token
+          }}).then(function(data){
             return data;
           });
         }
@@ -100,7 +103,10 @@ App.factory('PolygonFactory', ["$rootScope", "$http", function($rootScope, $http
   }
 
   service.savePolygon = function(path, data) {
-    $http.post(path, data).then(function(response){
+    $http.post(path, { headers: {
+            "Content-Type": 'application/json',
+            "Authorization": 'Bearer' + UserFactory.getUserData().data.token
+          }}, data).then(function(response){
         console.log(response);
       }, function(error){
         console.log(error);
