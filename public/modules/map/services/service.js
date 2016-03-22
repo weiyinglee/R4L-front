@@ -91,7 +91,7 @@ App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($r
         if(!promise) {
           promise = $http.get(path, { headers: {
             "Content-Type": 'application/json',
-            "Authorization": 'Bearer' + UserFactory.getUserData().data.token
+            "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
           }}).then(function(data){
             return data;
           });
@@ -103,11 +103,8 @@ App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($r
   }
 
   service.savePolygon = function(path, data) {
-    $http.post(path, { headers: {
-            "Content-Type": 'application/json',
-            "Authorization": 'Bearer' + UserFactory.getUserData().data.token
-          }}, data).then(function(response){
-        console.log(response);
+    $http.post(path, data).then(function(response){
+          console.log(response);
       }, function(error){
         console.log(error);
     });

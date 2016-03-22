@@ -103,6 +103,7 @@ var MapController = App.controller('MapCtrl', [
     $scope.eventId = EventFactory.getEventId();
     
     $scope.username = UserFactory.getUserData().data.username;
+
     var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
 
     //get the geojson data from backend API
