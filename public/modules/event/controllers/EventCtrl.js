@@ -3,9 +3,10 @@
 var EventController = App.controller('EventCtrl', [
 	'$scope',
 	'$http',
+	'$location',
 	'EventFactory',
 	'PolygonFactory',
-	function($scope, $http, EventFactory, PolygonFactory){
+	function($scope, $http, $location, EventFactory, PolygonFactory){
 
   	  $scope.showEarthquakeTxt = false;
   	  $scope.showFloodTxt = false;
@@ -25,7 +26,7 @@ var EventController = App.controller('EventCtrl', [
 
 	  $scope.enterMap = function(eventId){
 	  	EventFactory.setEventId(eventId);
-	  	location.replace('/#/map');
+	  	$location.path('/map');
 	  }
 
 }]);

@@ -15,20 +15,47 @@ App.config(function($logProvider){
 
 // url routing
 App.config(["$routeProvider", function($routeProvider){
+
+	var checkLoggedIn = function($location, UserFactory){
+		var userData = UserFactory.getUserData();
+		if(userData.data === undefined || !userData.data.success){
+			$location.path('/');
+		}
+	}
+
+	var notLoggedIn = function($location, UserFactory){
+		var userData = UserFactory.getUserData();
+		if(userData.data != undefined){
+			$location.path('/events');
+		}
+	}
+
 	$routeProvider.
 		when('/', {
+			resolve: {
+				check: notLoggedIn
+			},
 			templateUrl : "/modules/user/views/Login.html",
 			controller  : "LoginCtrl"
 		}).
 		when('/signup', {
+			resolve: {
+				check: notLoggedIn
+			},
 			templateUrl : "/modules/user/views/Register.html",
 			controller  : "RegisterCtrl"
 		}).
 		when('/events', {
+			resolve: {
+				check: checkLoggedIn
+			},
 			templateUrl : "/modules/event/views/Events.html",
-			controller  : "EventCtrl" 
+			controller  : "EventCtrl"
 		}).
 		when('/map', {
+			resolve: {
+				check: checkLoggedIn
+			},
 			templateUrl : "/modules/map/views/Map.html",
 			controller  : "MapCtrl"
 		})
