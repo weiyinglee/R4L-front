@@ -139,7 +139,7 @@ var MapController = App.controller('MapCtrl', [
             layerMap[feature.id] = layer;
 
             //obtain the saved color
-            switch(feature.status){
+            switch(feature.properties.status){
               case 'DAMAGE':
                 layer.setStyle({
                   fillColor: 'RED', 
@@ -176,8 +176,7 @@ var MapController = App.controller('MapCtrl', [
 
               marker.openPopup();
 
-              //if(feature.status != 'NOT_EVALUATED')
-              if(layer.options.fillColor){
+              if(feature.properties.status != 'NOT_EVALUATED'){
                 handleCurrentStatus(layer, 'status');
 
                 layer.setStyle({
