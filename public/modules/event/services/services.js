@@ -1,14 +1,11 @@
 'use strict';
 
-App.factory('EventFactory', ['$rootScope', '$http', function($rootScope, $http){
+App.factory('EventFactory', ['$rootScope', '$cookieStore', function($rootScope, $cookieStore){
 
   var service = {};
 
-  //default path
-  var eventId = 0;
-
   service.setEventId = function(Id){
-    eventId = Id;
+    $cookieStore.put('eventId', Id);
     this.eventUpdate();
   }
 
@@ -17,7 +14,7 @@ App.factory('EventFactory', ['$rootScope', '$http', function($rootScope, $http){
   }
 
   service.getEventId = function(){
-    return eventId;
+    return $cookieStore.get('eventId');
   }
 
   return service;

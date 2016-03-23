@@ -4,9 +4,7 @@ var MapController = App.controller('MapCtrl', [
     '$scope',
     '$rootScope',
     '$location',
-    '$http',
     'leafletData',
-    '$timeout',
     '$compile',
     'BadgeFactory',
     'EventFactory',
@@ -16,9 +14,7 @@ var MapController = App.controller('MapCtrl', [
     $scope,
     $rootScope,
     $location,
-    $http,
     leafletData,
-    $timeout,
     $compile,
     BadgeFactory,
     EventFactory,
@@ -99,9 +95,15 @@ var MapController = App.controller('MapCtrl', [
 
     var layerMap = {};
 
+    $scope.signOut = function(){
+      UserFactory.signout();
+      $location.path('/');
+    }
+
     $scope.eventId = EventFactory.getEventId();
     
     $scope.username = UserFactory.getUserData().data.username;
+
     var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
 
     //get the geojson data from backend API
@@ -145,18 +147,21 @@ var MapController = App.controller('MapCtrl', [
                   fillColor: 'RED', 
                   fillOpacity: 1.0
                 });
+                BadgeFactory.incDamage();
                 break;
               case 'NO_DAMAGE':
                 layer.setStyle({
                   fillColor: 'BLUE', 
                   fillOpacity: 1.0
                 });
+                BadgeFactory.incUnDamage();
                 break;
               case 'UNSURE':
                 layer.setStyle({
                   fillColor: 'PURPLE', 
                   fillOpacity: 1.0
                 });
+                BadgeFactory.incUnKnown();
                 break;
             }
 
@@ -177,6 +182,7 @@ var MapController = App.controller('MapCtrl', [
               marker.openPopup();
 
               if(feature.properties.status != 'NOT_EVALUATED'){
+
                 handleCurrentStatus(layer, 'status');
 
                 layer.setStyle({
@@ -293,15 +299,13 @@ var MapController = App.controller('MapCtrl', [
           }
 
           //check if the polygon is too far by 300 meters to improve use visibility
-          if(currentPolygon.distanceTo(nextPolygon) > 300){
-            leafletData.getMap('map').then(function(map){
+          leafletData.getMap('map').then(function(map){
+            map.closePopup();
+            if(currentPolygon.distanceTo(nextPolygon) > 300){
               map.setView(nextPolygon, 17);
-              nextLayer.fire('click', { latlng: nextPolygon });
-              setTimeout(function(){
-                map.closePopup();
-              }, 3000);
-            });
-          }
+            }
+            nextLayer.fire('click', { latlng: nextPolygon });
+          });
           return;
         }
       }
