@@ -1,12 +1,11 @@
 .jumbotron {
 	border: 1px solid black;
 	border-radius: 15px;
-	box-shadow: 2px 2px 2px #888;
-	background-color: lightblue;
+	background-color: #2B2B2B;
 	padding-top: 5%;
 	margin-top: 2%;
 	margin-bottom: 1%;
-	color: #555;
+	color: #fff;
 	text-align: center;
 	.button_section {
 		margin-left: 85%;
@@ -24,6 +23,15 @@
 
 #hurricane_img {
     background: url('/assets/img/hurricane.jpg') no-repeat center;
+}
+
+.card, .md-subhead > p {
+	background-color: #2B2B2B;
+	color: white;
+}
+
+.no-color{
+	background-color: #121211;
 }
 
 @media screen and (max-width: 768px) {

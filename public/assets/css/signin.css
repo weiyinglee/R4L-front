@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
 body {
-  background-color: #fff;
+  background-color: #121211;
   -webkit-font-smoothing: antialiased;
   font: normal 14px Roboto,arial,sans-serif; }
 
@@ -12,7 +12,8 @@ body {
   width: 80%; }
 
 .form-login {
-  background-color: #EDEDED;
+  background-color: #2B2B2B;
+  color: white;
   padding-top: 10px;
   padding-bottom: 20px;
   padding-left: 20px;
@@ -20,7 +21,6 @@ body {
   border-radius: 15px;
   border-color: #d2d2d2;
   border-width: 5px;
-  box-shadow: 0 1px 0 #cfcfcf;
   margin-left: 18%;
   width: 60%; }
 
@@ -35,6 +35,10 @@ h4 {
 
 .wrapper {
   text-align: center; }
+
+.alert {
+  margin-left: 18%;
+  width: 60%; }
 
 @media screen and (max-width: 768px) {
   .group-btn a {
