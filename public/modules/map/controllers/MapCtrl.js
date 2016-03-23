@@ -6,6 +6,7 @@ var MapController = App.controller('MapCtrl', [
     '$location',
     'leafletData',
     '$compile',
+    '$cookieStore',
     'BadgeFactory',
     'EventFactory',
     'PolygonFactory',
@@ -16,6 +17,7 @@ var MapController = App.controller('MapCtrl', [
     $location,
     leafletData,
     $compile,
+    $cookieStore,
     BadgeFactory,
     EventFactory,
     PolygonFactory,
@@ -100,11 +102,18 @@ var MapController = App.controller('MapCtrl', [
       $location.path('/');
     }
 
+    $scope.menu = function() {
+      //make the badge numbers back to original
+      BadgeFactory.resetBadges();
+      //redirect to menu
+      $location.path('/events');
+    }
+
     $scope.eventId = EventFactory.getEventId();
     
-    $scope.username = UserFactory.getUserData().data.username;
+    $scope.username = UserFactory.getUserData().config.data.username;
 
-    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
+    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;   
 
     //get the geojson data from backend API
     PolygonFactory.getGeojson(path).async().then(function(data){

@@ -34,6 +34,15 @@ App.factory('BadgeFactory', ['$rootScope', function($rootScope){
     }
   }
 
+  service.resetBadges = function() {
+    badgeCount = {
+        damage           : 0,
+        undamage         : 0,
+        unknown          : 0,
+        remain           : 20
+      }
+  }
+
   service.broadcastUpdate = function() {
     $rootScope.$emit('badge_update');
   }
