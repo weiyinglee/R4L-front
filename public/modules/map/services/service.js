@@ -112,7 +112,10 @@ App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($r
   }
 
   service.savePolygon = function(path, data) {
-    $http.post(path, data).then(function(response){
+    $http.post(path, data, { headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + UserFactory.getUserData().data.token
+    }}).then(function(response){
           console.log(response);
       }, function(error){
         console.log(error);
