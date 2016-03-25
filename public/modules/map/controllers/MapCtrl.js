@@ -125,6 +125,8 @@ var MapController = App.controller('MapCtrl', [
         marker.bindPopup(popup);
       });
 
+      console.log(data);
+
       data.data.features.forEach(function(data){
         data.geometry = JSON.parse(data.geometry);
         data.type = "Feature";
@@ -311,7 +313,7 @@ var MapController = App.controller('MapCtrl', [
           leafletData.getMap('map').then(function(map){
             map.closePopup();
             if(currentPolygon.distanceTo(nextPolygon) > 300){
-              map.setView(nextPolygon, 17);
+              map.setView(nextPolygon, 16);
             }
             nextLayer.fire('click', { latlng: nextPolygon });
           });

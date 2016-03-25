@@ -3,11 +3,13 @@
 var LoginController = App.controller('LoginCtrl', [ 
 	'$scope',
 	'$http',
+	'$timeout',
 	'UserFactory',
 	'$rootScope',
 	function(
 	  $scope,
 	  $http,
+	  $timeout,
 	  UserFactory,
 	  $rootScope
 	  ){
@@ -16,6 +18,7 @@ var LoginController = App.controller('LoginCtrl', [
 
 	  $scope.userName = "";
 	  $scope.userPassword = "";
+	  $scope.invalid = false;
 
 	  $scope.fieldIncompleted = function(){
 	  	var name = $scope.userName;
@@ -32,6 +35,12 @@ var LoginController = App.controller('LoginCtrl', [
 	  	};
 
 	  	UserFactory.userLogin(inputData);
+
+	  	if(!$scope.userData.data.success){
+	  		$scope.invalid = true;
+	  		$scope.userName = "";
+	  		$scope.userPassword = "";
+	  	}
 	  };
 
 	  $rootScope.$on('user_update', function(){

@@ -1,6 +1,15 @@
 <div class="register-container" ng-controller="RegisterCtrl">
     <div class="row">
         <div class="col-md-offset-5 col-md-3 text-center">
+            <div class="alert alert-danger" role="alert" ng-show="invalid1">
+                <strong>This user has already existed. Please try again!</strong>
+            </div>
+            <div class="alert alert-danger" role="alert" ng-show="invalid2">
+                <strong>Oops! Two passwords were not the same. Please try again!</strong> 
+            </div>
+            <div class="alert alert-danger" role="alert" ng-show="invalid3">
+                <strong>The fields cannot contain character " - ". Please try again!</strong>
+            </div>
             <div class="form-login">
                 <h4>Become a new user in Rader for Life</h4>
                 <input type="text" ng-model="userId" class="form-control input-sm chat-input" placeholder="User ID" />
