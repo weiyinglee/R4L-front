@@ -312,10 +312,10 @@ var MapController = App.controller('MapCtrl', [
           //check if the polygon is too far by 300 meters to improve use visibility
           leafletData.getMap('map').then(function(map){
             map.closePopup();
-            if(currentPolygon.distanceTo(nextPolygon) > 300){
-              map.setView(nextPolygon, 16);
-            }
             nextLayer.fire('click', { latlng: nextPolygon });
+            if(currentPolygon.distanceTo(nextPolygon) > 300){
+              map.setView(nextPolygon, 19);
+            }
           });
           return;
         }
