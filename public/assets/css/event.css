@@ -20,12 +20,52 @@
 #hurricane_img {
   background: url("/assets/img/hurricane.jpg") no-repeat center; }
 
-.card, .md-subhead > p {
+md-card, .md-subhead > p {
   background-color: #2B2B2B;
   color: white; }
 
-.no-color {
+.card, .md-padding {
   background-color: #121211; }
+
+.md-btn {
+  background-color: green;
+  color: white;
+  border-radius: 20px 20px 20px; }
+
+.md-btn:not([disabled]):hover {
+  background-color: #CCFF00;
+  color: black;
+  font-weight: bold; }
+
+.signout-btn {
+  background-color: #CC6600;
+  color: white;
+  border-radius: 10px 10px 10px 10px; }
+
+.signout-btn:not([disabled]):hover {
+  background-color: #660000;
+  color: white;
+  font-weight: bold; }
+
+/* ng-animation fade in */
+.info-fade.ng-enter {
+  transition: 0.8s ease all;
+  opacity: 0;
+  transform: translateX(-100%); }
+
+.info-fade.ng-enter.ng-enter-active {
+  opacity: 1;
+  transform: translateX(0); }
+
+/* ng-animation fade out */
+.info-fade.ng-leave {
+  transition: 0.2s ease all;
+  opacity: 1;
+  transform: translateX(0); }
+
+.info-fade.ng-leave.ng-leave-active {
+  transform: translateX(-100%);
+  opacity: 0; }
 
 @media screen and (max-width: 768px) {
   .jumbotron > .button_section {

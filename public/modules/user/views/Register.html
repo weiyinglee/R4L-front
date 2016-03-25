@@ -3,6 +3,7 @@
         <div class="col-md-offset-5 col-md-3 text-center">
             <div class="form-login">
                 <h4>Become a new user in Rader for Life</h4>
+                <h5>Please fill out all input fields</h5>
                 <input type="text" ng-model="userId" class="form-control input-sm chat-input" placeholder="User ID" />
                 </br>
                 <input type="text" ng-model="firstName" class="form-control input-sm chat-input" placeholder="First Name" />
@@ -16,10 +17,10 @@
                 <input type="password" ng-model="reSignPassword" class="form-control input-sm chat-input" placeholder="re-type password"/>
                 <div class="wrapper">
                     <span class="group-btn">
-                        <a role="button" ng-disabled="fieldIncompleted()" ng-click="fieldIncompleted() || signUp()"  class="btn btn-primary btn-md">
+                        <a role="button" ng-disabled="fieldIncompleted()" ng-click="fieldIncompleted() || signUp()"  class="btn btn-warning btn-md">
                             Register <i class="fa fa-sign-in"></i>
                         </a>
-                        <a href="/#/" role="button" class="btn btn-primary btn-md">
+                        <a href="/#/" role="button" class="btn btn-warning btn-md">
                             Already a user ?
                         </a>
                     </span>

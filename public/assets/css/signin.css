@@ -40,6 +40,24 @@ h4 {
   margin-left: 18%;
   width: 60%; }
 
+/*
+.login-btn {
+    background-color: green;
+    color: white;
+    border-radius: 10px 10px 10px;
+}
+
+.login-btn:not([disabled]):hover {
+    background-color: #CCFF00;
+    color: black;
+    font-weight: bold;
+}
+
+.login-btn[disabled] {
+    color : #003300;
+    background-color: #66CC66;
+}
+*/
 @media screen and (max-width: 768px) {
   .group-btn a {
     margin-bottom: 4%; }

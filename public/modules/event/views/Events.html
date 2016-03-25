@@ -4,17 +4,17 @@
         </br>
         <h5>Choose a event below to proceed</h5>
         <div class="button_section">
-          <md-button ng-click="signOut()" class="md-raised md-primary">Sign out</md-button>
+          <md-button ng-click="signOut()" class="signout-btn">Sign out</md-button>
         </div>
     </div>
     <md-content class="md-padding" layout-xs="column" layout="row">
-        <div flex-xs flex-gt-xs="50" layout="column">
+        <div flex-xs flex-gt-xs="50" layout="column" class="card">
           <md-card>
             <md-card-title>
               <md-card-title-text>
                 <span class="md-headline"><strong>Earthquake</strong></span>
                 <span class="md-subhead">
-                    <p ng-show="showEarthquakeTxt">
+                    <p ng-if="showEarthquakeTxt" class="info-fade">
                         LLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in dolor vehicula, eleifend nisl consequat, cursus risus. Donec fermentum velit bibendum mauris maximus hendrerit. Etiam viverra mi non sapien vulputate ornare. Maecenas turpis tortor, sagittis at velit in, sollicitudin blandit odio.
                     </p>
                 </span>
@@ -24,18 +24,18 @@
               </md-card-title-media>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="earthquakeToggle()" class="md-raised">Info</md-button>
-                <md-button ng-click="enterMap(100)" class="md-raised">Enter</md-button>
+                <md-button ng-click="earthquakeToggle()" class="md-btn">Info</md-button>
+                <md-button ng-click="enterMap(100)" class="md-btn">Enter</md-button>
             </md-card-actions>
           </md-card>
         </div>
-        <div flex-xs flex-gt-xs="50" layout="column">
+        <div flex-xs flex-gt-xs="50" layout="column" class="card">
           <md-card>
             <md-card-title>
               <md-card-title-text>
                 <span class="md-headline"><strong>Flood</strong></span>
                 <span class="md-subhead">
-                    <p ng-show="showFloodTxt">
+                    <p ng-if="showFloodTxt" class="info-fade">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in dolor vehicula, eleifend nisl consequat, cursus risus. Donec fermentum velit bibendum mauris maximus hendrerit. Etiam viverra mi non sapien vulputate ornare. Maecenas turpis tortor, sagittis at velit in, sollicitudin blandit odio.
                     </p>
                 </span>
@@ -45,18 +45,18 @@
               </md-card-title-media>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="floodToggle()" class="md-raised">Info</md-button>
-                <md-button ng-click="enterMap('flood')" class="md-raised">Enter</md-button>
+                <md-button ng-click="floodToggle()" class="md-btn">Info</md-button>
+                <md-button ng-click="enterMap('flood')" class="md-btn">Enter</md-button>
             </md-card-actions>
           </md-card>
         </div>
-        <div flex-xs flex-gt-xs="50" layout="column">
+        <div flex-xs flex-gt-xs="50" layout="column" class="card">
           <md-card>
             <md-card-title>
               <md-card-title-text>
                 <span class="md-headline"><strong>Hurricane</strong></span>
                 <span class="md-subhead">
-                    <p ng-show="showHurricaneTxt">
+                    <p ng-if="showHurricaneTxt" class="info-fade">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in dolor vehicula, eleifend nisl consequat, cursus risus. Donec fermentum velit bibendum mauris maximus hendrerit. Etiam viverra mi non sapien vulputate ornare. Maecenas turpis tortor, sagittis at velit in, sollicitudin blandit odio.
                     </p>
                 </span>
@@ -66,8 +66,8 @@
               </md-card-title-media>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="hurricaneToggle()" class="md-raised">Info</md-button>
-                <md-button ng-click="enterMap('hurricane')" class="md-raised">Enter</md-button>
+                <md-button ng-click="hurricaneToggle()" class="md-btn">Info</md-button>
+                <md-button ng-click="enterMap('hurricane')" class="md-btn">Enter</md-button>
             </md-card-actions>
           </md-card>
         </div>
