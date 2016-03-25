@@ -1,11 +1,14 @@
 <div class="login-container" ng-controller="LoginCtrl">
     <div class="row">
         <div class="col-md-offset-5 col-md-3 text-center">
+            <div class="alert alert-danger" role="alert" ng-show="invalid">
+                <strong>Oops!</strong> Invalid username/password. Please try again!
+            </div>
             <div class="form-login">
                 <h4>Welcome To Radar for Life</h4>
                 <h5>Please login to continue</h5>
                 <div class="input-section">
-                    <input type="text" ng-model="userName" id="userName" class="form-control input-sm chat-input" placeholder="User ID or Username" />
+                    <input type="text" ng-model="userName" id="userName" class="form-control input-sm chat-input" placeholder="User ID or Email" />
                     <input type="password" ng-model="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
                 </br>
                 </div>

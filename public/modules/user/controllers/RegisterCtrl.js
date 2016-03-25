@@ -14,12 +14,25 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  
 	  $scope.userData = UserFactory.getUserData();
 
+	  $scope.invalid1 = false;
+	  $scope.invalid2 = false;
+	  $scope.invalid3 = false;
+
 	  $scope.userId = "";
 	  $scope.firstName = "";
 	  $scope.lastName = "";
 	  $scope.userEmail = "";
 	  $scope.signPassword = "";
 	  $scope.reSignPassword = "";
+
+	  function fieldClear() {
+	  	$scope.userId = "";
+		$scope.firstName = "";
+		$scope.lastName = "";
+		$scope.userEmail = "";
+		$scope.signPassword = "";
+	  	$scope.reSignPassword = "";
+	  }
 
 	  $scope.fieldIncompleted = function(){
 	  	var id = $scope.userId;
@@ -38,8 +51,19 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  $scope.signUp = function(){
 
 	  	if($scope.signPassword != $scope.reSignPassword){
-	  		alert("Two passwords are not the same, please try again!");
-	  		location.reload();
+	  		$scope.invalid1 = false;
+	  		$scope.invalid2 = true;
+	  		$scope.invalid3 = false;
+	  		fieldClear();
+	  		return;
+	  	}
+
+	  	if($scope.userId.indexOf("-") > -1){
+	  		$scope.invalid1 = false;
+	  		$scope.invalid2 = false;
+	  		$scope.invalid3 = true;
+	  		fieldClear();
+	  		return;
 	  	}
 
 	  	var inputData = {
@@ -51,6 +75,13 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  	}
 
 	  	UserFactory.userCreate(inputData);
+
+	  	if(!$scope.userData.data.success){
+	  	  $scope.invalid1 = true;
+	  	  $scope.invalid2 = false;
+	  	  $scope.invalid3 = false;
+	  	  fieldClear();
+	  	}
 	  };
 
 	  $rootScope.$on('user_update', function(){

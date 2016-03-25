@@ -15,7 +15,7 @@ App.config(function($logProvider){
 });
 
 // url routing
-App.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider){
+App.config(["$routeProvider", function($routeProvider){
 
 	var checkLoggedIn = function($location, $cookieStore){
 		var userData = $cookieStore.get('userData');

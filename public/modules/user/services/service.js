@@ -21,9 +21,6 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$c
          if(userData.data.success){
             //enter the event page
             $location.path('/events');
-         }else{
-            alert('Username has already existed. Please try again!');
-            location.reload();
          }
       }, function(error){
         console.log(error);
@@ -40,9 +37,6 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$c
           if(userData.data.success){
             //enter the event page
             $location.path('/events');
-          }else{
-            alert("Username/Password is invalid. Please try again!");
-            location.reload();
           }
     	}, function(error){
         console.log(error);
