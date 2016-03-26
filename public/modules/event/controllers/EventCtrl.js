@@ -4,10 +4,11 @@ var EventController = App.controller('EventCtrl', [
 	'$scope',
 	'$http',
 	'$location',
+	'$mdDialog',
 	'EventFactory',
 	'PolygonFactory',
 	'UserFactory',
-	function($scope, $http, $location, EventFactory, PolygonFactory, UserFactory){
+	function($scope, $http, $location, $mdDialog, EventFactory, PolygonFactory, UserFactory){
 
   	  $scope.showEarthquakeTxt = false;
   	  $scope.showFloodTxt = false;
@@ -31,8 +32,16 @@ var EventController = App.controller('EventCtrl', [
 	  }
 
 	  $scope.signOut = function(){
-	  	UserFactory.signout();
-	  	$location.path('/');
+	  	var confirm = $mdDialog.confirm()
+        	.title('Sign out already ?')
+        	.textContent('Are you sure to log out ?')
+        	.ok('YES')
+        	.cancel('CANCEL');
+
+      	$mdDialog.show(confirm).then(function() {
+          UserFactory.signout(); 
+          $location.path('/');
+      	});
 	  }
 
 }]);

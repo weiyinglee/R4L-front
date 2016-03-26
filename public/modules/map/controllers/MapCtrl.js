@@ -7,6 +7,7 @@ var MapController = App.controller('MapCtrl', [
     'leafletData',
     '$compile',
     '$cookieStore',
+    '$mdDialog',
     'BadgeFactory',
     'EventFactory',
     'PolygonFactory',
@@ -18,6 +19,7 @@ var MapController = App.controller('MapCtrl', [
     leafletData,
     $compile,
     $cookieStore,
+    $mdDialog,
     BadgeFactory,
     EventFactory,
     PolygonFactory,
@@ -98,8 +100,16 @@ var MapController = App.controller('MapCtrl', [
     var layerMap = {};
 
     $scope.signOut = function(){
-      UserFactory.signout();
-      $location.path('/');
+      var confirm = $mdDialog.confirm()
+        .title('Sign out already ?')
+        .textContent('Are you sure to log out ?')
+        .ok('YES')
+        .cancel('CANCEL');
+
+      $mdDialog.show(confirm).then(function() {
+          UserFactory.signout(); 
+          $location.path('/');
+      });
     }
 
     $scope.menu = function() {
