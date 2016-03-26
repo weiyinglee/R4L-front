@@ -5,7 +5,7 @@ body {
   font: normal 14px Roboto,arial,sans-serif; }
 
 .login-container {
-  padding-top: 15%;
+  padding-top: 1%;
   padding-left: auto;
   padding-right: auto;
   margin-left: 10%;
@@ -40,29 +40,42 @@ h4 {
   margin-left: 18%;
   width: 60%; }
 
-/*
-.login-btn {
-    background-color: green;
-    color: white;
-    border-radius: 10px 10px 10px;
-}
+.admin-btn {
+  background-color: #444;
+  color: gray;
+  border-radius: 20px 20px 20px;
+  font-size: 14px; }
 
-.login-btn:not([disabled]):hover {
-    background-color: #CCFF00;
-    color: black;
+.admin-btn:not([disabled]):hover {
+  background-color: white;
+  color: black;
+  font-weight: bold; }
+
+.navbar {
+  margin-bottom: 10%;
+  background-color: #121211; }
+  .navbar md-toolbar {
+    background-color: #2B2B2B;
+    border-radius: 5px 5px 5px 5px; }
+  .navbar .logo-title {
     font-weight: bold;
-}
+    font-style: italic;
+    font-size: 24px;
+    text-shadow: 1px 1px #444; }
 
-.login-btn[disabled] {
-    color : #003300;
-    background-color: #66CC66;
-}
-*/
 @media screen and (max-width: 768px) {
   .group-btn a {
     margin-bottom: 4%; }
 
   input {
-    width: 90%; } }
+    width: 90%; }
+
+  .navbar {
+    margin-bottom: 20%; }
+    .navbar .logo-title {
+      font-size: 16px; }
+    .navbar .admin-btn {
+      font-size: 12px;
+      border-radius: 20px 0 0 20px; } }
 
 /*# sourceMappingURL=signin.css.map */

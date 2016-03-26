@@ -1,26 +1,39 @@
-<div class="login-container" ng-controller="LoginCtrl">
-    <div class="row">
-        <div class="col-md-offset-5 col-md-3 text-center">
-            <div class="alert alert-danger" role="alert" ng-show="invalid" ng-cloak>
-                <strong>Oops!</strong> Invalid username/password. Please try again!
+<div ng-controller="LoginCtrl">
+    <md-content class="navbar">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings">
+                    <md-icon md-svg-icon=""></md-icon>
+                </md-button>
+                <h2>
+                    <span class="logo-title">Rapid Natural Disaster Response</span>
+                </h2>
+                <span flex></span>
+                <md-button ng-click="" class="admin-btn">Admin</md-button>
             </div>
-            <div class="form-login">
-                <h4>Welcome To Radar for Life</h4>
-                <h5>Please login to continue</h5>
-                <div class="input-section">
-                    <input type="text" ng-model="userName" id="userName" class="form-control input-sm chat-input" placeholder="User ID or Email" />
-                    <input type="password" ng-model="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
-                </br>
-                </div>
-                <div class="wrapper">
-                    <span class="group-btn">
-                        <a role="button" ng-disabled="fieldIncompleted()" ng-click="fieldIncompleted() || auth()" class="btn btn-warning btn-md">
-                            login <i class="fa fa-sign-in"></i>
-                        </a>
-                        <a href="/#/signup" role="button" class="btn btn-warning btn-md">
-                            Sign up
-                        </a>
-                    </span>
+        </md-toolbar>
+    </md-content>
+    <div class="login-container" ng-cloak>
+        <div class="row">
+            <div class="col-md-offset-5 col-md-3 text-center">
+                <div class="form-login">
+                    <h4>Welcome To Radar for Life</h4>
+                    <h5>Please login to continue</h5>
+                    <div class="input-section">
+                        <input type="text" ng-model="userName" id="userName" class="form-control input-sm chat-input" placeholder="User ID or Email" />
+                        <input type="password" ng-model="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
+                    </br>
+                    </div>
+                    <div class="wrapper">
+                        <span class="group-btn">
+                            <a role="button" ng-disabled="fieldIncompleted()" ng-click="fieldIncompleted() || auth()" class="btn btn-warning btn-md">
+                                login <i class="fa fa-sign-in"></i>
+                            </a>
+                            <a href="/#/signup" role="button" class="btn btn-warning btn-md">
+                                Sign up
+                            </a>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

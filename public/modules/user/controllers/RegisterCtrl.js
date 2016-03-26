@@ -3,20 +3,18 @@
 var RegisterController = App.controller('RegisterCtrl', [ 
 	'$scope',
 	'$http',
+	'$mdDialog',
 	'UserFactory',
 	'$rootScope',
 	function(
 	  $scope,
 	  $http,
+	  $mdDialog,
 	  UserFactory,
 	  $rootScope
 	  ){
 	  
 	  $scope.userData = UserFactory.getUserData();
-
-	  $scope.invalid1 = false;
-	  $scope.invalid2 = false;
-	  $scope.invalid3 = false;
 
 	  $scope.userId = "";
 	  $scope.firstName = "";
@@ -51,17 +49,27 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  $scope.signUp = function(){
 
 	  	if($scope.signPassword != $scope.reSignPassword){
-	  		$scope.invalid1 = false;
-	  		$scope.invalid2 = true;
-	  		$scope.invalid3 = false;
+	  		$mdDialog.show(
+	  			$mdDialog.alert()
+	  				.parent(angular.element(document.querySelector('.register-container')))
+	  				.clickOutsideToClose(true)
+	  				.title('Oops!')
+	  				.textContent('Two passwords are not the same. Please try again!')
+	  				.ok('Try again!')
+	  		);
 	  		fieldClear();
 	  		return;
 	  	}
 
 	  	if($scope.userId.indexOf("-") > -1){
-	  		$scope.invalid1 = false;
-	  		$scope.invalid2 = false;
-	  		$scope.invalid3 = true;
+	  		$mdDialog.show(
+	  			$mdDialog.alert()
+	  				.parent(angular.element(document.querySelector('.register-container')))
+	  				.clickOutsideToClose(true)
+	  				.title('Oops!')
+	  				.textContent('The fields cannot contain character " - ". Please try again!')
+	  				.ok('Try again!')
+	  		);
 	  		fieldClear();
 	  		return;
 	  	}
@@ -77,9 +85,14 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  	UserFactory.userCreate(inputData);
 
 	  	if(!$scope.userData.data.success){
-	  	  $scope.invalid1 = true;
-	  	  $scope.invalid2 = false;
-	  	  $scope.invalid3 = false;
+	  	  $mdDialog.show(
+	  		  $mdDialog.alert()
+	  			  .parent(angular.element(document.querySelector('.register-container')))
+	  			  .clickOutsideToClose(true)
+	  			  .title('Oops!')
+	  			  .textContent('This user has already existed. Please try again!')
+	  			  .ok('Try again!')
+	  	  );
 	  	  fieldClear();
 	  	}
 	  };
