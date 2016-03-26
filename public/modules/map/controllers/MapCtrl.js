@@ -114,9 +114,10 @@ var MapController = App.controller('MapCtrl', [
     $scope.username = UserFactory.getUserData().config.data.username;
 
     var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;   
+    var test = '/assets/libs/test.json';
 
     //get the geojson data from backend API
-    PolygonFactory.getGeojson(path).async().then(function(data){
+    PolygonFactory.getGeojson(test).async().then(function(data){
       var marker = null;
       var popup = L.popup().setContent('<status-button></status-button>');
 
@@ -125,15 +126,16 @@ var MapController = App.controller('MapCtrl', [
         marker.bindPopup(popup);
       });
 
-      console.log(data);
-
+      /*
       data.data.features.forEach(function(data){
         data.geometry = JSON.parse(data.geometry);
         data.type = "Feature";
       });
+    */
 
       angular.extend($scope, {
         geojson: {
+          type: "MultiPolygon",
           data: data.data,
           style: {
             weight: 3,

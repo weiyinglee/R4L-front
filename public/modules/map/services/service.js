@@ -4,7 +4,7 @@ App.factory('BadgeFactory', ['$rootScope', function($rootScope){
     damage           : 0,
     undamage         : 0,
     unknown          : 0,
-    remain           : 20
+    remain           : 4075
   }
 
   var service = {};
@@ -39,7 +39,7 @@ App.factory('BadgeFactory', ['$rootScope', function($rootScope){
         damage           : 0,
         undamage         : 0,
         unknown          : 0,
-        remain           : 20
+        remain           : 4075
       }
   }
 
@@ -95,13 +95,16 @@ App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($r
 
   service.getGeojson = function(path) {
     var promise;
+    var headers = {
+      headers: {
+            "Content-Type": 'application/json',
+            "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
+      }
+    }
     var polygons = {
       async: function() {
         if(!promise) {
-          promise = $http.get(path, { headers: {
-            "Content-Type": 'application/json',
-            "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
-          }}).then(function(data){
+          promise = $http.get(path, headers).then(function(data){
             return data;
           });
         }
