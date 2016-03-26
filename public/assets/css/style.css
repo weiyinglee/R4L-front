@@ -51,8 +51,18 @@ h4 {
   color: black;
   font-weight: bold; }
 
+.login-btn {
+  background-color: green;
+  color: white;
+  border-radius: 20px 20px 20px; }
+
+.login-btn:not([disabled]):hover {
+  background-color: #CCFF00;
+  color: black;
+  font-weight: bold; }
+
 .navbar {
-  margin-bottom: 10%;
+  margin-bottom: 8%;
   background-color: #121211; }
   .navbar md-toolbar {
     background-color: #2B2B2B;
@@ -71,11 +81,13 @@ h4 {
     width: 90%; }
 
   .navbar {
-    margin-bottom: 20%; }
+    margin-bottom: 15%; }
     .navbar .logo-title {
       font-size: 16px; }
     .navbar .admin-btn {
       font-size: 12px;
+      border-radius: 20px 0 0 20px; }
+    .navbar .login-btn {
       border-radius: 20px 0 0 20px; } }
 #map {
   margin-top: 0.5%;
@@ -183,7 +195,6 @@ md-card, .md-subhead > p {
   .md-headline {
     font-size: 14px; } }
 .register-container {
-  padding-top: 10%;
   padding-left: auto;
   padding-right: auto;
   margin-left: 10%;

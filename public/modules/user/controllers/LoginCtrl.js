@@ -49,7 +49,7 @@ var LoginController = App.controller('LoginCtrl', [
 	  		$scope.userName = "";
 	  		$scope.userPassword = "";
 	  	}
-	  };
+	  }
 
 	  $rootScope.$on('user_update', function(){
         $scope.userData = UserFactory.getUserData();

@@ -55,13 +55,25 @@ h4 {
 }
 
 .admin-btn:not([disabled]):hover {
-  background-color: white;
-  color: black;
-  font-weight: bold;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+}
+
+.login-btn {
+    background-color: green;
+    color: white;
+    border-radius: 20px 20px 20px;
+}
+
+.login-btn:not([disabled]):hover {
+    background-color: #CCFF00;
+    color: black;
+    font-weight: bold;
 }
 
 .navbar {
-    margin-bottom: 10%;
+    margin-bottom: 8%;
     background-color: #121211;
     md-toolbar {
         background-color: #2B2B2B;
@@ -85,12 +97,15 @@ h4 {
     }
 
     .navbar {
-        margin-bottom: 20%;
+        margin-bottom: 15%;
         .logo-title {
             font-size: 16px;
         }
         .admin-btn {
             font-size: 12px;
+            border-radius: 20px 0 0 20px;
+        }
+        .login-btn {
             border-radius: 20px 0 0 20px;
         }
     }
