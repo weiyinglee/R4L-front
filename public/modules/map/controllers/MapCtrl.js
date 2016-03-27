@@ -127,7 +127,7 @@ var MapController = App.controller('MapCtrl', [
     var test = '/assets/libs/test.json';
 
     //get the geojson data from backend API
-    PolygonFactory.getGeojson(test).async().then(function(data){
+    PolygonFactory.getGeojson(path).async().then(function(data){
       var marker = null;
       var popup = L.popup().setContent('<status-button></status-button>');
 

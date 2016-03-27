@@ -17,17 +17,28 @@ App.config(function($logProvider){
 // url routing
 App.config(["$routeProvider", function($routeProvider){
 
+	
+
 	var checkLoggedIn = function($location, $cookieStore){
 		var userData = $cookieStore.get('userData');
 		if(userData === undefined || !userData.data.success){
-			$location.path('/');
+		  $location.path('/');
 		}
 	}
 
 	var notLoggedIn = function($location, $cookieStore){
 		var userData = $cookieStore.get('userData');
 		if(userData != undefined && userData.data.success){
-			$location.path('/events');
+		  $location.path('/events');
+		}
+	}
+
+	var isAdmin = function($location, $cookieStore){
+		var userData = $cookieStore.get('userData');
+		if(userData === undefined || !userData.data.success){
+		  $location.path('/');
+		}else if(!userData.data.is_admin){
+		  $location.path('/events');
 		}
 	}
 
@@ -59,6 +70,13 @@ App.config(["$routeProvider", function($routeProvider){
 			},
 			templateUrl : "/modules/map/views/Map.html",
 			controller  : "MapCtrl"
+		}).
+		when('/admin', {
+			resolve: {
+				check: isAdmin
+			},
+			templateUrl: "/modules/admin/views/admin.html",
+			controller : "AdminCtrl"
 		})
 	}
 ]);

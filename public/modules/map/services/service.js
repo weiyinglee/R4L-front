@@ -95,16 +95,15 @@ App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($r
 
   service.getGeojson = function(path) {
     var promise;
-    var headers = {
-      headers: {
-            "Content-Type": 'application/json',
-            "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
-      }
-    }
     var polygons = {
       async: function() {
         if(!promise) {
-          promise = $http.get(path, headers).then(function(data){
+          promise = $http.get(path, {
+            headers: {
+              "Content-Type": 'application/json',
+              "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
+            }
+          }).then(function(data){
             return data;
           });
         }
