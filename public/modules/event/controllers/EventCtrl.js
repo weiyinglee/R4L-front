@@ -10,21 +10,11 @@ var EventController = App.controller('EventCtrl', [
 	'UserFactory',
 	function($scope, $http, $location, $mdDialog, EventFactory, PolygonFactory, UserFactory){
 
-  	  $scope.showEarthquakeTxt = false;
-  	  $scope.showFloodTxt = false;
-      $scope.showHurricaneTxt = false;
+	  var events = EventFactory.getEvent();
 
-  	  $scope.earthquakeToggle = function(){
-  		$scope.showEarthquakeTxt = !$scope.showEarthquakeTxt;
-  	  }
+	  $scope.eventList = events.data;
 
-	  $scope.floodToggle = function(){
-	  	$scope.showFloodTxt = !$scope.showFloodTxt;
-	  }
-
-	  $scope.hurricaneToggle = function(){
-	  	$scope.showHurricaneTxt = !$scope.showHurricaneTxt;
-	  }
+	  $scope.isAdmin = UserFactory.getUserData().data.is_admin;
 
 	  $scope.enterMap = function(eventId){
 	  	EventFactory.setEventId(eventId);

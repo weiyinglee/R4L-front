@@ -136,12 +136,16 @@ var MapController = App.controller('MapCtrl', [
         marker.bindPopup(popup);
       });
 
-      /*
+      leafletData.getMap().then(function(map){
+        map.on('dragend', function(event){
+          console.log(map.getBounds());
+        });
+      });
+      
       data.data.features.forEach(function(data){
         data.geometry = JSON.parse(data.geometry);
         data.type = "Feature";
       });
-    */
 
       angular.extend($scope, {
         geojson: {

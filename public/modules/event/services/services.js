@@ -4,6 +4,14 @@ App.factory('EventFactory', ['$rootScope', '$cookieStore', function($rootScope, 
 
   var service = {};
 
+  service.setEvent = function(events){
+    $cookieStore.put('events', events);
+  }
+
+  service.getEvent = function(){
+    return $cookieStore.get('events');
+  }
+
   service.setEventId = function(Id){
     $cookieStore.put('eventId', Id);
     this.eventUpdate();
