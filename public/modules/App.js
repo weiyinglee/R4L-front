@@ -75,6 +75,7 @@ App.config(["$routeProvider", function($routeProvider){
 			},
 			templateUrl: "/modules/admin/views/admin.html",
 			controller : "AdminCtrl"
-		})
+		}).
+		otherwise('/')
 	}
 ]);
