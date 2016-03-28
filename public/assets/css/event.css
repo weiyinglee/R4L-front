@@ -2,14 +2,16 @@
   border: 1px solid black;
   border-radius: 15px;
   background-color: #2B2B2B;
-  padding-top: 5%;
-  margin-top: 2%;
+  padding-top: 1%;
+  margin-top: 1%;
   margin-bottom: 1%;
   color: #fff;
   text-align: center; }
-  .jumbotron .button_section {
+  .jumbotron #menu-signout {
     margin-left: 85%;
     margin-bottom: 1%; }
+  .jumbotron #create-btn {
+    margin-right: 85%; }
 
 md-card, .md-subhead > p {
   background-color: #2B2B2B;
@@ -33,7 +35,7 @@ md-card, .md-subhead > p {
   font-weight: bold; }
 
 .next-page-btn, .prev-page-btn {
-  background-color: #b36b00;
+  background-color: #4d2e00;
   color: white; }
 
 .next-page-btn {
@@ -82,8 +84,11 @@ md-card, .md-subhead > p {
   opacity: 0; }
 
 @media screen and (max-width: 768px) {
-  .jumbotron > .button_section {
+  .jumbotron #menu-signout {
     margin-left: 0;
+    margin-bottom: 2%; }
+  .jumbotron #create-btn {
+    margin-right: 0;
     margin-bottom: 2%; }
 
   .md-headline {
