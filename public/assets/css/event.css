@@ -18,6 +18,10 @@ md-card, .md-subhead > p {
 .card, .md-padding {
   background-color: #121211; }
 
+.event-img {
+  weight: 100%;
+  height: auto; }
+
 .md-btn {
   background-color: green;
   color: white;
@@ -27,6 +31,25 @@ md-card, .md-subhead > p {
   background-color: #CCFF00;
   color: black;
   font-weight: bold; }
+
+.next-page-btn, .prev-page-btn {
+  background-color: #b36b00;
+  color: white; }
+
+.next-page-btn {
+  border-radius: 0 20px 20px 0; }
+
+.prev-page-btn {
+  border-radius: 20px 0 0 20px; }
+
+.next-page-btn:not([disabled]):hover, .prev-page-btn:not([disabled]):hover {
+  background-color: #fff;
+  color: black;
+  font-weight: bold; }
+
+.next-page-btn[disabled], .prev-page-btn[disabled] {
+  background-color: #333;
+  color: #111; }
 
 .signout-btn {
   background-color: #CC6600;

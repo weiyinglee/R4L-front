@@ -16,6 +16,8 @@ var EventController = App.controller('EventCtrl', [
 
 	  $scope.isAdmin = UserFactory.getUserData().data.is_admin;
 
+	  $scope.pageCount = 1;
+
 	  $scope.enterMap = function(eventId){
 	  	EventFactory.setEventId(eventId);
 	  	$location.path('/map');

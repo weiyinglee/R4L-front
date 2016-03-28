@@ -7,18 +7,18 @@
           <md-button ng-click="signOut()" class="signout-btn">Sign out</md-button>
         </div>
     </div>
-    <md-content class="md-padding" layout="row">
-      <div flex-xs flex-gt-xs="50" layout="column" class="card" ng-repeat="event in eventList">
+    <md-content class="md-padding" layout="row" layout-xs="column">
+      <div flex-xs flex-gt-xs="50" layout="column" class="card" ng-repeat="event in eventList | limitTo: pageCount * 3 | limitTo: -3">
         <md-card>
           <md-card-title>
             <md-card-title-text>
-              <span class="md-headline"><strong>{{ event.name }}</strong></span>
+              <span class="md-headline"><h4>{{ event.name }}</h4></span>
               <span class="md-subhead">
                   <p>{{ event.description }}</p>
               </span>
             </md-card-title-text>
             <md-card-title-media>
-              <div class="md-media-lg card-media"><img ng-src="{{ event.thumbnail }}"/></div>
+              <div class="md-media-lg card-media"><img ng-src="{{ event.thumbnail }}" class="event-img"/></div>
             </md-card-title-media>
           </md-card-title>
           <md-card-actions layout="row" layout-align="end center">
@@ -28,4 +28,10 @@
         </md-card>
       </div>
     </md-content>
+    <nav>
+      <ul class="pager">
+        <li><md-button class="prev-page-btn" ng-click="pageCount = pageCount - 1" ng-disabled="pageCount * 3 == 3">Previous</md-button></li>
+        <li><md-button class="next-page-btn" ng-click="pageCount = pageCount + 1" ng-disabled="pageCount * 3 == eventList.length">Next</md-button></li>
+      </ul>
+    </nav>
 </div>
