@@ -1,18 +1,22 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
 body {
-  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  height: auto;
+  background-color: #121211;
   -webkit-font-smoothing: antialiased;
   font: normal 14px Roboto,arial,sans-serif; }
 
 .login-container {
-  padding-top: 15%;
+  padding-top: 1%;
   padding-left: auto;
   padding-right: auto;
   margin-left: 10%;
   width: 80%; }
 
 .form-login {
-  background-color: #EDEDED;
+  background-color: #2B2B2B;
+  color: white;
   padding-top: 10px;
   padding-bottom: 20px;
   padding-left: 20px;
@@ -20,7 +24,6 @@ body {
   border-radius: 15px;
   border-color: #d2d2d2;
   border-width: 5px;
-  box-shadow: 0 1px 0 #cfcfcf;
   margin-left: 18%;
   width: 60%; }
 
@@ -36,11 +39,58 @@ h4 {
 .wrapper {
   text-align: center; }
 
+.alert {
+  margin-left: 18%;
+  width: 60%; }
+
+.admin-btn {
+  background-color: #444;
+  color: gray;
+  border-radius: 20px 20px 20px;
+  font-size: 14px; }
+
+.admin-btn:not([disabled]):hover {
+  background-color: white;
+  color: black;
+  font-weight: bold; }
+
+.login-btn {
+  background-color: green;
+  color: white;
+  border-radius: 20px 20px 20px; }
+
+.login-btn:not([disabled]):hover {
+  background-color: #CCFF00;
+  color: black;
+  font-weight: bold; }
+
+.navbar {
+  margin-bottom: 8%;
+  background-color: #121211; }
+  .navbar md-toolbar {
+    background-color: #2B2B2B;
+    border-radius: 5px 5px 5px 5px; }
+  .navbar .logo-title {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 24px;
+    text-shadow: 1px 1px #444; }
+
 @media screen and (max-width: 768px) {
   .group-btn a {
     margin-bottom: 4%; }
 
   input {
-    width: 90%; } }
+    width: 90%; }
+
+  .navbar {
+    margin-bottom: 15%; }
+    .navbar .logo-title {
+      font-size: 16px; }
+    .navbar .admin-btn {
+      font-size: 12px;
+      border-radius: 20px 0 0 20px; }
+    .navbar .login-btn {
+      border-radius: 20px 0 0 20px; } }
 
 /*# sourceMappingURL=signin.css.map */

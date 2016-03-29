@@ -6,6 +6,8 @@ var MapController = App.controller('MapCtrl', [
     '$location',
     'leafletData',
     '$compile',
+    '$cookieStore',
+    '$mdDialog',
     'BadgeFactory',
     'EventFactory',
     'PolygonFactory',
@@ -16,6 +18,8 @@ var MapController = App.controller('MapCtrl', [
     $location,
     leafletData,
     $compile,
+    $cookieStore,
+    $mdDialog,
     BadgeFactory,
     EventFactory,
     PolygonFactory,
@@ -95,10 +99,32 @@ var MapController = App.controller('MapCtrl', [
 
     var layerMap = {};
 
+    $scope.signOut = function(){
+      var confirm = $mdDialog.confirm()
+        .title('Sign out already ?')
+        .textContent('Are you sure to log out ?')
+        .ok('YES')
+        .cancel('CANCEL');
+
+      $mdDialog.show(confirm).then(function() {
+          UserFactory.signout(); 
+          $location.path('/');
+      });
+    }
+
+    $scope.menu = function() {
+      //make the badge numbers back to original
+      BadgeFactory.resetBadges();
+      //redirect to menu
+      $location.path('/events');
+    }
+
     $scope.eventId = EventFactory.getEventId();
     
-    $scope.username = UserFactory.getUserData().data.username;
-    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
+    $scope.username = UserFactory.getUserData().config.data.username;
+
+    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;   
+    var test = '/assets/libs/test.json';
 
     //get the geojson data from backend API
     PolygonFactory.getGeojson(path).async().then(function(data){
@@ -110,6 +136,12 @@ var MapController = App.controller('MapCtrl', [
         marker.bindPopup(popup);
       });
 
+      leafletData.getMap().then(function(map){
+        map.on('dragend', function(event){
+          console.log(map.getBounds());
+        });
+      });
+      
       data.data.features.forEach(function(data){
         data.geometry = JSON.parse(data.geometry);
         data.type = "Feature";
@@ -117,6 +149,7 @@ var MapController = App.controller('MapCtrl', [
 
       angular.extend($scope, {
         geojson: {
+          type: "MultiPolygon",
           data: data.data,
           style: {
             weight: 3,
@@ -175,7 +208,7 @@ var MapController = App.controller('MapCtrl', [
 
               marker.openPopup();
 
-              if(feature.properties.status != 'NOT_EVALUATED') {
+              if(feature.properties.status != 'NOT_EVALUATED'){
 
                 handleCurrentStatus(layer, 'status');
 
@@ -295,10 +328,10 @@ var MapController = App.controller('MapCtrl', [
           //check if the polygon is too far by 300 meters to improve use visibility
           leafletData.getMap('map').then(function(map){
             map.closePopup();
-            if(currentPolygon.distanceTo(nextPolygon) > 300){
-              map.setView(nextPolygon, 17);
-            }
             nextLayer.fire('click', { latlng: nextPolygon });
+            if(currentPolygon.distanceTo(nextPolygon) > 300){
+              map.setView(nextPolygon, 19);
+            }
           });
           return;
         }

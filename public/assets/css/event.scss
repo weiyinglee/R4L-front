@@ -1,35 +1,118 @@
 .jumbotron {
 	border: 1px solid black;
 	border-radius: 15px;
-	box-shadow: 2px 2px 2px #888;
-	background-color: lightblue;
-	padding-top: 5%;
-	margin-top: 2%;
+	background-color: #2B2B2B;
+	padding-top: 1%;
+	margin-top: 1%;
 	margin-bottom: 1%;
-	color: #555;
+	color: #fff;
 	text-align: center;
-	.button_section {
+	#menu-signout {
 		margin-left: 85%;
 		margin-bottom: 1%;
 	}
+	#create-btn {
+		margin-right: 85%;
+	}
 }
 
-#earthquake_img {
-    background: url('/assets/img/earthquake.jpg') no-repeat center; 
+md-card, .md-subhead > p {
+	background-color: #2B2B2B;
+	color: white;
+	
 }
 
-#flood_img {
-    background: url('/assets/img/flood.jpg') no-repeat top;
+.card, .md-padding{
+	background-color: #121211;
 }
 
-#hurricane_img {
-    background: url('/assets/img/hurricane.jpg') no-repeat center;
+.event-img {
+	weight: 100%;
+	height: auto;
+}
+
+.md-btn {
+	background-color: green;
+	color: white;
+	border-radius: 20px 20px 20px;
+}
+
+.md-btn:not([disabled]):hover {
+  	background-color: #CCFF00;
+  	color: black;
+  	font-weight: bold;
+}
+
+.next-page-btn, .prev-page-btn {
+	background-color: #4d2e00;
+	color: white;
+}
+
+.next-page-btn {
+	border-radius: 0 20px 20px 0;
+}
+
+.prev-page-btn {
+	border-radius: 20px 0 0 20px;
+}
+
+.next-page-btn:not([disabled]):hover, .prev-page-btn:not([disabled]):hover {
+	background-color: #fff;
+	color: black;
+	font-weight: bold;
+}
+
+.next-page-btn[disabled], .prev-page-btn[disabled] {
+	background-color: #333;
+	color: #111;
+}
+
+.signout-btn {
+	background-color: #CC6600;
+	color: white;
+	border-radius: 10px 10px 10px 10px;
+}
+
+.signout-btn:not([disabled]):hover {
+	background-color: #660000;
+	color: white;
+	font-weight: bold;
+}
+
+/* ng-animation fade in */
+.info-fade.ng-enter {
+  	transition:0.8s ease all;
+  	opacity:0;
+  	transform:translateX(-100%);
+}
+
+.info-fade.ng-enter.ng-enter-active {
+  	opacity:1;
+  	transform:translateX(0);
+}
+
+/* ng-animation fade out */
+.info-fade.ng-leave {
+	transition: 0.2s ease all;
+  	opacity:1;
+  	transform:translateX(0);
+}
+.info-fade.ng-leave.ng-leave-active {
+	transform:translateX(-100%);
+  	opacity:0;
 }
 
 @media screen and (max-width: 768px) {
-	.jumbotron > .button_section {
-		margin-left: 0;
-		margin-bottom: 2%;
+	.jumbotron{
+		#menu-signout {
+			margin-left: 0;
+			margin-bottom: 2%;
+		}
+
+		#create-btn {
+			margin-right: 0;
+			margin-bottom: 2%;
+		}
 	}
 
 	.md-headline {

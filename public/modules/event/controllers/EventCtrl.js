@@ -3,29 +3,49 @@
 var EventController = App.controller('EventCtrl', [
 	'$scope',
 	'$http',
+	'$location',
+	'$mdDialog',
 	'EventFactory',
 	'PolygonFactory',
-	function($scope, $http, EventFactory, PolygonFactory){
+	'UserFactory',
+	function($scope, $http, $location, $mdDialog, EventFactory, PolygonFactory, UserFactory){
 
-  	  $scope.showEarthquakeTxt = false;
-  	  $scope.showFloodTxt = false;
-      $scope.showHurricaneTxt = false;
+	  var events = EventFactory.getEvent();
 
-  	  $scope.earthquakeToggle = function(){
-  		$scope.showEarthquakeTxt = !$scope.showEarthquakeTxt;
-  	  }
+	  $scope.eventList = events.data;
 
-	  $scope.floodToggle = function(){
-	  	$scope.showFloodTxt = !$scope.showFloodTxt;
-	  }
+	  $scope.isAdmin = UserFactory.getUserData().data.is_admin;
 
-	  $scope.hurricaneToggle = function(){
-	  	$scope.showHurricaneTxt = !$scope.showHurricaneTxt;
-	  }
+	  $scope.pageCount = 1;
 
 	  $scope.enterMap = function(eventId){
 	  	EventFactory.setEventId(eventId);
-	  	location.replace('/#/map');
+	  	$location.path('/map');
+	  }
+
+	  $scope.showCreatePanel = function() {
+	  	$mdDialog.show({
+	  		controller: 'AdminCtrl',
+	  		templateUrl: '/modules/admin/views/upload.html',
+	  		parent: angular.element(document.body),
+	  		clickOutsideToClose: true
+	  	})
+	  	.then(function(){
+	  		alert('Successfully create a event');
+	  	});
+	  }
+
+	  $scope.signOut = function(){
+	  	var confirm = $mdDialog.confirm()
+        	.title('Sign out already ?')
+        	.textContent('Are you sure to log out ?')
+        	.ok('YES')
+        	.cancel('CANCEL');
+
+      	$mdDialog.show(confirm).then(function() {
+          UserFactory.signout(); 
+          $location.path('/');
+      	});
 	  }
 
 }]);

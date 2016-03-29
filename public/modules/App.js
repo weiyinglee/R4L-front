@@ -4,7 +4,9 @@ var App = window.App = angular.module('R4LApp', [
 		'ui.bootstrap',
 		'ngMaterial',
 		'ngAnimate',
-		'ngResource'
+		'ngResource',
+		'ngCookies',
+		'ngFileUpload'
 	]
 );
 
@@ -15,22 +17,66 @@ App.config(function($logProvider){
 
 // url routing
 App.config(["$routeProvider", function($routeProvider){
+
+	var checkLoggedIn = function($location, $cookieStore){
+		var userData = $cookieStore.get('userData');
+		if(userData === undefined || !userData.data.success){
+		  $location.path('/');
+		}
+	}
+
+	var notLoggedIn = function($location, $cookieStore){
+		var userData = $cookieStore.get('userData');
+		if(userData != undefined && userData.data.success){
+		  $location.path('/events');
+		}
+	}
+
+	var isAdmin = function($location, $cookieStore){
+		var userData = $cookieStore.get('userData');
+		if(userData === undefined || !userData.data.success){
+		  $location.path('/');
+		}else if(!userData.data.is_admin){
+		  $location.path('/events');
+		}
+	}
+
 	$routeProvider.
 		when('/', {
+			resolve: {
+				check: notLoggedIn
+			},
 			templateUrl : "/modules/user/views/Login.html",
 			controller  : "LoginCtrl"
 		}).
 		when('/signup', {
+			resolve: {
+				check: notLoggedIn
+			},
 			templateUrl : "/modules/user/views/Register.html",
 			controller  : "RegisterCtrl"
 		}).
 		when('/events', {
+			resolve: {
+				check: checkLoggedIn
+			},
 			templateUrl : "/modules/event/views/Events.html",
-			controller  : "EventCtrl" 
+			controller  : "EventCtrl"
 		}).
 		when('/map', {
+			resolve: {
+				check: checkLoggedIn
+			},
 			templateUrl : "/modules/map/views/Map.html",
 			controller  : "MapCtrl"
-		})
+		}).
+		when('/admin', {
+			resolve: {
+				check: isAdmin
+			},
+			templateUrl: "/modules/admin/views/admin.html",
+			controller : "AdminCtrl"
+		}).
+		otherwise('/')
 	}
 ]);

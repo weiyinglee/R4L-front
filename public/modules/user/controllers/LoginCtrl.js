@@ -3,11 +3,15 @@
 var LoginController = App.controller('LoginCtrl', [ 
 	'$scope',
 	'$http',
+	'$timeout',
+	'$mdDialog',
 	'UserFactory',
 	'$rootScope',
 	function(
 	  $scope,
 	  $http,
+	  $timeout,
+	  $mdDialog,
 	  UserFactory,
 	  $rootScope
 	  ){
@@ -32,7 +36,20 @@ var LoginController = App.controller('LoginCtrl', [
 	  	};
 
 	  	UserFactory.userLogin(inputData);
-	  };
+
+	  	if(!$scope.userData.data.success){
+	  		$mdDialog.show(
+	  			$mdDialog.alert()
+	  				.parent(angular.element(document.querySelector('.login-container')))
+	  				.clickOutsideToClose(true)
+	  				.title('Oops!')
+	  				.textContent('Invalid username/password. Please try again!')
+	  				.ok('Try again!')
+	  		);
+	  		$scope.userName = "";
+	  		$scope.userPassword = "";
+	  	}
+	  }
 
 	  $rootScope.$on('user_update', function(){
         $scope.userData = UserFactory.getUserData();

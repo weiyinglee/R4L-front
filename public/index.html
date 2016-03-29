@@ -12,7 +12,6 @@
 	<title>Radar For Life</title>
 </head>
 <body>
-
 	<div class="container-fluid">
 		<div ng-view></div>
 	</div>
@@ -21,6 +20,7 @@
 	<script src="/vendor/leaflet/dist/leaflet.js"></script>
 	<script src="/vendor/jquery/dist/jquery.min.js"></script>
 	<script src="/vendor/angular/angular.min.js"></script>
+	<script src="/vendor/angular-cookies/angular-cookies.js"></script>
 	<script src="/vendor/angular-aria/angular-aria.js"></script>
 	<script src="/vendor/angular-animate/angular-animate.js"></script>
 	<script src="/vendor/angular-material/angular-material.js"></script>
@@ -28,6 +28,8 @@
 	<script src="/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script src="/vendor/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
 	<script src="/vendor/ng-resource/dist/ng-resource.min.js"></script>
+	<script src="/vendor/ng-file-upload/ng-file-upload.min.js"></script>
+	<script src="/vendor/ng-file-upload/ng-file-upload-shim.min.js"></script>
 
 	<!-- dependencies by Main -->
 	<script src="/modules/App.js"></script>
@@ -48,5 +50,8 @@
 	<script src="/modules/event/controllers/EventCtrl.js"></script>
 	<script src="/modules/event/services/services.js"></script>
 
+	<!-- dependencies by admin -->
+	<script src="/modules/admin/controllers/AdminCtrl.js"></script>
+	<script src="/modules/admin/services/service.js"></script>
 </body>
 </html>

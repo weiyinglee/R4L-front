@@ -1,10 +1,12 @@
+'use strict';
+
 App.factory('BadgeFactory', ['$rootScope', function($rootScope){
 
   var badgeCount = {
     damage           : 0,
     undamage         : 0,
     unknown          : 0,
-    remain           : 20
+    remain           : 4075
   }
 
   var service = {};
@@ -32,6 +34,15 @@ App.factory('BadgeFactory', ['$rootScope', function($rootScope){
       unknown  : badgeCount.unknown,
       remain   : badgeCount.remain
     }
+  }
+
+  service.resetBadges = function() {
+    badgeCount = {
+        damage           : 0,
+        undamage         : 0,
+        unknown          : 0,
+        remain           : 4075
+      }
   }
 
   service.broadcastUpdate = function() {
@@ -65,7 +76,7 @@ App.factory('BadgeFactory', ['$rootScope', function($rootScope){
   return service;
 }]);
 
-App.factory('PolygonFactory', ["$rootScope", "$http", function($rootScope, $http){
+App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($rootScope, $http, UserFactory){
   
   var service = {};
 
@@ -89,7 +100,12 @@ App.factory('PolygonFactory', ["$rootScope", "$http", function($rootScope, $http
     var polygons = {
       async: function() {
         if(!promise) {
-          promise = $http.get(path).then(function(data){
+          promise = $http.get(path, {
+            headers: {
+              "Content-Type": 'application/json',
+              "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
+            }
+          }).then(function(data){
             return data;
           });
         }
@@ -100,8 +116,11 @@ App.factory('PolygonFactory', ["$rootScope", "$http", function($rootScope, $http
   }
 
   service.savePolygon = function(path, data) {
-    $http.post(path, data).then(function(response){
-        console.log(response);
+    $http.post(path, data, { headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + UserFactory.getUserData().data.token
+    }}).then(function(response){
+          console.log(response);
       }, function(error){
         console.log(error);
     });

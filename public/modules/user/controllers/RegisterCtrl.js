@@ -3,11 +3,13 @@
 var RegisterController = App.controller('RegisterCtrl', [ 
 	'$scope',
 	'$http',
+	'$mdDialog',
 	'UserFactory',
 	'$rootScope',
 	function(
 	  $scope,
 	  $http,
+	  $mdDialog,
 	  UserFactory,
 	  $rootScope
 	  ){
@@ -20,6 +22,15 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  $scope.userEmail = "";
 	  $scope.signPassword = "";
 	  $scope.reSignPassword = "";
+
+	  function fieldClear() {
+	  	$scope.userId = "";
+		$scope.firstName = "";
+		$scope.lastName = "";
+		$scope.userEmail = "";
+		$scope.signPassword = "";
+	  	$scope.reSignPassword = "";
+	  }
 
 	  $scope.fieldIncompleted = function(){
 	  	var id = $scope.userId;
@@ -38,19 +49,52 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  $scope.signUp = function(){
 
 	  	if($scope.signPassword != $scope.reSignPassword){
-	  		alert("Two passwords are not the same, please try again!");
-	  		location.reload();
+	  		$mdDialog.show(
+	  			$mdDialog.alert()
+	  				.parent(angular.element(document.querySelector('.register-container')))
+	  				.clickOutsideToClose(true)
+	  				.title('Oops!')
+	  				.textContent('Two passwords are not the same. Please try again!')
+	  				.ok('Try again!')
+	  		);
+	  		fieldClear();
+	  		return;
+	  	}
+
+	  	if($scope.userId.indexOf("-") > -1){
+	  		$mdDialog.show(
+	  			$mdDialog.alert()
+	  				.parent(angular.element(document.querySelector('.register-container')))
+	  				.clickOutsideToClose(true)
+	  				.title('Oops!')
+	  				.textContent('The fields cannot contain character " - ". Please try again!')
+	  				.ok('Try again!')
+	  		);
+	  		fieldClear();
+	  		return;
 	  	}
 
 	  	var inputData = {
 	  	  username: $scope.userId,
-	  	  firstName: $scope.firstName,
-	  	  lastName: $scope.lastName,
+	  	  first_name: $scope.firstName,
+	  	  last_name: $scope.lastName,
 	  	  email: $scope.userEmail,
 	  	  password: $scope.signPassword
 	  	}
 
 	  	UserFactory.userCreate(inputData);
+
+	  	if(!$scope.userData.data.success){
+	  	  $mdDialog.show(
+	  		  $mdDialog.alert()
+	  			  .parent(angular.element(document.querySelector('.register-container')))
+	  			  .clickOutsideToClose(true)
+	  			  .title('Oops!')
+	  			  .textContent('This user has already existed. Please try again!')
+	  			  .ok('Try again!')
+	  	  );
+	  	  fieldClear();
+	  	}
 	  };
 
 	  $rootScope.$on('user_update', function(){
