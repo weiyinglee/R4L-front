@@ -23,6 +23,18 @@ var EventController = App.controller('EventCtrl', [
 	  	$location.path('/map');
 	  }
 
+	  $scope.showCreatePanel = function() {
+	  	$mdDialog.show({
+	  		controller: 'AdminCtrl',
+	  		templateUrl: '/modules/admin/views/upload.html',
+	  		parent: angular.element(document.body),
+	  		clickOutsideToClose: true
+	  	})
+	  	.then(function(){
+	  		alert('Successfully create a event');
+	  	});
+	  }
+
 	  $scope.signOut = function(){
 	  	var confirm = $mdDialog.confirm()
         	.title('Sign out already ?')

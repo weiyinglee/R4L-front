@@ -1,5 +1,5 @@
 'use strict';
 
-var AdminController = App.controller('AdminCtrl', [ "$scope", function($scope){
+var AdminController = App.controller('AdminCtrl', ["$scope", "Upload", function($scope, Upload){
 
 }]);

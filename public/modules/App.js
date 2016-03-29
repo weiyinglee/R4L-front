@@ -5,7 +5,8 @@ var App = window.App = angular.module('R4LApp', [
 		'ngMaterial',
 		'ngAnimate',
 		'ngResource',
-		'ngCookies'
+		'ngCookies',
+		'ngFileUpload'
 	]
 );
 
