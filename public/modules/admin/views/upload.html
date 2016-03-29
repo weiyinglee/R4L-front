@@ -12,23 +12,27 @@
         <div layout="column">
           <md-input-container class="event-upload-input" flex>
             <label>Event Name</label>
-            <input type="text"/>
+            <input type="text" ng-model="eventName"/>
           </md-input-container>
           <md-input-container class="event-upload-input" flex>
             <label>Event Description</label>
-            <textarea rows="5" md-select-on-focus></textarea>
+            <textarea ng-model="eventDescription" rows="5" md-select-on-focus></textarea>
           </md-input-container>
+          <div ng-show="fieldIncompleted" class="error-message">
+              *The required fields have not been completed.
+          </div>
           <h5>Upload Geojson file: </h5>
-          <div ngf-drop ngf-select ng-model="files" class="drop-box" ngf-multiple="false" ngf-drag-over-class="'dragover'" ngf-allow-dir="true">
+          <div ngf-drop ngf-select ng-model="file" class="drop-box" ngf-multiple="false" ngf-drag-over-class="'dragover'" ngf-allow-dir="true">
             Drag/Click to upload Geojson file here
           </div>
           <div ngf-no-file-drop>File Drag/Drop is not supported for this brower</div>
         </div>
       </form>
+      <span ng-hide="file === undefined"><strong>File : {{ file.name }}</strong></span>
     </div>
   </md-dialog-content>
   <md-dialog-actions>
-    <md-button class="md-raised md-primary" ng-click="">Submit</md-button>
-    <md-button class="md-raised md-primary" ng-click="">Cancel</md-button>
+    <md-button class="md-raised md-primary" ng-click="upload(eventName, eventDescription,file)" ng-disabled="file === undefined">Submit</md-button>
+    <md-button class="md-raised md-primary" ng-click="cancel()">Cancel</md-button>
   </md-dialog-actions>
 </md-dialog>

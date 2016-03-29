@@ -1,3 +1,5 @@
+'use strict';
+
 App.factory('BadgeFactory', ['$rootScope', function($rootScope){
 
   var badgeCount = {

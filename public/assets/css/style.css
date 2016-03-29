@@ -234,4 +234,8 @@ md-card, .md-subhead > p {
 .event-upload-input {
   margin-bottom: 0; }
 
+.error-message {
+  color: red;
+  font-weight: bold; }
+
 /*# sourceMappingURL=style.css.map */
