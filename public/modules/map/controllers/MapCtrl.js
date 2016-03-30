@@ -143,7 +143,12 @@ var MapController = App.controller('MapCtrl', [
       });
       
       data.data.features.forEach(function(data){
-        data.geometry = JSON.parse(data.geometry);
+        if(data.geometry){
+          data.geometry = JSON.parse(data.geometry);
+        }
+        if(data.geometry_multi){
+          data.geometry_multi = JSON.parse(data.geometry_multi);
+        }
         data.type = "Feature";
       });
 

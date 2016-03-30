@@ -14,8 +14,6 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  $rootScope
 	  ){
 	  
-	  $scope.userData = UserFactory.getUserData();
-
 	  $scope.userId = "";
 	  $scope.firstName = "";
 	  $scope.lastName = "";
@@ -83,8 +81,10 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  	}
 
 	  	UserFactory.userCreate(inputData);
+	  };
 
-	  	if(!$scope.userData.data.success){
+	  $rootScope.$on('user_update', function(){
+	  	if(UserFactory.getUserData() != undefined && !UserFactory.getUserData().data.success){
 	  	  $mdDialog.show(
 	  		  $mdDialog.alert()
 	  			  .parent(angular.element(document.querySelector('.register-container')))
@@ -95,10 +95,6 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  	  );
 	  	  fieldClear();
 	  	}
-	  };
-
-	  $rootScope.$on('user_update', function(){
-        $scope.userData = UserFactory.getUserData();
       });
 
   	}]);
