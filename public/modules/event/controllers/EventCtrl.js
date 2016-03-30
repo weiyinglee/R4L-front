@@ -31,7 +31,7 @@ var EventController = App.controller('EventCtrl', [
 	  		clickOutsideToClose: true
 	  	})
 	  	.then(function(){
-	  		alert('Successfully create a event');
+	  		console.log('Successfully create a event');
 	  	});
 	  }
 
