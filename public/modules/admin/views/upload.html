@@ -21,6 +21,10 @@
           <div ng-show="fieldIncompleted" class="error-message">
               *The required fields have not been completed.
           </div>
+          <h5>Upload event image: </h5>
+          <div ngf-drop ngf-select ng-model="image" class="drop-box" ngf-multiple="false" ngf-drag-over-class="'dragover'" ngf-allow-dir="true">
+            Drag/Click to upload image here
+          </div>
           <h5>Upload Geojson file: </h5>
           <div ngf-drop ngf-select ng-model="file" class="drop-box" ngf-multiple="false" ngf-drag-over-class="'dragover'" ngf-allow-dir="true">
             Drag/Click to upload Geojson file here
@@ -28,11 +32,12 @@
           <div ngf-no-file-drop>File Drag/Drop is not supported for this brower</div>
         </div>
       </form>
+      <span ng-hide="image === undefined"><strong>Image : {{ image.name }}</strong></span></br>
       <span ng-hide="file === undefined"><strong>File : {{ file.name }}</strong></span>
     </div>
   </md-dialog-content>
   <md-dialog-actions>
-    <md-button class="md-raised md-primary" ng-click="upload(eventName, eventDescription,file)" ng-disabled="file === undefined">Submit</md-button>
+    <md-button class="md-raised md-primary" ng-click="upload(eventName, eventDescription,file, image)" ng-disabled="file === undefined">Submit</md-button>
     <md-button class="md-raised md-primary" ng-click="cancel()">Cancel</md-button>
   </md-dialog-actions>
 </md-dialog>

@@ -29,8 +29,8 @@
     </md-content>
     <nav>
       <ul class="pager">
-        <li><md-button class="prev-page-btn" ng-click="pageCount = pageCount - 1" ng-disabled="pageCount * 3 == 3">Previous</md-button></li>
-        <li><md-button class="next-page-btn" ng-click="pageCount = pageCount + 1" ng-disabled="pageCount * 3 == eventList.length">Next</md-button></li>
+        <li><md-button class="prev-page-btn" ng-click="pageCount = pageCount - 1" ng-disabled="pageCount * 3 <= 3">Previous</md-button></li>
+        <li><md-button class="next-page-btn" ng-click="pageCount = pageCount + 1" ng-disabled="pageCount * 3 >= eventList.length">Next</md-button></li>
       </ul>
     </nav>
 </div>

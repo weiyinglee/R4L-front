@@ -9,12 +9,12 @@ var AdminController = App.controller('AdminCtrl', ["$scope", "UploadFactory", "$
 		$mdDialog.cancel();
 	}
 
-	$scope.upload = function(name, description, file) {
+	$scope.upload = function(name, description, file, image) {
 		if(name === undefined || description === undefined){
 			$scope.fieldIncompleted = true;
 			return;
 		}
-		UploadFactory.fileUpload(name, description, file);
+		UploadFactory.fileUpload(name, description, file, image);
 	}
 
 }]);
