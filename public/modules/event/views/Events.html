@@ -7,7 +7,7 @@
         <md-button ng-click="signOut()" class="signout-btn" id="menu-signout">Sign out</md-button>
     </div>
     <md-content class="md-padding" layout="row" layout-xs="column">
-      <div flex-xs flex-gt-xs="50" layout="column" class="card" ng-repeat="event in events.data | limitTo: pageCount * 3 | limitTo: -3">
+      <div flex-xs flex-gt-xs="50" layout="column" class="card" ng-repeat="event in events.data | orderBy: 'creation_date' | limitTo: pageCount * 3 | limitTo: -3">
         <md-card>
           <md-card-title>
             <md-card-title-text>

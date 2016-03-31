@@ -141,21 +141,18 @@ var MapController = App.controller('MapCtrl', [
               marker.bindPopup(popup);
             });
 
-            console.log(data);
+            data.data.features.forEach(function(data){
+              if(data.geometry){
+                data.geometry = JSON.parse(data.geometry);
 
-            if(data.geometry || data.geometry_multi){
-              
-              console.log(data);
+              }
+              if(data.geometry_multi){
+                data.geometry_multi = JSON.parse(data.geometry_multi);
+              }
+              data.type = "Feature";
+            });
 
-              data.data.features.forEach(function(data){
-                if(data.geometry){
-                  data.geometry = JSON.parse(data.geometry);
-                }
-                if(data.geometry_multi){
-                  data.geometry_multi = JSON.parse(data.geometry_multi);
-                }
-                data.type = "Feature";
-              });
+            if(true){
 
               angular.extend($scope, {
                 geojson: {

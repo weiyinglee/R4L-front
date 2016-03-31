@@ -100,6 +100,7 @@ App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($r
     var polygons = {
       async: function() {
         if(!promise) {
+          console.log(path);
           promise = $http.post(path, 
           {
             max_lng: bounds._northEast.lng,

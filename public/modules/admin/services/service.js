@@ -5,16 +5,15 @@ App.factory('UploadFactory', ["$rootScope", "$http", "$cookieStore", "$location"
   
     var service = {};
 
-    service.fileUpload = function(name, description, file, image) {
+    service.fileUpload = function(name, description, file) {
 
       var fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = function(e){
-        $http.post('http://52.8.54.187:3000/ping',{ 
+        $http.post('http://52.8.54.187:3000/event',{ 
           featureCollection: JSON.parse(e.target.result),
           eventName: name,
           description: description,
-          imageUrl: image,
           username: UserFactory.getUserData().data.username
         }, {
           headers: {
