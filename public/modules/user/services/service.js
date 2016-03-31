@@ -1,7 +1,7 @@
 'use strict';
 
-App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$cookieStore", "EventFactory",
-  function($rootScope, $http, $resource, $location, $cookieStore, EventFactory){
+App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$cookieStore",
+  function($rootScope, $http, $resource, $location, $cookieStore){
 
     var service = {}
 
@@ -20,15 +20,7 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$c
          var userData = $cookieStore.get('userData');
          if(userData.data.success){
             //enter the event page
-            $http.get('http://52.8.54.187:3000/event', {
-              headers: {
-                "Authorization": 'Bearer ' + userData.data.token
-              }
-            }).then(function(response){
-              $location.path('/events');
-              EventFactory.setEvent(response);
-              console.log(response);
-            });
+            $location.path('/events');
          }
       }, function(error){
         console.log(error);
@@ -44,15 +36,7 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$c
           console.log(userData);
           if(userData.data.success){
             //enter the event page
-            $http.get('http://52.8.54.187:3000/event', {
-              headers: {
-                "Authorization": 'Bearer ' + userData.data.token
-              }
-            }).then(function(response){
-              $location.path('/events');
-              EventFactory.setEvent(response);
-              console.log(response);
-            });
+            $location.path('/events');
           }
     	}, function(error){
         console.log(error);

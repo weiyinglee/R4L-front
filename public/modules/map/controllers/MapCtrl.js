@@ -97,7 +97,8 @@ var MapController = App.controller('MapCtrl', [
       }
     });
 
-    var layerMap = {};
+    var layerMap = {}
+    var bounds = {}
 
     $scope.signOut = function(){
       var confirm = $mdDialog.confirm()
@@ -123,118 +124,127 @@ var MapController = App.controller('MapCtrl', [
     
     $scope.username = UserFactory.getUserData().config.data.username;
 
-    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;   
-    var test = '/assets/libs/test.json';
+    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
 
-    //get the geojson data from backend API
-    PolygonFactory.getGeojson(path).async().then(function(data){
-      var marker = null;
-      var popup = L.popup().setContent('<status-button></status-button>');
-
-      leafletData.getMarkers().then(function(leafletMarkers){
-        marker = leafletMarkers.newMarker;
-        marker.bindPopup(popup);
-      });
-
-      leafletData.getMap().then(function(map){
+    leafletData.getMap('map').then(function(map){
         map.on('dragend', function(event){
           console.log(map.getBounds());
-        });
-      });
-      
-      data.data.features.forEach(function(data){
-        if(data.geometry){
-          data.geometry = JSON.parse(data.geometry);
-        }
-        if(data.geometry_multi){
-          data.geometry_multi = JSON.parse(data.geometry_multi);
-        }
-        data.type = "Feature";
-      });
+          bounds = map.getBounds();
+          //get the geojson data from backend API
+          PolygonFactory.getGeojson(path, bounds, $scope.username).async().then(function(data){
 
-      angular.extend($scope, {
-        geojson: {
-          type: "MultiPolygon",
-          data: data.data,
-          style: {
-            weight: 3,
-            opacity: 1,
-            color: 'darkred',
-            fillColor: null,
-            fillOpacity: 0
-          },
-          markers : {
-            cursor : {
-              lat : 0,
-              lng : 0
-            }
-          },
-          onEachFeature: function(feature, layer) {
-            layerMap[feature.id] = layer;
+            var marker = null;
+            var popup = L.popup().setContent('<status-button></status-button>');
 
-            //obtain the saved color
-            switch(feature.properties.status){
-              case 'DAMAGE':
-                layer.setStyle({
-                  fillColor: 'RED', 
-                  fillOpacity: 1.0
-                });
-                BadgeFactory.incDamage();
-                break;
-              case 'NO_DAMAGE':
-                layer.setStyle({
-                  fillColor: 'BLUE', 
-                  fillOpacity: 1.0
-                });
-                BadgeFactory.incUnDamage();
-                break;
-              case 'UNSURE':
-                layer.setStyle({
-                  fillColor: 'PURPLE', 
-                  fillOpacity: 1.0
-                });
-                BadgeFactory.incUnKnown();
-                break;
-            }
-
-            layer.on('click', function(e){
-              PolygonFactory.setFeature(feature);
-
-              var lat = (e.latlng.lat);
-              var lng = (e.latlng.lng);
-
-              //marker move to centroid of polygon
-              $scope.marker.newMarker = {
-                lng: lng,
-                lat: lat
-              };
-
-              $scope.marker.newMarker.layer_featureId = feature.id;
-
-              marker.openPopup();
-
-              if(feature.properties.status != 'NOT_EVALUATED'){
-
-                handleCurrentStatus(layer, 'status');
-
-                layer.setStyle({
-                  fillColor: null,
-                  fillOpacity: 0
-                });
-
-                //save the data
-                var path = 'http://52.8.54.187:3000/event/' + $scope.eventId + '/polygon/' + feature.id;
-                var data = {
-                  username: $scope.username,
-                  status: 'NOT_EVALUATED'
-                }
-                PolygonFactory.savePolygon(path, data);
-              }
+            leafletData.getMarkers().then(function(leafletMarkers){
+              marker = leafletMarkers.newMarker;
+              marker.bindPopup(popup);
             });
-          }
-        } 
-      });
+
+            console.log(data);
+
+            if(data.geometry || data.geometry_multi){
+              
+              console.log(data);
+
+              data.data.features.forEach(function(data){
+                if(data.geometry){
+                  data.geometry = JSON.parse(data.geometry);
+                }
+                if(data.geometry_multi){
+                  data.geometry_multi = JSON.parse(data.geometry_multi);
+                }
+                data.type = "Feature";
+              });
+
+              angular.extend($scope, {
+                geojson: {
+                  type: "MultiPolygon",
+                  data: data.data,
+                  style: {
+                    weight: 3,
+                    opacity: 1,
+                    color: 'darkred',
+                    fillColor: null,
+                    fillOpacity: 0
+                  },
+                  markers : {
+                    cursor : {
+                      lat : 0,
+                      lng : 0
+                    }
+                  },
+                  onEachFeature: function(feature, layer) {
+                    layerMap[feature.id] = layer;
+
+                    //obtain the saved color
+                    switch(feature.properties.status){
+                      case 'DAMAGE':
+                        layer.setStyle({
+                          fillColor: 'RED', 
+                          fillOpacity: 1.0
+                        });
+                        BadgeFactory.incDamage();
+                        break;
+                      case 'NO_DAMAGE':
+                        layer.setStyle({
+                          fillColor: 'BLUE', 
+                          fillOpacity: 1.0
+                        });
+                        BadgeFactory.incUnDamage();
+                        break;
+                      case 'UNSURE':
+                        layer.setStyle({
+                          fillColor: 'PURPLE', 
+                          fillOpacity: 1.0
+                        });
+                        BadgeFactory.incUnKnown();
+                        break;
+                    }
+
+                    layer.on('click', function(e){
+                      PolygonFactory.setFeature(feature);
+
+                      var lat = (e.latlng.lat);
+                      var lng = (e.latlng.lng);
+
+                      //marker move to centroid of polygon
+                      $scope.marker.newMarker = {
+                        lng: lng,
+                        lat: lat
+                      };
+
+                      $scope.marker.newMarker.layer_featureId = feature.id;
+
+                      marker.openPopup();
+
+                      if(feature.properties.status != 'NOT_EVALUATED'){
+
+                        handleCurrentStatus(layer, 'status');
+
+                        layer.setStyle({
+                          fillColor: null,
+                          fillOpacity: 0
+                        });
+
+                        //save the data
+                        var path = 'http://52.8.54.187:3000/event/' + $scope.eventId + '/polygon/' + feature.id;
+                        var data = {
+                          username: $scope.username,
+                          status: 'NOT_EVALUATED'
+                        }
+                        PolygonFactory.savePolygon(path, data);
+                      }
+                    });
+                  }
+                } 
+              });
+            }
+          });
+        });
     });
+
+   
 
     var setStyle = function(layer, status) {
       layer.setStyle({

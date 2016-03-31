@@ -7,7 +7,7 @@
         <md-button ng-click="signOut()" class="signout-btn" id="menu-signout">Sign out</md-button>
     </div>
     <md-content class="md-padding" layout="row" layout-xs="column">
-      <div flex-xs flex-gt-xs="50" layout="column" class="card" ng-repeat="event in eventList | limitTo: pageCount * 3 | limitTo: -3">
+      <div flex-xs flex-gt-xs="50" layout="column" class="card" ng-repeat="event in events.data | limitTo: pageCount * 3 | limitTo: -3">
         <md-card>
           <md-card-title>
             <md-card-title-text>
@@ -30,7 +30,7 @@
     <nav>
       <ul class="pager">
         <li><md-button class="prev-page-btn" ng-click="pageCount = pageCount - 1" ng-disabled="pageCount * 3 <= 3">Previous</md-button></li>
-        <li><md-button class="next-page-btn" ng-click="pageCount = pageCount + 1" ng-disabled="pageCount * 3 >= eventList.length">Next</md-button></li>
+        <li><md-button class="next-page-btn" ng-click="pageCount = pageCount + 1" ng-disabled="pageCount * 3 >= events.data.length">Next</md-button></li>
       </ul>
     </nav>
 </div>

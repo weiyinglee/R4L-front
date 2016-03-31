@@ -2,17 +2,18 @@
 
 var EventController = App.controller('EventCtrl', [
 	'$scope',
-	'$http',
+	'$rootScope',
 	'$location',
 	'$mdDialog',
 	'EventFactory',
 	'PolygonFactory',
 	'UserFactory',
-	function($scope, $http, $location, $mdDialog, EventFactory, PolygonFactory, UserFactory){
+	function($scope, $rootScope, $location, $mdDialog, EventFactory, PolygonFactory, UserFactory){
 
-	  var events = EventFactory.getEvent();
-
-	  $scope.eventList = events.data;
+	  EventFactory.getEvent('http://52.8.54.187:3000/event').async().then(function(events){
+	  	$scope.events = events;
+	  	console.log($scope.events);
+	  });
 
 	  $scope.isAdmin = UserFactory.getUserData().data.is_admin;
 

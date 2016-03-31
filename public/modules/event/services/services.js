@@ -1,15 +1,27 @@
 'use strict';
 
-App.factory('EventFactory', ['$rootScope', '$cookieStore', function($rootScope, $cookieStore){
+App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory', function($rootScope, $http, $cookieStore, UserFactory){
 
   var service = {};
 
-  service.setEvent = function(events){
-    $cookieStore.put('events', events);
-  }
-
-  service.getEvent = function(){
-    return $cookieStore.get('events');
+  service.getEvent = function(path){
+    var promise;
+    var events = {
+      async: function() {
+        if(!promise) {
+          promise = $http.get(path,
+          {
+            headers: {
+              "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
+            }
+          }).then(function(data){
+            return data;
+          });
+        }
+        return promise;
+      }
+    };
+    return events;
   }
 
   service.setEventId = function(Id){
