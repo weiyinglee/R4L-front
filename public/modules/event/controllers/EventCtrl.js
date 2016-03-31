@@ -19,8 +19,9 @@ var EventController = App.controller('EventCtrl', [
 
 	  $scope.pageCount = 1;
 
-	  $scope.enterMap = function(eventId){
+	  $scope.enterMap = function(eventId, eventCount){
 	  	EventFactory.setEventId(eventId);
+	  	EventFactory.setEventCount(eventCount);
 	  	$location.path('/map');
 	  }
 

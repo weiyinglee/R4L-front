@@ -4,6 +4,8 @@ App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory
 
   var service = {};
 
+  var count = 0;
+
   service.getEvent = function(path){
     var promise;
     var events = {
@@ -22,6 +24,15 @@ App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory
       }
     };
     return events;
+  }
+
+  service.setEventCount = function(c){
+    count = c;
+    this.eventUpdate();
+  }
+
+  service.getEventCount = function(){
+    return count;
   }
 
   service.setEventId = function(Id){

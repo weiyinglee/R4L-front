@@ -1,12 +1,18 @@
 'use strict';
 
-App.factory('BadgeFactory', ['$rootScope', function($rootScope){
+App.factory('BadgeFactory', ['$rootScope', 'EventFactory', function($rootScope, EventFactory){
+
+  var count = EventFactory.getEventCount();
+
+  $rootScope.$on('event_update', function(){
+    count = EventFactory.getEventCount();
+  });
 
   var badgeCount = {
     damage           : 0,
     undamage         : 0,
     unknown          : 0,
-    remain           : 4075
+    remain           : count
   }
 
   var service = {};
@@ -41,7 +47,7 @@ App.factory('BadgeFactory', ['$rootScope', function($rootScope){
         damage           : 0,
         undamage         : 0,
         unknown          : 0,
-        remain           : 4075
+        remain           : count
       }
   }
 
@@ -101,14 +107,7 @@ App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($r
       async: function() {
         if(!promise) {
           console.log(path);
-          promise = $http.post(path, 
-          {
-            max_lng: bounds._northEast.lng,
-            min_lat: bounds._southWest.lat,
-            min_lng: bounds._southWest.lng,
-            max_lat: bounds._northEast.lat,
-            username: username
-          }, 
+          promise = $http.get(path,
           {
             headers: {
               "Content-Type": 'application/json',
