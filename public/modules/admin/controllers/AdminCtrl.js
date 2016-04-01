@@ -1,7 +1,7 @@
 'use strict';
 
-var AdminController = App.controller('AdminCtrl', ["$scope", "AdminFactory", "EventFactory", "$mdDialog", 
-  function($scope, AdminFactory, EventFactory, $mdDialog){
+var AdminController = App.controller('AdminCtrl', ["$scope", "AdminFactory", "EventFactory", "UserFactory", "$mdDialog", "$location",
+  function($scope, AdminFactory, EventFactory, UserFactory, $mdDialog, $location){
 	
   	$scope.fieldIncompleted = false;
 
@@ -57,6 +57,19 @@ var AdminController = App.controller('AdminCtrl', ["$scope", "AdminFactory", "Ev
 			}
 		})
 		return count;
+	}
+
+	$scope.signout = function(){
+		var confirm = $mdDialog.confirm()
+        .title('Sign out already ?')
+        .textContent('Are you sure to log out ?')
+        .ok('YES')
+        .cancel('CANCEL');
+
+      $mdDialog.show(confirm).then(function() {
+          UserFactory.signout(); 
+          $location.path('/');
+      });
 	}
 
 }]);
