@@ -1,3 +1,7 @@
-
+table {
+  background-color: white;
+  border-collapse: collapse; }
+  table .table-header {
+    font-weight: bold; }
 
 /*# sourceMappingURL=admin.css.map */

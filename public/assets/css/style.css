@@ -245,4 +245,10 @@ md-card, .md-subhead > p {
   color: red;
   font-weight: bold; }
 
+table {
+  background-color: white;
+  border-collapse: collapse; }
+  table .table-header {
+    font-weight: bold; }
+
 /*# sourceMappingURL=style.css.map */
