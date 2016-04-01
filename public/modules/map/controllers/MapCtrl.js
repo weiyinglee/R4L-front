@@ -32,11 +32,13 @@ var MapController = App.controller('MapCtrl', [
       unknown  : 'PURPLE'
     }
 
+    $scope.centroid = JSON.parse(EventFactory.getEventCentroid());
+
     angular.extend($scope, {
       center: {
-        lng: 124.740348,
-        lat: 11.379895,
-        zoom: 14
+        lng: $scope.centroid.coordinates[1],
+        lat: $scope.centroid.coordinates[0],
+        zoom: 17
       },
       defaults: {
         controls: {
@@ -148,108 +150,107 @@ var MapController = App.controller('MapCtrl', [
         elem.type = "Feature";
       });
 
-      if(true){
-
-        angular.extend($scope, {
-          geojson: {
-            type: "MultiPolygon",
-            data: data.data,
-            style: {
-              weight: 3,
-              opacity: 1,
-              color: 'darkred',
-              fillColor: null,
-              fillOpacity: 0
-            },
-            markers : {
-              cursor : {
-                lat : 0,
-                lng : 0
-              }
-            },
-            onEachFeature: function(feature, layer) {
-              layerMap[feature.id] = layer;
-
-              //obtain the saved color
-              switch(feature.properties.status){
-                case 'DAMAGE':
-                  layer.setStyle({
-                    fillColor: 'RED', 
-                    fillOpacity: 1.0
-                  });
-                  BadgeFactory.incDamage();
-                  break;
-                case 'NO_DAMAGE':
-                  layer.setStyle({
-                    fillColor: 'BLUE', 
-                    fillOpacity: 1.0
-                  });
-                  BadgeFactory.incUnDamage();
-                  break;
-                case 'UNSURE':
-                  layer.setStyle({
-                    fillColor: 'PURPLE', 
-                    fillOpacity: 1.0
-                  });
-                  BadgeFactory.incUnKnown();
-                  break;
-              }
-
-              layer.on('click', function(e){
-                PolygonFactory.setFeature(feature);
-
-                var lat = (e.latlng.lat);
-                var lng = (e.latlng.lng);
-
-                //marker move to centroid of polygon
-                $scope.marker.newMarker = {
-                  lng: lng,
-                  lat: lat
-                };
-
-                $scope.marker.newMarker.layer_featureId = feature.id;
-
-                marker.openPopup();
-
-                if(feature.properties.status != 'NOT_EVALUATED'){
-
-                  handleCurrentStatus(layer, 'status');
-
-                  layer.setStyle({
-                    fillColor: null,
-                    fillOpacity: 0
-                  });
-
-                  //save the data
-                  var path = 'http://52.8.54.187:3000/event/' + $scope.eventId + '/polygon/' + feature.id;
-                  var data = {
-                    username: $scope.username,
-                    status: 'NOT_EVALUATED'
-                  }
-                  PolygonFactory.savePolygon(path, data);
-                }
-              });
+      angular.extend($scope, {
+        geojson: {
+          type: "MultiPolygon",
+          data: data.data,
+          style: {
+            weight: 3,
+            opacity: 1,
+            color: 'darkred',
+            fillColor: null,
+            fillOpacity: 0
+          },
+          markers : {
+            cursor : {
+              lat : 0,
+              lng : 0
             }
-          } 
-        });
-      }
+          },
+          onEachFeature: function(feature, layer) {
+            layerMap[feature.id] = layer;
+
+            //obtain the saved color
+            switch(feature.properties.status){
+              case 'DAMAGE':
+                layer.setStyle({
+                  fillColor: 'RED', 
+                  fillOpacity: 0.8
+                });
+                BadgeFactory.incDamage();
+                break;
+              case 'NO_DAMAGE':
+                layer.setStyle({
+                  fillColor: 'BLUE', 
+                  fillOpacity: 0.8
+                });
+                BadgeFactory.incUnDamage();
+                break;
+              case 'UNSURE':
+                layer.setStyle({
+                  fillColor: 'PURPLE', 
+                  fillOpacity: 0.8
+                });
+                BadgeFactory.incUnKnown();
+                break;
+            }
+
+            layer.on('click', function(e){
+              PolygonFactory.setFeature(feature);
+
+              console.log(layer);
+
+              var lat = (e.latlng.lat);
+              var lng = (e.latlng.lng);
+
+              //marker move to centroid of polygon
+              $scope.marker.newMarker = {
+                lng: lng,
+                lat: lat
+              };
+
+              $scope.marker.newMarker.layer_featureId = feature.id;
+
+              marker.openPopup();
+
+              if(feature.properties.status != 'NOT_EVALUATED'){
+
+                handleCurrentStatus(layer, 'status');
+
+                layer.setStyle({
+                  fillColor: null,
+                  fillOpacity: 0
+                });
+
+                //save the data
+                var path = 'http://52.8.54.187:3000/event/' + $scope.eventId + '/polygon/' + feature.id;
+                var data = {
+                  username: $scope.username,
+                  status: 'NOT_EVALUATED'
+                }
+                PolygonFactory.savePolygon(path, data);
+              }
+            });
+          }
+        } 
+      });
     });
 
     var setStyle = function(layer, status) {
       layer.setStyle({
         fillColor : COLORSTATUS[status],
-        fillOpacity : 1.0
+        fillOpacity : 0.8
       })
     };
 
     var handleCurrentStatus = function(layer, status){
-      if (layer.options.fillColor && status != 'next') {
+      if ((layer.options.fillColor) && status != 'next') {
         var currentStatus;
         angular.forEach(COLORSTATUS, function(v, k){
           if (v == layer.options.fillColor) currentStatus = k;
         });
         BadgeFactory.decStatus(currentStatus);
-      }
+      }  
     };
 
     $scope.handlerclick = function(object) {
@@ -355,6 +356,7 @@ var MapController = App.controller('MapCtrl', [
 
     $rootScope.$on('event_update', function(){
       $scope.eventId = EventFactory.getEventId();
+      $scope.centroid = JSON.parse(EventFactory.getEventCentroid());
     });
 
     $rootScope.$on('featureStatusChange', function(event, data){

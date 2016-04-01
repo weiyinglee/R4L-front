@@ -1,7 +1,7 @@
 'use strict';
 
-var AdminController = App.controller('AdminCtrl', ["$scope", "UploadFactory", "$mdDialog", 
-  function($scope, UploadFactory, $mdDialog){
+var AdminController = App.controller('AdminCtrl', ["$scope", "AdminFactory", "EventFactory", "$mdDialog", 
+  function($scope, AdminFactory, EventFactory, $mdDialog){
 	
   	$scope.fieldIncompleted = false;
 
@@ -14,7 +14,11 @@ var AdminController = App.controller('AdminCtrl', ["$scope", "UploadFactory", "$
 			$scope.fieldIncompleted = true;
 			return;
 		}
-		UploadFactory.fileUpload(name, description, file, image);
+		AdminFactory.fileUpload(name, description, file, image);
+	}
+
+	$scope.data = function(){
+		AdminFactory.getData(EventFactory.getEventId());
 	}
 
 }]);

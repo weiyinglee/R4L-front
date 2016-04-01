@@ -1,6 +1,6 @@
 'use strict';
 
-App.factory('UploadFactory', ["$rootScope", "$http", "$cookieStore", "$location", "Upload", "UserFactory", "EventFactory", 
+App.factory('AdminFactory', ["$rootScope", "$http", "$cookieStore", "$location", "Upload", "UserFactory", "EventFactory", 
   function($rootScope, $http, $cookieStore, $location, Upload, UserFactory, EventFactory){
   
     var service = {};
@@ -23,15 +23,23 @@ App.factory('UploadFactory', ["$rootScope", "$http", "$cookieStore", "$location"
       ).then(function(res){
         alert("successfully upload event!");
         console.log(res);
-        //location.reload();
+        location.reload();
       }, function(error){
         alert("fail to upload event");
         console.log(error);
-        //location.reload();
-      });
+        location.reload();
+        });
       }
+    }
 
-
+    service.getData = function(id){
+      $http.get('http://52.8.54.187:3000/event/' + id + '/data', {
+        headers: {
+          "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
+        }
+      }).then(function(res){
+        console.log(res);
+      });
     }
 
     return service;

@@ -4,8 +4,6 @@ App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory
 
   var service = {};
 
-  var count = 0;
-
   service.getEvent = function(path){
     var promise;
     var events = {
@@ -28,12 +26,23 @@ App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory
   }
 
   service.setEventCount = function(c){
-    count = c;
+    $cookieStore.remove('polygonCount');
+    $cookieStore.put('polygonCount', c);
     this.eventUpdate();
   }
 
   service.getEventCount = function(){
-    return count;
+    return $cookieStore.get('polygonCount');
+  }
+
+  service.setEventCentroid = function(c) {
+    $cookieStore.remove('eventCentroid');
+    $cookieStore.put('eventCentroid', c);
+    this.eventUpdate();
+  }
+
+  service.getEventCentroid = function() {
+    return $cookieStore.get('eventCentroid');
   }
 
   service.setEventId = function(Id){

@@ -12,16 +12,16 @@ var EventController = App.controller('EventCtrl', [
 
 	  EventFactory.getEvent('http://52.8.54.187:3000/event').async().then(function(events){
 	  	$scope.events = events;
-	  	console.log($scope.events);
 	  });
 
 	  $scope.isAdmin = UserFactory.getUserData().data.is_admin;
 
 	  $scope.pageCount = 1;
 
-	  $scope.enterMap = function(eventId, eventCount){
+	  $scope.enterMap = function(eventId, eventCount, eventCentroid){
 	  	EventFactory.setEventId(eventId);
 	  	EventFactory.setEventCount(eventCount);
+	  	EventFactory.setEventCentroid(eventCentroid);
 	  	$location.path('/map');
 	  }
 
@@ -39,6 +39,11 @@ var EventController = App.controller('EventCtrl', [
 
 	  $scope.delEvent = function(eventId){
 	  	EventFactory.delEvent(eventId);
+	  }
+
+	  $scope.enterData = function(eventId){
+	  	EventFactory.setEventId(eventId);
+	  	$location.path('/admin');
 	  }
 
 	  $scope.signOut = function(){

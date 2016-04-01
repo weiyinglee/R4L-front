@@ -48,6 +48,8 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$c
     service.signout = function(){
       $cookieStore.remove('userData');
       $cookieStore.remove('eventId');
+      $cookieStore.remove('eventCentroid');
+      $cookieStore.remove('polygonCount');
     }
 
     return service;
