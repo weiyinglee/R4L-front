@@ -1,3 +1,31 @@
 <div ng-controller="AdminCtrl" ng-cloak>
-	<button ng-click="data()">Get data</button>
+	<md-content class="navbar">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings">
+                    <md-icon md-svg-icon=""></md-icon>
+                </md-button>
+                <h2>
+                    <span class="logo-title">Event Data Page </span>
+                </h2>
+                <span flex></span>
+                <md-button href="/#/events" class="md-btn">Menu</md-button>
+                <md-button class="signout-btn">Sign out</md-button>
+            </div>
+        </md-toolbar>
+    </md-content>
+    <div class="admin-container">
+	  <md-content>
+		  <md-list flex>
+		    <md-list-item class="md-3-line" ng-repeat="item in data | orderBy: 'id'">
+		      <div class="md-list-item-text" layout="column">
+		        <h3>Polygon ID: {{ item[0].id }}</h3>
+		        <h4>Highest Voted: {{ item[0].status }}</h4>
+		        <h4>Damage: </h4>
+		        <h4>Undamage:</h4>
+		        <h4>Unsure:</h4>
+		      </div>
+		    </md-list-item>
+    	</md-content>
+    </div>
 </div>

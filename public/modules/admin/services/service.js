@@ -33,14 +33,25 @@ App.factory('AdminFactory', ["$rootScope", "$http", "$cookieStore", "$location",
     }
 
     service.getData = function(id){
-      $http.get('http://52.8.54.187:3000/event/' + id + '/data', {
-        headers: {
-          "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
+      var promise;
+      var data = {
+      async: function() {
+        if(!promise) {
+          promise = $http.get('http://52.8.54.187:3000/event/' + id + '/data',
+          {
+            headers: {
+              "Authorization": 'Bearer ' + UserFactory.getUserData().data.token,
+              "x-username" : UserFactory.getUserData().data.username
+            }
+          }).then(function(data){
+            return data;
+          });
         }
-      }).then(function(res){
-        console.log(res);
-      });
-    }
+        return promise;
+      }
+    };
+    return data;
+  }
 
     return service;
 }]);

@@ -139,15 +139,27 @@ var MapController = App.controller('MapCtrl', [
         marker.bindPopup(popup);
       });
 
+      data.data.initial_centroid = JSON.parse(data.data.initial_centroid);
+
       data.data.features.forEach(function(elem, index, arr){
         if(elem.geometry){
           elem.geometry = JSON.parse(elem.geometry);
-
+          elem.initial
         }
         if(elem.geometry_multi){
           elem.geometry = JSON.parse(elem.geometry_multi);
         }
         elem.type = "Feature";
+      });
+
+      var center = new L.LatLng(
+        data.data.initial_centroid.coordinates[1],
+        data.data.initial_centroid.coordinates[0]);
+
+      leafletData.getMap('map').then(function(map){
+        console.log('here');
+        console.log(center);
+        map.setView(center, 17);
       });
 
       angular.extend($scope, {
