@@ -41,12 +41,22 @@ var AdminController = App.controller('AdminCtrl', ["$scope", "AdminFactory", "Ev
 			val.sort(function (a, b) {
 				return a.count < b.count
 			})
+			if((val[0] && val[1] && val[2]) && (val[0].count == val[1].count && val[1].count == val[2].count)){
+				val[0].isTied = true;
+			}
 			result.push(val)
 		}
 	
 		console.log(result)
 
 		return result;
+	}
+
+	$scope.highStatus = function(item){
+		if(item.isTied){
+			return "TIED"
+		}
+		return item.status
 	}
 
 	$scope.count = function(data, status){

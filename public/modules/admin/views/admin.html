@@ -23,7 +23,7 @@
         	</tr>
     		<tr ng-repeat="item in data | orderBy: 'item[0].id'">
     			<td>{{ item[0].id }}</td>
-    			<td>{{ item[0].status }}</td>
+    			<td>{{ highStatus(item[0]) }}</td>
     			<td>{{ count(item, "DAMAGE") }}</td>
     			<td>{{ count(item, "NO_DAMAGE") }}</td>
     			<td>{{ count(item, "UNSURE") }}</td>
