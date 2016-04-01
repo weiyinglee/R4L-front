@@ -46,9 +46,6 @@ var AdminController = App.controller('AdminCtrl', ["$scope", "AdminFactory", "Ev
 			}
 			result.push(val)
 		}
-	
-		console.log(result)
-
 		return result;
 	}
 

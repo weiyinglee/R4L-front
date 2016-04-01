@@ -157,8 +157,6 @@ var MapController = App.controller('MapCtrl', [
         data.data.initial_centroid.coordinates[0]);
 
       leafletData.getMap('map').then(function(map){
-        console.log('here');
-        console.log(center);
         map.setView(center, 17);
       });
 
@@ -209,8 +207,6 @@ var MapController = App.controller('MapCtrl', [
 
             layer.on('click', function(e){
               PolygonFactory.setFeature(feature);
-
-              console.log(layer);
 
               var lat = (e.latlng.lat);
               var lng = (e.latlng.lng);

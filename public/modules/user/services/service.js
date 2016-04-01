@@ -33,7 +33,6 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$c
     	$http.post('http://52.8.54.187:3000/user/login', data).then(function(response){
           $cookieStore.put('userData', response);
           var userData = $cookieStore.get('userData');
-          console.log(userData);
           if(userData.data.success){
             //enter the event page
             $location.path('/events');

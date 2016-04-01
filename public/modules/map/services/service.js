@@ -106,7 +106,6 @@ App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($r
     var polygons = {
       async: function() {
         if(!promise) {
-          console.log(path);
           promise = $http.get(path,
           {
             headers: {
@@ -130,6 +129,7 @@ App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($r
       "Authorization": "Bearer " + UserFactory.getUserData().data.token,
       "x-username" : UserFactory.getUserData().data.username
     }}).then(function(response){
+          console.log("Successfully save the vote for " + data.status);
           console.log(response);
       }, function(error){
         console.log(error);

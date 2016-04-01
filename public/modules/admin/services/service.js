@@ -22,11 +22,9 @@ App.factory('AdminFactory', ["$rootScope", "$http", "$cookieStore", "$location",
         }
       ).then(function(res){
         alert("successfully upload event!");
-        console.log(res);
         location.reload();
       }, function(error){
         alert("fail to upload event");
-        console.log(error);
         location.reload();
         });
       }
