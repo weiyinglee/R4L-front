@@ -1,4 +1,4 @@
-<div class="event-container" ng-controller="EventCtrl" ng-cloak>
+<div ng-controller="EventCtrl" ng-cloak>
     <div class="jumbotron">
         <md-button class="md-raised md-primary" ng-show="isAdmin" ng-click="showCreatePanel()" id="create-btn"> + Create new event</md-button>
         <h1>Welcome to Radar for life</h1>
@@ -6,31 +6,35 @@
         <h5>Choose a event below to proceed</h5>
         <md-button ng-click="signOut()" class="signout-btn" id="menu-signout">Sign out</md-button>
     </div>
-    <md-content class="md-padding" layout="row" layout-xs="column">
-      <div flex-xs flex-gt-xs="50" layout="column" class="card" ng-repeat="event in events.data | orderBy: 'creation_date' | limitTo: pageCount * 3 | limitTo: -3">
-        <md-card>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline"><h4>{{ event.name }}</h4></span>
-              <span class="md-subhead">
-                  <p>{{ event.description }}</p>
-              </span>
-            </md-card-title-text>
-            <md-card-title-media>
-              <div class="md-media-lg card-media"><img ng-src="{{ event.thumbnail }}" class="event-img"/></div>
-            </md-card-title-media>
-          </md-card-title>
-          <md-card-actions layout="row" layout-align="end center">
-              <md-button ng-click="" ng-show="isAdmin" class="md-btn">Data</md-button>
-              <md-button ng-click="enterMap(event.id, event.site_count)" class="md-btn">Enter</md-button>
-          </md-card-actions>
-        </md-card>
-      </div>
-    </md-content>
-    <nav>
-      <ul class="pager">
-        <li><md-button class="prev-page-btn" ng-click="pageCount = pageCount - 1" ng-disabled="pageCount * 3 <= 3">Previous</md-button></li>
-        <li><md-button class="next-page-btn" ng-click="pageCount = pageCount + 1" ng-disabled="pageCount * 3 >= events.data.length">Next</md-button></li>
-      </ul>
-    </nav>
+    <div class="event-container">
+        <md-content class="md-padding" layout="row" layout-xs="column">
+          <div flex-xs flex-gt-xs="50" layout="column" class="card" ng-repeat="event in events.data | orderBy: 'date' | limitTo: pageCount * 3 | limitTo: -3">
+            <md-card>
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline"><h4>{{ event.name }}</h4></span>
+                  <span class="md-subhead">
+                      <p>{{ event.description }}</p>
+                  </span>
+                </md-card-title-text>
+                <md-card-title-media>
+                  <div class="md-media-lg card-media"><img ng-src="{{ event.thumbnail }}" class="event-img"/></div>
+                </md-card-title-media>
+              </md-card-title>
+              <md-card-actions layout="row" layout-align="end center">
+                  <md-button ng-click="" ng-show="isAdmin" class="md-btn">Data</md-button>
+                  <md-button ng-click="enterMap(event.id, event.site_count)" class="md-btn">Enter</md-button>
+                  <md-button class="del-btn" ng-click="delEvent(event.id)">Delete</md-button>
+              </md-card-actions>
+            </md-card>
+            
+          </div>
+        </md-content>
+        <nav>
+          <ul class="pager">
+            <li><md-button class="prev-page-btn" ng-click="pageCount = pageCount - 1" ng-disabled="pageCount * 3 <= 3">Previous</md-button></li>
+            <li><md-button class="next-page-btn" ng-click="pageCount = pageCount + 1" ng-disabled="pageCount * 3 >= events.data.length">Next</md-button></li>
+          </ul>
+        </nav>
+    </div>
 </div>

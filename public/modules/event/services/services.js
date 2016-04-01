@@ -14,7 +14,8 @@ App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory
           promise = $http.get(path,
           {
             headers: {
-              "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
+              "Authorization": 'Bearer ' + UserFactory.getUserData().data.token,
+              "x-username" : UserFactory.getUserData().data.username
             }
           }).then(function(data){
             return data;
@@ -46,6 +47,20 @@ App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory
 
   service.getEventId = function(){
     return $cookieStore.get('eventId');
+  }
+
+  service.delEvent = function(id){
+    $http.delete('http://52.8.54.187:3000/event/' + id, {
+      headers: {
+        "Authorization": "Bearer " + UserFactory.getUserData().data.token,
+        "x-username": UserFactory.getUserData().data.username
+      }
+    }).then(function(res){
+      alert('Successfully delete the event: ID ' + id);
+      location.reload();
+    },function(error){
+      console.log(error);
+    });
   }
 
   return service;

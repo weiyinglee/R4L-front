@@ -143,7 +143,7 @@ var MapController = App.controller('MapCtrl', [
 
         }
         if(elem.geometry_multi){
-          elem.geometry_multi = JSON.parse(elem.geometry_multi);
+          elem.geometry = JSON.parse(elem.geometry_multi);
         }
         elem.type = "Feature";
       });

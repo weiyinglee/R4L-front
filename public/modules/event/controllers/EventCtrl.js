@@ -37,6 +37,10 @@ var EventController = App.controller('EventCtrl', [
 	  	});
 	  }
 
+	  $scope.delEvent = function(eventId){
+	  	EventFactory.delEvent(eventId);
+	  }
+
 	  $scope.signOut = function(){
 	  	var confirm = $mdDialog.confirm()
         	.title('Sign out already ?')

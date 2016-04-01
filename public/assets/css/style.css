@@ -148,7 +148,7 @@ md-card, .md-subhead > p {
 .md-btn {
   background-color: green;
   color: white;
-  border-radius: 20px 20px 20px; }
+  border-radius: 5% 5% 5%; }
 
 .md-btn:not([disabled]):hover {
   background-color: #CCFF00;
@@ -156,8 +156,8 @@ md-card, .md-subhead > p {
   font-weight: bold; }
 
 .next-page-btn, .prev-page-btn {
-  background-color: #4d2e00;
-  color: white; }
+  background-color: #C4C4C4;
+  color: black; }
 
 .next-page-btn {
   border-radius: 0 20px 20px 0; }
@@ -174,10 +174,19 @@ md-card, .md-subhead > p {
   background-color: #333;
   color: #111; }
 
+.del-btn {
+  background-color: darkred;
+  color: white;
+  border-radius: 5% 5% 5%; }
+
+.del-btn:not([disabled]):hover {
+  background-color: #780009;
+  font-weight: bold; }
+
 .signout-btn {
   background-color: #CC6600;
   color: white;
-  border-radius: 10px 10px 10px 10px; }
+  border-radius: 5% 5% 5%; }
 
 .signout-btn:not([disabled]):hover {
   background-color: #660000;

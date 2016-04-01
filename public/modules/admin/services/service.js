@@ -13,20 +13,21 @@ App.factory('UploadFactory', ["$rootScope", "$http", "$cookieStore", "$location"
         $http.post('http://52.8.54.187:3000/event',{ 
           featureCollection: JSON.parse(e.target.result),
           eventName: name,
-          description: description,
-          username: UserFactory.getUserData().data.username
+          description: description
         }, {
           headers: {
-            "Authorization": 'Bearer ' + UserFactory.getUserData().data.token
+            "Authorization": 'Bearer ' + UserFactory.getUserData().data.token,
+            "x-username": UserFactory.getUserData().data.username
           }
         }
       ).then(function(res){
         alert("successfully upload event!");
         console.log(res);
-        location.reload();
+        //location.reload();
       }, function(error){
         alert("fail to upload event");
-        location.reload();
+        console.log(error);
+        //location.reload();
       });
       }
 
