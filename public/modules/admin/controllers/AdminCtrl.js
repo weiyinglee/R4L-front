@@ -26,18 +26,14 @@ var AdminController = App.controller('AdminCtrl', ["$scope", "AdminFactory", "Ev
 
 		list.forEach(function (elm) {
             if (map.has(elm.id)) {
-            	map.get(elm.id).push({status : elm.status, count : elm.count, id:elm.id})
+            	map.get(elm.id).push({status : elm.status, count : elm.count, id: Number(elm.id)})
             } else {
             	var o = {}
-            	var arr = [{status:elm.status, count:elm.count, id: elm.id}]            	
-            	o["id"] = elm.id
-            	o["DAMAGE"] = o["NO_DAMAGE"] = o["UNSURE"] = 0
-            	o[elm.status] = Number(elm.count)
+            	var arr = [{status:elm.status, count:elm.count, id: Number(elm.id)}]            	
             	map.set(elm.id, arr)
             }
 		})
 
-		
 		var it = map.entries()
 		var entry = null, val = null
 		while (entry = it.next().value) {
@@ -51,6 +47,16 @@ var AdminController = App.controller('AdminCtrl', ["$scope", "AdminFactory", "Ev
 		console.log(result)
 
 		return result;
+	}
+
+	$scope.count = function(data, status){
+		var count = 0;
+		data.forEach(function(obj){
+			if(obj.status == status){
+				count = obj.count;
+			}
+		})
+		return count;
 	}
 
 }]);

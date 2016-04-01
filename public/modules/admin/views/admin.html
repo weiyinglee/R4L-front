@@ -15,17 +15,20 @@
         </md-toolbar>
     </md-content>
     <div class="admin-container">
-	  <md-content>
-		  <md-list flex>
-		    <md-list-item class="md-3-line" ng-repeat="item in data | orderBy: 'id'">
-		      <div class="md-list-item-text" layout="column">
-		        <h3>Polygon ID: {{ item[0].id }}</h3>
-		        <h4>Highest Voted: {{ item[0].status }}</h4>
-		        <h4>Damage: </h4>
-		        <h4>Undamage:</h4>
-		        <h4>Unsure:</h4>
-		      </div>
-		    </md-list-item>
-    	</md-content>
-    </div>
+    <table class="table table-bordered table-hover table-condensed table-striped">
+    	<tr class="table-header info">
+    		<td>Polygon ID</td>
+    		<td>Highest Vote</td>
+    		<td>Damage Count</td>
+    		<td>Undamage Count</td>
+    		<td>Unsure Count</td>
+    	</tr>
+		<tr ng-repeat="item in data | orderBy: 'item[0].id'">
+			<td>{{ item[0].id }}</td>
+			<td>{{ item[0].status }}</td>
+			<td>{{ count(item, "DAMAGE") }}</td>
+			<td>{{ count(item, "NO_DAMAGE") }}</td>
+			<td>{{ count(item, "UNSURE") }}</td>
+		</tr>
+    </table>
 </div>
