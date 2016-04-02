@@ -342,9 +342,7 @@ var MapController = App.controller('MapCtrl', [
           leafletData.getMap('map').then(function(map){
             map.closePopup();
             nextLayer.fire('click', { latlng: nextPolygon });
-            if(currentPolygon.distanceTo(nextPolygon) > 300){
-              map.setView(nextPolygon, 19);
-            }
+            map.setView(nextPolygon, 19);
           });
           return;
         }
