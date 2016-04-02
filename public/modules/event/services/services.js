@@ -68,7 +68,8 @@ App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory
       alert('Successfully delete the event: ID ' + id);
       location.reload();
     },function(error){
-      console.log(error);
+      alert("Fail to delete the event ID " + id);
+      location.reload();
     });
   }
 

@@ -24,7 +24,7 @@
               <md-card-actions layout="row" layout-align="end center">
                   <md-button ng-click="enterData(event.id)" ng-show="isAdmin" class="md-btn">Data</md-button>
                   <md-button ng-click="enterMap(event.id, event.site_count, event.centroid)" class="md-btn">Enter</md-button>
-                  <md-button class="del-btn" ng-click="delEvent(event.id)">Delete</md-button>
+                  <md-button class="del-btn" ng-show="isAdmin" ng-click="delEvent(event.id)">Delete</md-button>
               </md-card-actions>
             </md-card>
             

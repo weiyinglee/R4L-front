@@ -245,7 +245,11 @@ md-card, .md-subhead > p {
   color: red;
   font-weight: bold; }
 
+.navbar {
+  height: auto; }
+
 table {
+  margin-top: 0;
   background-color: white;
   border-collapse: collapse; }
   table .table-header {

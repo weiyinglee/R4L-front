@@ -1,5 +1,4 @@
 <div ng-controller="AdminCtrl" ng-cloak>
-	<md-content class="navbar">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <md-button class="md-icon-button" aria-label="Settings">
@@ -13,22 +12,22 @@
                 <md-button class="signout-btn" ng-click="signout()">Sign out</md-button>
             </div>
         </md-toolbar>
-    </md-content>
     <div class="admin-container">
-    <table class="table table-bordered table-hover table-condensed table-striped">
-    	<tr class="table-header info">
-    		<td>Polygon ID</td>
-    		<td>Highest Vote</td>
-    		<td>Damage Count</td>
-    		<td>Undamage Count</td>
-    		<td>Unsure Count</td>
-    	</tr>
-		<tr ng-repeat="item in data | orderBy: 'item[0].id'">
-			<td>{{ item[0].id }}</td>
-			<td>{{ item[0].status }}</td>
-			<td>{{ count(item, "DAMAGE") }}</td>
-			<td>{{ count(item, "NO_DAMAGE") }}</td>
-			<td>{{ count(item, "UNSURE") }}</td>
-		</tr>
-    </table>
+        <table class="table table-bordered table-hover table-condensed table-striped">
+        	<tr class="table-header info">
+        		<td>Polygon ID</td>
+        		<td>Highest Vote</td>
+        		<td>Damage Count</td>
+        		<td>Undamage Count</td>
+        		<td>Unsure Count</td>
+        	</tr>
+    		<tr ng-repeat="item in data | orderBy: 'item[0].id'">
+    			<td>{{ item[0].id }}</td>
+    			<td>{{ highStatus(item[0]) }}</td>
+    			<td>{{ count(item, "DAMAGE") }}</td>
+    			<td>{{ count(item, "NO_DAMAGE") }}</td>
+    			<td>{{ count(item, "UNSURE") }}</td>
+    		</tr>
+        </table>
+    </div>
 </div>

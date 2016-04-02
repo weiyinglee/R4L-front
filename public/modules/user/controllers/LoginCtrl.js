@@ -36,18 +36,4 @@ var LoginController = App.controller('LoginCtrl', [
 	  	UserFactory.userLogin(inputData);
 	  }
 
-	  $rootScope.$on('user_update', function(){
-	  	if(UserFactory.getUserData() != undefined && !UserFactory.getUserData().data.success){
-			$mdDialog.show(
-				$mdDialog.alert()
-					.parent(angular.element(document.querySelector('.login-container')))
-					.clickOutsideToClose(true)
-					.title('Oops!')
-					.textContent('Invalid username/password. Please try again!')
-					.ok('Try again!')
-			);
-			$scope.userName = "";
-			$scope.userPassword = "";
-		}
-      });
   	}]);

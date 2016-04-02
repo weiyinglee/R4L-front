@@ -83,18 +83,4 @@ var RegisterController = App.controller('RegisterCtrl', [
 	  	UserFactory.userCreate(inputData);
 	  };
 
-	  $rootScope.$on('user_update', function(){
-	  	if(UserFactory.getUserData() != undefined && !UserFactory.getUserData().data.success){
-	  	  $mdDialog.show(
-	  		  $mdDialog.alert()
-	  			  .parent(angular.element(document.querySelector('.register-container')))
-	  			  .clickOutsideToClose(true)
-	  			  .title('Oops!')
-	  			  .textContent('This user has already existed. Please try again!')
-	  			  .ok('Try again!')
-	  	  );
-	  	  fieldClear();
-	  	}
-      });
-
   	}]);

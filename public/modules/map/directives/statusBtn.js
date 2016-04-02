@@ -26,7 +26,6 @@ App.directive('statusButton', [
         handlerclick: '&'
       },
       link: function(scope, element, attrs) {
-        console.log(scope)
         scope.badge = BadgeFactory.getBadges();
         scope.eventId = EventFactory.getEventId();
         scope.feature = PolygonFactory.getFeature();
@@ -51,8 +50,6 @@ App.directive('statusButton', [
               username: username,
               status: status
             }
-
-            console.log(status +  ' saved to database');
 
             var path = 'http://52.8.54.187:3000/event/' + eventId + '/polygon/' + polygonId;
 

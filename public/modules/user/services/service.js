@@ -1,7 +1,7 @@
 'use strict';
 
-App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$cookieStore",
-  function($rootScope, $http, $resource, $location, $cookieStore){
+App.factory('UserFactory', ['$rootScope', '$http', '$mdDialog','$resource', "$location", "$cookieStore",
+  function($rootScope, $http, $mdDialog, $resource, $location, $cookieStore){
 
     var service = {}
 
@@ -21,11 +21,21 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$c
          if(userData.data.success){
             //enter the event page
             $location.path('/events');
+         }else{
+            $mdDialog.show(
+              $mdDialog.alert()
+                .parent(angular.element(document.querySelector('.register-container')))
+                .clickOutsideToClose(true)
+                .title('Oops!')
+                .textContent('This user has already existed. Please try again!')
+                .ok('Try again!')
+            ).then(function(){
+              location.reload();
+            });
          }
       }, function(error){
         console.log(error);
     	});
-      this.update();
     }
 
     //login
@@ -33,15 +43,25 @@ App.factory('UserFactory', ['$rootScope', '$http', '$resource', "$location", "$c
     	$http.post('http://52.8.54.187:3000/user/login', data).then(function(response){
           $cookieStore.put('userData', response);
           var userData = $cookieStore.get('userData');
-          console.log(userData);
           if(userData.data.success){
             //enter the event page
             $location.path('/events');
+          }else{
+            $mdDialog.show(
+              $mdDialog.alert()
+                .parent(angular.element(document.querySelector('.login-container')))
+                .clickOutsideToClose(true)
+                .title('Oops!')
+                .textContent('Invalid username/password. Please try again!')
+                .ok('Try again!')
+            ).then(function(){
+              location.reload();
+            });
+ 
           }
     	}, function(error){
         console.log(error);
     	});
-      this.update();
     }
 
     //signout
