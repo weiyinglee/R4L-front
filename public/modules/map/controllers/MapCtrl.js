@@ -60,10 +60,10 @@ var MapController = App.controller('MapCtrl', [
           oms: {
             name: "Base Map",
             type: "xyz",
-            url: 'https://{s}.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+            url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
             layerOptions: {
-              apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
-              mapid: 'digitalglobe.n6nhn7mg',
+              //apikey: 'pk.eyJ1IjoiZGlnaXRhbGdsb2JlIiwiYSI6ImNpa2EwN3N6cTBnb2l2b200MnYybnl6cXEifQ.qRrepvdS2GT_Vs9Kh9HzBg',
+              //mapid: 'digitalglobe.n6nhn7mg',
               minZoom: 2
             }
           },
