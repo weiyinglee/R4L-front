@@ -254,5 +254,11 @@ table {
   border-collapse: collapse; }
   table .table-header {
     font-weight: bold; }
+  table .damage-bg {
+    background-color: "red"; }
+  table .fine-bg {
+    background-color: "blue"; }
+  table .unsure-bg {
+    background-color: "purple"; }
 
 /*# sourceMappingURL=style.css.map */
