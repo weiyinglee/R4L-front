@@ -21,12 +21,12 @@
         		<td>Undamage Count</td>
         		<td>Unsure Count</td>
         	</tr>
-    		<tr ng-repeat="item in data | orderBy: 'item[0].id'">
-    			<td>{{ item[0].id }}</td>
-    			<td>{{ highStatus(item[0]) }}</td>
-    			<td>{{ count(item, "DAMAGE") }}</td>
-    			<td>{{ count(item, "NO_DAMAGE") }}</td>
-    			<td>{{ count(item, "UNSURE") }}</td>
+    		<tr ng-repeat="item in data">
+                <td>{{ item.id }}</td>
+                <td>{{ item.highest }}</td>
+                <td>{{ item.DAMAGE }}</td>
+                <td>{{ item.NO_DAMAGE }}</td>
+                <td>{{ item.UNSURE }}</td>
     		</tr>
         </table>
     </div>
