@@ -18,8 +18,7 @@ var AdminController = App.controller('AdminCtrl', ["$scope", "AdminFactory", "Ev
 	}
 
 	AdminFactory.getData(EventFactory.getEventId()).async().then(function(res){
-		$scope.data = res.data.modified.result;
-		console.log($scope.data);
+		$scope.data = res.data.result;
 	});
 
 	$scope.signout = function(){
