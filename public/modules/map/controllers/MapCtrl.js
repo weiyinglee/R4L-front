@@ -110,7 +110,7 @@ var MapController = App.controller('MapCtrl', [
         .cancel('CANCEL');
 
       $mdDialog.show(confirm).then(function() {
-          UserFactory.signout(); 
+          UserFactory.signout();
           $location.path('/');
       });
     }
@@ -123,11 +123,11 @@ var MapController = App.controller('MapCtrl', [
     }
 
     $scope.eventId = EventFactory.getEventId();
-    
+
     $scope.username = UserFactory.getUserData().config.data.username;
 
     var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
-    
+
     //get the geojson data from backend API
     PolygonFactory.getGeojson(path).async().then(function(data){
 
@@ -184,21 +184,21 @@ var MapController = App.controller('MapCtrl', [
             switch(feature.properties.status){
               case 'DAMAGE':
                 layer.setStyle({
-                  fillColor: 'RED', 
+                  fillColor: 'RED',
                   fillOpacity: 0.8
                 });
                 BadgeFactory.incDamage();
                 break;
               case 'NO_DAMAGE':
                 layer.setStyle({
-                  fillColor: 'BLUE', 
+                  fillColor: 'BLUE',
                   fillOpacity: 0.8
                 });
                 BadgeFactory.incUnDamage();
                 break;
               case 'UNSURE':
                 layer.setStyle({
-                  fillColor: 'PURPLE', 
+                  fillColor: 'PURPLE',
                   fillOpacity: 0.8
                 });
                 BadgeFactory.incUnKnown();
@@ -240,8 +240,14 @@ var MapController = App.controller('MapCtrl', [
               }
             });
           }
-        } 
+        }
       });
+      setTimeout(function () {
+        alert("$scope.geometry will be deleted.")
+        angular.merge($scope, {
+          "geometry" : {}
+        })
+      }, 5000)
     });
 
     var setStyle = function(layer, status) {
@@ -258,7 +264,7 @@ var MapController = App.controller('MapCtrl', [
           if (v == layer.options.fillColor) currentStatus = k;
         });
         BadgeFactory.decStatus(currentStatus);
-      }  
+      }
     };
 
     $scope.handlerclick = function(object) {
@@ -328,7 +334,7 @@ var MapController = App.controller('MapCtrl', [
           }else if(nextLayer == -1){
             alert("You completed the map!");
             return;
-          }else{  
+          }else{
             nextPolygon = new L.LatLng(
               nextLayer.feature.properties.centroid.lat,
               nextLayer.feature.properties.centroid.lng);
