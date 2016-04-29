@@ -245,7 +245,7 @@ var MapController = App.controller('MapCtrl', [
       setTimeout(function () {
         alert("$scope.geometry will be deleted.")
         angular.merge($scope, {
-          "geometry" : {}
+          "geojson" : {}
         })
       }, 5000)
     });
