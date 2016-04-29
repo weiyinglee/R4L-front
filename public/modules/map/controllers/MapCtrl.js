@@ -127,9 +127,10 @@ var MapController = App.controller('MapCtrl', [
     $scope.username = UserFactory.getUserData().config.data.username;
 
     var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
+    var path_0 = `http://52.8.54.187:3000/user/${$scope.username}/event/${6}`
 
     //get the geojson data from backend API
-    PolygonFactory.getGeojson(path).async().then(function(data){
+    PolygonFactory.getGeojson(path).async().then(function polygonFactoryCallback (data) {
 
       var marker = null;
       var popup = L.popup().setContent('<status-button></status-button>');
@@ -242,15 +243,11 @@ var MapController = App.controller('MapCtrl', [
           }
         }
       });
-      setTimeout(function () {
-        alert("$scope.geometry will be deleted.")
-        angular.merge($scope, {
-          "geojson" : {
-            "data" : {}
-          }
-        })
-      }, 5000)
+      PolygonFactory.getGeojson(path_0).async().then(polygonFactoryCallback)
     });
+
+
+
 
     var setStyle = function(layer, status) {
       layer.setStyle({
