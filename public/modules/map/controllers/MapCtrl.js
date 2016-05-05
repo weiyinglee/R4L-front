@@ -104,8 +104,8 @@ var MapController = App.controller('MapCtrl', [
 
     $scope.signOut = function(){
       var confirm = $mdDialog.confirm()
-        .title('Sign out already ?')
-        .textContent('Are you sure to log out ?')
+        .title('Sign out?')
+        .textContent('Are you sure you want to log out?')
         .ok('YES')
         .cancel('CANCEL');
 
@@ -212,7 +212,7 @@ var MapController = App.controller('MapCtrl', [
 
               var lat = (e.latlng.lat);
               var lng = (e.latlng.lng);
-
+              console.log(`lat: ${lat} \n lng: ${lng}`)
               //marker move to centroid of polygon
               $scope.marker.newMarker = {
                 lng: lng,
@@ -247,7 +247,7 @@ var MapController = App.controller('MapCtrl', [
 
     });
 
-PolygonFactory.getGeojson(path_0).async().then(polygonFactoryCallback)
+//PolygonFactory.getGeojson(path_0).async().then(polygonFactoryCallback)
 
 
     var setStyle = function(layer, status) {
