@@ -164,8 +164,8 @@ var MapController = App.controller('MapCtrl', [
           console.log("in map.on()")
           console.log(map.getBounds())
         })
-        map.on("drag", function () {
-          console.log("drag event fired")
+        map.on("touchend", function () {
+          console.log("touchend event fired")
         })
         map.on("dragend", function () {
           console.log("dragend event fired")
