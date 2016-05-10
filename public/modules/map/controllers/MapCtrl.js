@@ -160,10 +160,10 @@ var MapController = App.controller('MapCtrl', [
 
       leafletData.getMap('map').then(function(map){
         map.setView(center, 17);
-        setInterval(function () {
-          console.log("in setInterval")
+        map.on("click", function () {
+          console.log("in map.on()")
           console.log(map.getBounds())
-        }, 1000)
+        })
       });
 
       angular.extend($scope, {
