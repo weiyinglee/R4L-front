@@ -49,6 +49,13 @@ App.config(["$routeProvider", function($routeProvider){
 			templateUrl : "/modules/user/views/Login.html",
 			controller  : "LoginCtrl"
 		}).
+		when('/mod', {
+			resolve : {
+				"check" : notLoggedIn
+			},
+			"templateUrl" : "modules/user/views/Login_modified.html",
+			"controller" : "LoginCtrlMod"
+		}).
 		when('/signup', {
 			resolve: {
 				check: notLoggedIn

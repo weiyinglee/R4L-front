@@ -164,7 +164,10 @@ var MapController = App.controller('MapCtrl', [
           console.log("in map.on()")
           console.log(map.getBounds())
         })
+
+        //Leaflet directive doesn't support custom touch events.
         map.on("touchend", function () {
+          //Trying to fire `touchend` manually by detecting
           alert("touchend event fired")
         })
         map.on("dragend", function () {
