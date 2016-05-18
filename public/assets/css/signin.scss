@@ -38,7 +38,7 @@ h4 {
 }
 
 .form-control {
-    border-radius: 10px;
+    // border-radius: 10px;
 }
 
 .wrapper {
@@ -53,7 +53,7 @@ h4 {
 .admin-btn {
     background-color: #444;
     color: gray;
-    border-radius: 20px 20px 20px;
+    // border-radius: 20px 20px 20px;
     font-size: 14px;
 }
 
@@ -66,7 +66,7 @@ h4 {
 .login-btn {
     background-color: green;
     color: white;
-    border-radius: 20px 20px 20px;
+    // border-radius: 20px 20px 20px;
 }
 
 .login-btn:not([disabled]):hover {
@@ -80,7 +80,7 @@ h4 {
     background-color: #121211;
     md-toolbar {
         background-color: #2B2B2B;
-        border-radius: 5px 5px 5px 5px;
+        // border-radius: 5px 5px 5px 5px;
     }
     .logo-title {
         font-weight: bold;
@@ -106,10 +106,10 @@ h4 {
         }
         .admin-btn {
             font-size: 12px;
-            border-radius: 20px 0 0 20px;
+            // border-radius: 20px 0 0 20px;
         }
         .login-btn {
-            border-radius: 20px 0 0 20px;
+            // border-radius: 20px 0 0 20px;
         }
     }
 }
