@@ -34,7 +34,9 @@ h4 {
   text-align: center; }
 
 .form-control {
-  /*border-radius: 10px; }*/
+  /*border-radius: 10px; */
+  display:block;
+}
 
 .wrapper {
   text-align: center; }
