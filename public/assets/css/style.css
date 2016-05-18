@@ -20,13 +20,11 @@ body {
   padding-bottom: 20px;
   padding-left: 20px;
   padding-right: 20px;
-  border-color: #d2d2d2;
   border-width: 5px;
   margin-left: 18%;
   width: 60%; }
 
 h4 {
-  border: 0 solid #fff;
   border-bottom-width: 1px;
   padding-bottom: 10px;
   text-align: center; }
@@ -59,7 +57,7 @@ h4 {
   margin-bottom: 8%;
   background-color: #1976D2; }
   .navbar md-toolbar {
-    background-color: #2B2B2B; }
+    background-color: #1976D2; }
   .navbar .logo-title {
     font-weight: bold;
     font-style: italic;
