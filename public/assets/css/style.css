@@ -1,9 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
 body {
+  color: #212121;
   margin: 0;
   padding: 0;
   height: auto;
-  background-color: #121211;
   -webkit-font-smoothing: antialiased;
   font: normal 14px Roboto,arial,sans-serif; }
 
@@ -15,7 +15,6 @@ body {
   width: 80%; }
 
 .form-login {
-  background-color: #2B2B2B;
   color: white;
   padding-top: 10px;
   padding-bottom: 20px;
@@ -40,27 +39,25 @@ h4 {
   width: 60%; }
 
 .admin-btn {
-  background-color: #444;
-  color: gray;
   font-size: 14px; }
 
 .admin-btn:not([disabled]):hover {
-  background-color: white;
+  background-color: #ff00de;
   color: black;
   font-weight: bold; }
 
 .login-btn {
-  background-color: green;
-  color: white; }
+  background-color: #2196F3;
+  color: #FFFFFF; }
 
 .login-btn:not([disabled]):hover {
-  background-color: #CCFF00;
-  color: black;
+  background-color: #BBDEFB;
+  color: #FFFFFF;
   font-weight: bold; }
 
 .navbar {
   margin-bottom: 8%;
-  background-color: #121211; }
+  background-color: #1976D2; }
   .navbar md-toolbar {
     background-color: #2B2B2B; }
   .navbar .logo-title {
@@ -101,13 +98,13 @@ h4 {
   .map-button {
     margin-left: 0; } }
 .badge {
-  /*border-radius: 8px;*/
+  border-radius: 8px;
   background: rgba(0, 0, 0, 0.9); }
 
 button {
   margin: 1%;
   padding-bottom: 1%;
-  /*border-radius: 15%;*/
+  border-radius: 15%;
   background: white;
   display: inline; }
 
@@ -138,8 +135,7 @@ md-card, .md-subhead > p {
 .md-btn {
   background-color: green;
   color: white;
-  /*border-radius: 5% 5% 5%; */
-}
+  border-radius: 5% 5% 5%; }
 
 .md-btn:not([disabled]):hover {
   background-color: #CCFF00;
@@ -151,12 +147,10 @@ md-card, .md-subhead > p {
   color: black; }
 
 .next-page-btn {
-  /*border-radius: 0 20px 20px 0; */
-}
+  border-radius: 0 20px 20px 0; }
 
 .prev-page-btn {
-  /*border-radius: 20px 0 0 20px; */
-}
+  border-radius: 20px 0 0 20px; }
 
 .next-page-btn:not([disabled]):hover, .prev-page-btn:not([disabled]):hover {
   background-color: #fff;
@@ -170,19 +164,16 @@ md-card, .md-subhead > p {
 .del-btn {
   background-color: darkred;
   color: white;
-  /*border-radius: 5% 5% 5%; */
-}
+  border-radius: 5% 5% 5%; }
 
 .del-btn:not([disabled]):hover {
   background-color: #780009;
-  font-weight: bold;
-}
+  font-weight: bold; }
 
 .signout-btn {
   background-color: #CC6600;
   color: white;
-  /*border-radius: 5% 5% 5%;*/
-}
+  border-radius: 5% 5% 5%; }
 
 .signout-btn:not([disabled]):hover {
   background-color: #660000;

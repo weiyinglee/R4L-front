@@ -1,9 +1,10 @@
+@import "globals";
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
 body {
+  color: $primary-text;
   margin: 0;
   padding: 0;
   height: auto;
-  background-color: #121211;
   -webkit-font-smoothing: antialiased;
   font: normal 14px Roboto,arial,sans-serif;
 }
@@ -17,7 +18,6 @@ body {
 }
 
 .form-login {
-    background-color: #2B2B2B;
     color: white;
     padding-top: 10px;
     padding-bottom: 20px;
@@ -51,33 +51,31 @@ h4 {
 }
 
 .admin-btn {
-    background-color: #444;
-    color: gray;
     // border-radius: 20px 20px 20px;
     font-size: 14px;
 }
 
 .admin-btn:not([disabled]):hover {
-    background-color: white;
-    color: black;
+    background-color: $hover-background-placeholder;
+    color: $hover-text-placeholder;
     font-weight: bold;
 }
 
 .login-btn {
-    background-color: green;
-    color: white;
+    background-color: $neutral-primary;
+    color: $icon-text;
     // border-radius: 20px 20px 20px;
 }
 
 .login-btn:not([disabled]):hover {
-    background-color: #CCFF00;
-    color: black;
+    background-color: $light-primary;
+    color: $icon-text;
     font-weight: bold;
 }
 
 .navbar {
     margin-bottom: 8%;
-    background-color: #121211;
+    background-color: $dark-primary;
     md-toolbar {
         background-color: #2B2B2B;
         // border-radius: 5px 5px 5px 5px;
