@@ -46,11 +46,12 @@ h4 {
 
 .login-btn {
   background-color: #2196F3;
-  color: #FFFFFF; }
+  color: #FFFFFF;
+  overflow: visible !important; }
 
 .login-btn:not([disabled]):hover {
   background-color: #BBDEFB;
-  color: #FFFFFF;
+  color: #212121;
   font-weight: bold; }
 
 .navbar {
