@@ -18,7 +18,7 @@ body {
 }
 
 .form-login {
-    color: $primary-text;
+    color: $neutral-primary;
     padding-top: 10px;
     padding-bottom: 20px;
     padding-left: 20px;
@@ -75,10 +75,11 @@ h4 {
 }
 
 .navbar {
+    color: $neutral-primary;
     margin-bottom: 8%;
-    background-color: $dark-primary;
+    // background-color: $dark-primary;
     md-toolbar {
-        background-color: $dark-primary;
+        // background-color: $dark-primary;
         // border-radius: 5px 5px 5px 5px;
     }
     .logo-title {
