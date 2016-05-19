@@ -64,12 +64,13 @@ h4 {
 .login-btn {
     background-color: $neutral-primary;
     color: $icon-text;
+    overflow: visible;
     // border-radius: 20px 20px 20px;
 }
 
 .login-btn:not([disabled]):hover {
     background-color: $light-primary;
-    color: $icon-text;
+    color: $primary-text;
     font-weight: bold;
 }
 
