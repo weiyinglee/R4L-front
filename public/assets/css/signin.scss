@@ -64,7 +64,7 @@ h4 {
 .login-btn {
     background-color: $neutral-primary;
     color: $icon-text;
-    overflow: visible;
+    overflow: visible !important;
     // border-radius: 20px 20px 20px;
 }
 
