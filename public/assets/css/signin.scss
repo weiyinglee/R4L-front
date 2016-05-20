@@ -1,12 +1,27 @@
 @import "globals";
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
 body {
+  overflow-x:hidden;
   color: $primary-text;
   margin: 0;
   padding: 0;
   height: auto;
   -webkit-font-smoothing: antialiased;
   font: normal 14px Roboto,arial,sans-serif;
+  background-image: url(/assets/img/map.jpg);
+  animation: slide 100s linear infinite;
+  background-size: 2042px 100%;
+}
+
+@keyframes slide {
+  0% {
+      background-position: 0% 0%;
+      // transform: translateX(0px);
+  }
+  100% {
+      // transform: translateX(2024px);
+      background-position: 2042px 0%;
+  }
 }
 
 #toolbar {
@@ -47,6 +62,11 @@ h4 {
     // border-radius: 10px;
 }
 
+.no-margin {
+  display: block;
+  margin: 0;
+}
+
 .wrapper {
     text-align: center;
 }
@@ -68,21 +88,21 @@ h4 {
 }
 
 .login-btn {
-    background-color: $neutral-primary;
-    color: $icon-text;
+    background-color: $neutral-primary !important;
+    color: $icon-text !important;
     overflow: visible !important;
     // border-radius: 20px 20px 20px;
 }
 
 .login-btn:not([disabled]):hover {
-    background-color: $light-primary;
-    color: $primary-text;
+    background-color: $light-primary !important;
+    color: $dark-primary !important;
     font-weight: bold;
 }
 
 .navbar {
     color: $light-primary;
-    margin-bottom: 8%;
+    margin-bottom: 4%;
     // background-color: $dark-primary;
     md-toolbar {
         // background-color: $dark-primary;

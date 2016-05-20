@@ -19,12 +19,16 @@
                 <div class="form-login">
                     <h4>Welcome To Radar for Life</h4>
                     <h5>Please login to continue</h5>
-                    <md-input-container class="input-section">
-                        <label>Test Label</label>
-                        <input type="text" ng-model="userName" id="userName" placeholder="User ID or Email" />
-                        <label></label>
-                        <input type="password" ng-model="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
+                    <form ng-submit="fieldIncompleted() || auth()">
+                    <md-input-container class="input-section no-margin">
+                        <input type="text" ng-model="userName" id="userName" placeholder="User ID or Email"/>
                     </md-input-container>
+                    <md-input-container class="no-margin">
+                        <input type="password" ng-model="userPassword" id="userPassword" placeholder="password" />
+                    </md-input-container>
+                    <input style="display:none;" type="submit"/>
+                    <!-- The above input is needed in order for ng-submit to work -->
+                  </form>
                     <div class="wrapper">
                         <span class="group-btn">
                             <md-button role="button" ng-disabled="fieldIncompleted()" ng-click="fieldIncompleted() || auth()" class="login-btn md-raised">
