@@ -19,10 +19,11 @@
                 <div class="form-login">
                     <h4>Welcome To Radar for Life</h4>
                     <h5>Please login to continue</h5>
-                    <div class="input-section">
+                    <md-input-container class="input-section">
+                        <label>Test Label</label>
                         <input type="text" ng-model="userName" id="userName" class="form-control input-sm chat-input" placeholder="User ID or Email" />
                         <input type="password" ng-model="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
-                    </div>
+                    </md-input-container>
                     <div class="wrapper">
                         <span class="group-btn">
                             <md-button role="button" ng-disabled="fieldIncompleted()" ng-click="fieldIncompleted() || auth()" class="login-btn md-raised">
