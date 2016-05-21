@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
+@import url(https://fonts.googleapis.com/css?family=Raleway);
 body {
   overflow-x: hidden;
   color: #212121;
@@ -6,10 +7,9 @@ body {
   padding: 0;
   height: auto;
   -webkit-font-smoothing: antialiased;
-  font: normal 14px Roboto,arial,sans-serif;
+  font: normal 14px Raleway,arial,sans-serif;
   background-image: url(/assets/img/map.jpg);
-  animation: slide 100s linear infinite;
-  background-size: 2042px 100%; }
+  background-size: cover; }
 
 @keyframes slide {
   0% {
@@ -122,19 +122,15 @@ button {
   display: inline; }
 
 .jumbotron {
-  border: 1px solid black;
+  background-color: rgba(0, 0, 0, 0.63);
   padding-top: 1%;
-  margin-bottom: 1%;
-  color: #fff;
+  color: #FFFFFF;
   text-align: center; }
   .jumbotron #menu-signout {
     margin-left: 85%;
     margin-bottom: 1%; }
   .jumbotron #create-btn {
     margin-right: 85%; }
-
-md-card, .md-subhead > p {
-  color: white; }
 
 .card, .md-padding {
   background-color: #121211; }
@@ -156,12 +152,6 @@ md-card, .md-subhead > p {
 .next-page-btn, .prev-page-btn {
   background-color: #C4C4C4;
   color: black; }
-
-.next-page-btn {
-  border-radius: 0 20px 20px 0; }
-
-.prev-page-btn {
-  border-radius: 20px 0 0 20px; }
 
 .next-page-btn:not([disabled]):hover, .prev-page-btn:not([disabled]):hover {
   background-color: #fff;

@@ -21,10 +21,10 @@
                     <h5>Please login to continue</h5>
                     <form ng-submit="fieldIncompleted() || auth()">
                     <md-input-container class="input-section no-margin">
-                        <input type="text" ng-model="userName" id="userName" placeholder="User ID or Email"/>
+                        <input type="text" ng-model="userName" id="userName" placeholder="User ID or Email" tabindex="1"/>
                     </md-input-container>
                     <md-input-container class="no-margin">
-                        <input type="password" ng-model="userPassword" id="userPassword" placeholder="password" />
+                        <input type="password" ng-model="userPassword" id="userPassword" placeholder="password" tabindex="2"/>
                     </md-input-container>
                     <input style="display:none;" type="submit"/>
                     <!-- The above input is needed in order for ng-submit to work -->

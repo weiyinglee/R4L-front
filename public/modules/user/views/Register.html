@@ -21,23 +21,22 @@
                     <!-- <h5>Please fill out all input fields</h5> -->
                     <form ng-submit="fieldIncompleted || signUp()">
                     <md-input-container class="no-margin">
-                    <input type="text" ng-model="userId" class="form-control input-sm chat-input" placeholder="User ID" />
-                  </md-input-container>
-
-                    <md-input-container class="no-margin">
-                    <input type="text" ng-model="firstName" class="form-control input-sm chat-input" placeholder="First Name" />
+                    <input type="text" ng-model="userId" class="form-control input-sm chat-input" placeholder="User ID" tabindex="1" />
                   </md-input-container>
                     <md-input-container class="no-margin">
-                    <input type="text" ng-model="lastName" class="form-control input-sm chat-input" placeholder="Last Name" />
+                    <input type="text" ng-model="firstName" class="form-control input-sm chat-input" placeholder="First Name" tabindex="2"/>
                   </md-input-container>
                     <md-input-container class="no-margin">
-                    <input type="email" ng-model="userEmail" class="form-control input-sm chat-input" placeholder="Email"/>
+                    <input type="text" ng-model="lastName" class="form-control input-sm chat-input" placeholder="Last Name" tabindex="3"/>
                   </md-input-container>
                     <md-input-container class="no-margin">
-                    <input type="password" ng-model="signPassword" class="form-control input-sm chat-input" placeholder="password" />
+                    <input type="email" ng-model="userEmail" class="form-control input-sm chat-input" placeholder="Email" tabindex="4"/>
                   </md-input-container>
                     <md-input-container class="no-margin">
-                    <input type="password" ng-model="reSignPassword" class="form-control input-sm chat-input" placeholder="re-type password"/>
+                    <input type="password" ng-model="signPassword" class="form-control input-sm chat-input" placeholder="password" tabindex="5"/>
+                  </md-input-container>
+                    <md-input-container class="no-margin">
+                    <input type="password" ng-model="reSignPassword" class="form-control input-sm chat-input" placeholder="re-type password" tabindex="6"/>
 </md-input-container>
 <input type="submit" style="display: none;"/>
 </form>

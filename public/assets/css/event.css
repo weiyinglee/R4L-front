@@ -1,17 +1,13 @@
 .jumbotron {
-  border: 1px solid black;
+  background-color: rgba(0, 0, 0, 0.63);
   padding-top: 1%;
-  margin-bottom: 1%;
-  color: #fff;
+  color: #FFFFFF;
   text-align: center; }
   .jumbotron #menu-signout {
     margin-left: 85%;
     margin-bottom: 1%; }
   .jumbotron #create-btn {
     margin-right: 85%; }
-
-md-card, .md-subhead > p {
-  color: white; }
 
 .card, .md-padding {
   background-color: #121211; }
@@ -33,12 +29,6 @@ md-card, .md-subhead > p {
 .next-page-btn, .prev-page-btn {
   background-color: #C4C4C4;
   color: black; }
-
-.next-page-btn {
-  border-radius: 0 20px 20px 0; }
-
-.prev-page-btn {
-  border-radius: 20px 0 0 20px; }
 
 .next-page-btn:not([disabled]):hover, .prev-page-btn:not([disabled]):hover {
   background-color: #fff;

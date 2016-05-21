@@ -27,13 +27,13 @@
                   <md-button class="del-btn" ng-show="isAdmin" ng-click="delEvent(event.id)">Delete</md-button>
               </md-card-actions>
             </md-card>
-            
+
           </div>
         </md-content>
         <nav>
           <ul class="pager">
-            <li><md-button class="prev-page-btn" ng-click="pageCount = pageCount - 1" ng-disabled="pageCount * 3 <= 3">Previous</md-button></li>
-            <li><md-button class="next-page-btn" ng-click="pageCount = pageCount + 1" ng-disabled="pageCount * 3 >= events.data.length">Next</md-button></li>
+            <li><md-button class="prev-page-btn" ng-click="pageCount = pageCount - 1" ng-disabled="pageCount * 3 <= 3"><i class="fa fa-arrow-left" aria-hidden="true"></i>PREV</md-button></li>
+            <li><md-button class="next-page-btn" ng-click="pageCount = pageCount + 1" ng-disabled="pageCount * 3 >= events.data.length">NEXT<i class="fa fa-arrow-right" aria-hidden="true"></i></md-button></li>
           </ul>
         </nav>
     </div>
