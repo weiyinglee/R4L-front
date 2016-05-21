@@ -19,7 +19,7 @@
                 <div class="form-login">
                     <h4>Become a new user in Radar for Life</h4>
                     <!-- <h5>Please fill out all input fields</h5> -->
-                    <form ng-submit="fieldIncompleted || signUp()">
+                    <form ng-submit="fieldIncompleted() || signUp()">
                     <md-input-container class="no-margin">
                     <input type="text" ng-model="userId" class="form-control input-sm chat-input" placeholder="User ID" tabindex="1" />
                   </md-input-container>
