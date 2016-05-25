@@ -1,57 +1,57 @@
 <div ng-controller="RegisterCtrl" ng-cloak>
-    <md-content class="navbar">
-        <md-toolbar>
-            <div id="toolbar" class="md-toolbar-tools">
-                <md-button class="md-icon-button" aria-label="Settings">
-                    <md-icon md-svg-icon=""></md-icon>
-                </md-button>
-                <h2>
-                    <span class="logo-title">Rapid Natural Disaster Response</span>
-                </h2>
-                <span flex></span>
-                <!-- <md-button href="/#/" class="login-btn">Login</md-button> -->
-            </div>
-        </md-toolbar>
-    </md-content>
-    <md-card class="register-container">
-        <div class="row">
-            <div class="col-md-offset-5 col-md-3 text-center">
-                <div class="form-login">
-                    <h4>Become a new user in Radar for Life</h4>
-                    <!-- <h5>Please fill out all input fields</h5> -->
-                    <form ng-submit="fieldIncompleted() || signUp()">
-                    <md-input-container class="no-margin">
-                    <input type="text" ng-model="userId" class="form-control input-sm chat-input" placeholder="User ID" tabindex="1" />
-                  </md-input-container>
-                    <md-input-container class="no-margin">
-                    <input type="text" ng-model="firstName" class="form-control input-sm chat-input" placeholder="First Name" tabindex="2"/>
-                  </md-input-container>
-                    <md-input-container class="no-margin">
-                    <input type="text" ng-model="lastName" class="form-control input-sm chat-input" placeholder="Last Name" tabindex="3"/>
-                  </md-input-container>
-                    <md-input-container class="no-margin">
-                    <input type="email" ng-model="userEmail" class="form-control input-sm chat-input" placeholder="Email" tabindex="4"/>
-                  </md-input-container>
-                    <md-input-container class="no-margin">
-                    <input type="password" ng-model="signPassword" class="form-control input-sm chat-input" placeholder="password" tabindex="5"/>
-                  </md-input-container>
-                    <md-input-container class="no-margin">
-                    <input type="password" ng-model="reSignPassword" class="form-control input-sm chat-input" placeholder="re-type password" tabindex="6"/>
-</md-input-container>
-<input type="submit" style="display: none;"/>
-</form>
-                    <div class="wrapper">
-                        <span class="group-btn">
-                            <md-button role="button" ng-disabled="fieldIncompleted()" ng-click="fieldIncompleted() || signUp()"  class="login-btn md-raised">
-                                Register <i class="fa fa-sign-in"></i>
-                            </md-button>
-                            <md-button href="/#/" role="button" class="login-btn md-raised">
-                                Already a user ?
-                            </md-button>
-                        </span>
-                    </div>
-                </div>
-            </div>
+  <md-content class="navbar">
+    <md-toolbar>
+      <div id="toolbar" class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings">
+          <md-icon md-svg-icon=""></md-icon>
+        </md-button>
+        <h2>
+          <span class="logo-title">Rapid Natural Disaster Response</span>
+        </h2>
+        <span flex></span>
+        <!-- <md-button href="/#/" class="login-btn">Login</md-button> -->
+      </div>
+    </md-toolbar>
+  </md-content>
+  <md-card class="register-container">
+    <div class="row">
+      <div class="col-md-offset-5 col-md-3 text-center">
+        <div class="form-login">
+          <h4>Become a new user in Radar for Life</h4>
+          <!-- <h5>Please fill out all input fields</h5> -->
+          <form ng-submit="fieldIncompleted() || signUp()">
+            <md-input-container class="no-margin">
+              <input type="text" ng-model="userId" class="form-control input-sm chat-input" placeholder="User ID" tabindex="1" />
+            </md-input-container>
+            <md-input-container class="no-margin">
+              <input type="text" ng-model="firstName" class="form-control input-sm chat-input" placeholder="First Name" tabindex="2"/>
+            </md-input-container>
+            <md-input-container class="no-margin">
+              <input type="text" ng-model="lastName" class="form-control input-sm chat-input" placeholder="Last Name" tabindex="3"/>
+            </md-input-container>
+            <md-input-container class="no-margin">
+              <input type="email" ng-model="userEmail" class="form-control input-sm chat-input" placeholder="Email" tabindex="4"/>
+            </md-input-container>
+            <md-input-container class="no-margin">
+              <input type="password" ng-model="signPassword" class="form-control input-sm chat-input" placeholder="password" tabindex="5"/>
+            </md-input-container>
+            <md-input-container class="no-margin">
+              <input type="password" ng-model="reSignPassword" class="form-control input-sm chat-input" placeholder="re-type password" tabindex="6"/>
+            </md-input-container>
+            <input type="submit" style="display: none;"/>
+          </form>
+          <div class="wrapper">
+            <span class="group-btn">
+              <md-button role="button" ng-disabled="fieldIncompleted()" ng-click="fieldIncompleted() || signUp()"  class="login-btn md-raised">
+                Register <i class="fa fa-sign-in"></i>
+              </md-button>
+              <md-button href="/#/" role="button" class="login-btn md-raised">
+                Already a user ?
+              </md-button>
+            </span>
+          </div>
         </div>
-    </md-card>
+      </div>
+    </div>
+  </md-card>
 </div>

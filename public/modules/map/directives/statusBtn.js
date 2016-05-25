@@ -38,7 +38,7 @@ App.directive('statusButton', [
 
         var timer = null;
         //status buttons onclick
-        scope.btnAction = function(status){
+        scope.btnAction = function(status) {
 
           //save to database
           function saveStatus(status){

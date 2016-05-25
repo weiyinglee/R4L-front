@@ -11,6 +11,7 @@ var MapController = App.controller('MapCtrl', [
     'BadgeFactory',
     'EventFactory',
     'PolygonFactory',
+    'SubPolygonFactory',
     'UserFactory',
   function(
     $scope,
@@ -23,18 +24,21 @@ var MapController = App.controller('MapCtrl', [
     BadgeFactory,
     EventFactory,
     PolygonFactory,
+    SubPolygonFactory,
     UserFactory
      ){
-
+       console.log(`MapCtrl started`)
     var COLORSTATUS = {
       damage   : 'RED',
       undamage : 'BLUE',
       unknown  : 'PURPLE'
     }
+    var polygonMap = new Map()
 
     $scope.centroid = JSON.parse(EventFactory.getEventCentroid());
 
     angular.extend($scope, {
+      map : leafletData.getMap('map'),
       center: {
         lng: $scope.centroid.coordinates[1],
         lat: $scope.centroid.coordinates[0],
@@ -47,6 +51,9 @@ var MapController = App.controller('MapCtrl', [
             position: "topright",
             collapsed: false
           }
+        },
+        tileLayerOptions: {
+          reuseTiles: true
         }
       },
       layercontrol: {
@@ -129,9 +136,8 @@ var MapController = App.controller('MapCtrl', [
     var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
     var path_0 = `http://52.8.54.187:3000/user/${$scope.username}/event/${6}`
 
-    var polygonFactoryCallback;
     //get the geojson data from backend API
-    PolygonFactory.getGeojson(path).async().then(polygonFactoryCallback = function (data) {
+    PolygonFactory.getGeojson(path).async().then(function polygonFactoryCallback(data) {
 
       var marker = null;
       var popup = L.popup().setContent('<status-button></status-button>');
@@ -161,17 +167,34 @@ var MapController = App.controller('MapCtrl', [
       leafletData.getMap('map').then(function(map){
         map.setView(center, 17);
         map.on("click", function () {
-          console.log("in map.on()")
-          console.log(map.getBounds())
+          console.log("in map.on()");
         })
 
-        //Leaflet directive doesn't support custom touch events.
-        map.on("touchend", function () {
-          //Trying to fire `touchend` manually by detecting
-          alert("touchend event fired")
-        })
-        map.on("dragend", function () {
-          console.log("dragend event fired")
+        map.on("moveend", function moveendHandler() {
+          if (map.getZoom() < 16) {
+            console.log("Too zoomed out. Will not retrieve polygons.")
+            return
+          }
+          var mapBounds = map.getBounds();
+          var bounds = {
+            minLat : mapBounds._southWest.lat,
+            minLng : mapBounds._southWest.lng,
+            maxLat : mapBounds._northEast.lat,
+            maxLng : mapBounds._northEast.lng
+          };
+          SubPolygonFactory.getGeoJson(path, bounds, $scope.username).async().then(function (data) {
+            //console.log("Promise resolution from SubPolygonFactory")
+            // Compare IDs returned to IDs we already have
+            // then request polygons of IDs we don't yet have, while adding new IDs to map
+            var ids = data.data.reduce(function reducer(previous, current) {
+              if (!polygonSet.has(current.id)) {
+                polygonSet.add(current.id)
+                return current.id
+              }
+              return null
+            }, [])
+            console.log(ids)
+          })
         })
       });
 
@@ -182,7 +205,7 @@ var MapController = App.controller('MapCtrl', [
           style: {
             weight: 3,
             opacity: 1,
-            color: 'darkred',
+            color: '#ff2a2a',
             fillColor: null,
             fillOpacity: 0
           },
@@ -193,28 +216,32 @@ var MapController = App.controller('MapCtrl', [
             }
           },
           onEachFeature: function(feature, layer) {
+            console.log(`Feature found!`)
             layerMap[feature.id] = layer;
-
+            var opacity = 0.8
             //obtain the saved color
             switch(feature.properties.status){
               case 'DAMAGE':
                 layer.setStyle({
                   fillColor: 'RED',
-                  fillOpacity: 0.8
+                  fillOpacity: opacity,
+                  color: null
                 });
                 BadgeFactory.incDamage();
                 break;
               case 'NO_DAMAGE':
                 layer.setStyle({
                   fillColor: 'BLUE',
-                  fillOpacity: 0.8
+                  fillOpacity: opacity,
+                  color: null
                 });
                 BadgeFactory.incUnDamage();
                 break;
               case 'UNSURE':
                 layer.setStyle({
                   fillColor: 'PURPLE',
-                  fillOpacity: 0.8
+                  fillOpacity: opacity,
+                  color: null
                 });
                 BadgeFactory.incUnKnown();
                 break;
@@ -254,7 +281,7 @@ var MapController = App.controller('MapCtrl', [
                 PolygonFactory.savePolygon(path, data);
               }
             });
-          }
+          } /* end onEachFeature */
         }
       });
 
@@ -372,7 +399,7 @@ var MapController = App.controller('MapCtrl', [
     };
 
     //compile directive on popup open
-    $scope.$on('leafletDirectiveMap.map.popupopen', function(event, leafletEvent){
+    $scope.$on('leafletDirectiveMap.map.popupopen', function (event, leafletEvent) {
       var newScope = $scope.$new();
 
       // compile actuall html with angular property
