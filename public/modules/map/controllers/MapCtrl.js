@@ -33,7 +33,7 @@ var MapController = App.controller('MapCtrl', [
       undamage : 'BLUE',
       unknown  : 'PURPLE'
     }
-    var polygonMap = new Map()
+    var polygonSet = new Set()
 
     $scope.centroid = JSON.parse(EventFactory.getEventCentroid());
 
@@ -189,11 +189,11 @@ var MapController = App.controller('MapCtrl', [
             var ids = data.data.reduce(function reducer(previous, current) {
               if (!polygonSet.has(current.id)) {
                 polygonSet.add(current.id)
-                return current.id
+                previous.push(current.id)
               }
-              return null
+              return previous
             }, [])
-            console.log(ids)
+            console.log(ids) //Request polygons in ids
           })
         })
       });
@@ -245,6 +245,9 @@ var MapController = App.controller('MapCtrl', [
                 });
                 BadgeFactory.incUnKnown();
                 break;
+                default:
+                console.log("no status found", feature.properties)
+                break;
             }
 
             layer.on('click', function(e){
@@ -262,7 +265,9 @@ var MapController = App.controller('MapCtrl', [
               $scope.marker.newMarker.layer_featureId = feature.id;
 
               marker.openPopup();
-
+              leafletData.getMap('map').then(function (map) {
+                map.setView([lat, lng])
+              })
               if(feature.properties.status != 'NOT_EVALUATED'){
 
                 handleCurrentStatus(layer, 'status');
@@ -388,7 +393,7 @@ var MapController = App.controller('MapCtrl', [
           leafletData.getMap('map').then(function(map){
             map.closePopup();
             nextLayer.fire('click', { latlng: nextPolygon });
-            map.setView(nextPolygon, 19);
+            //map.setView(nextPolygon, 19);
           });
           return;
         }

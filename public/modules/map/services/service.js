@@ -14,7 +14,7 @@ App.factory('BadgeFactory', ['$rootScope', 'EventFactory', function($rootScope, 
     unknown          : 0,
     remain           : count
   }
-
+  
   var service = {};
 
   service.getDamage = function() {
