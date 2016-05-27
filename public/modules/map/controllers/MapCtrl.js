@@ -11,7 +11,7 @@ var MapController = App.controller('MapCtrl', [
     'BadgeFactory',
     'EventFactory',
     'PolygonFactory',
-    'SubPolygonFactory',
+    'PolygonRangeFactory',
     'UserFactory',
   function(
     $scope,
@@ -24,7 +24,7 @@ var MapController = App.controller('MapCtrl', [
     BadgeFactory,
     EventFactory,
     PolygonFactory,
-    SubPolygonFactory,
+    PolygonRangeFactory,
     UserFactory
      ){
        console.log(`MapCtrl started`)
@@ -182,7 +182,7 @@ var MapController = App.controller('MapCtrl', [
             maxLat : mapBounds._northEast.lat,
             maxLng : mapBounds._northEast.lng
           };
-          SubPolygonFactory.getGeoJson(path, bounds, $scope.username).async().then(function (data) {
+          PolygonRangeFactory.getGeoJson(path, bounds, $scope.username).async().then(function (data) {
             //console.log("Promise resolution from SubPolygonFactory")
             // Compare IDs returned to IDs we already have
             // then request polygons of IDs we don't yet have, while adding new IDs to map
@@ -194,13 +194,19 @@ var MapController = App.controller('MapCtrl', [
               return previous
             }, [])
             console.log(ids) //Request polygons in ids
+            if (ids.length > 0) {
+              PolygonFactory.getGeojson(path, ids, $scope.username).async().then(function onFulfilled(data) {
+                console.log(`Resolution of ranged request: `, data)
+              })
+            }
           })
         })
       });
 
       angular.extend($scope, {
         geojson: {
-          type: "MultiPolygon",
+          //type: "MultiPolygon",
+          type: "Polygon",
           data: data.data,
           style: {
             weight: 3,
@@ -216,7 +222,7 @@ var MapController = App.controller('MapCtrl', [
             }
           },
           onEachFeature: function(feature, layer) {
-            console.log(`Feature found!`)
+            console.log(`Feature found! feature.id: ${feature.id}`)
             layerMap[feature.id] = layer;
             var opacity = 0.8
             //obtain the saved color
