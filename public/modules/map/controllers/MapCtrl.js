@@ -33,7 +33,7 @@ var MapController = App.controller('MapCtrl', [
       undamage : 'BLUE',
       unknown  : 'PURPLE'
     }
-    var polygonSet = new Set()
+    var polygonSet = new Set() /* Set of polygons that the client has*/
 
     $scope.centroid = JSON.parse(EventFactory.getEventCentroid());
 
@@ -133,8 +133,9 @@ var MapController = App.controller('MapCtrl', [
 
     $scope.username = UserFactory.getUserData().config.data.username;
 
-    var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
-    var path_0 = `http://52.8.54.187:3000/user/${$scope.username}/event/${6}`
+    //var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
+    var path = `http://${window.location.hostname}:3000/user/${scope.username}/event/${scope.eventId}`
+    var path_0 = `http://52.8.54.187:3000/user/${ $scope.username }/event/${6}`
 
     //get the geojson data from backend API
     PolygonFactory.getGeojson(path).async().then(function polygonFactoryCallback(data) {
@@ -147,14 +148,15 @@ var MapController = App.controller('MapCtrl', [
         marker.bindPopup(popup);
       });
 
+      // TODO, dynamically assign initial centroid 
       data.data.initial_centroid = JSON.parse(data.data.initial_centroid);
 
-      data.data.features.forEach(function(elem, index, arr){
-        if(elem.geometry){
+      data.data.features.forEach(function (elem, index, arr) {
+        if (elem.geometry) {
           elem.geometry = JSON.parse(elem.geometry);
           elem.initial
         }
-        if(elem.geometry_multi){
+        if (elem.geometry_multi) {
           elem.geometry = JSON.parse(elem.geometry_multi);
         }
         elem.type = "Feature";
@@ -164,13 +166,17 @@ var MapController = App.controller('MapCtrl', [
         data.data.initial_centroid.coordinates[1],
         data.data.initial_centroid.coordinates[0]);
 
-      leafletData.getMap('map').then(function(map){
+      leafletData.getMap('map').then(function onFulfilled(map) {
+	      map.on("load", function loadHandler() {
+          console.log("map load event fired")
+        })
         map.setView(center, 17);
         map.on("click", function () {
           console.log("in map.on()");
         })
 
         map.on("moveend", function moveendHandler() {
+          console.log("moveend fired")
           if (map.getZoom() < 16) {
             console.log("Too zoomed out. Will not retrieve polygons.")
             return
@@ -182,7 +188,7 @@ var MapController = App.controller('MapCtrl', [
             maxLat : mapBounds._northEast.lat,
             maxLng : mapBounds._northEast.lng
           };
-          PolygonRangeFactory.getGeoJson(path, bounds, $scope.username).async().then(function (data) {
+          PolygonRangeFactory.getGeoJson(path, bounds, $scope.username).async().then(function onFulfilled(data) {
             //console.log("Promise resolution from SubPolygonFactory")
             // Compare IDs returned to IDs we already have
             // then request polygons of IDs we don't yet have, while adding new IDs to map
@@ -221,7 +227,7 @@ var MapController = App.controller('MapCtrl', [
               lng : 0
             }
           },
-          onEachFeature: function(feature, layer) {
+          onEachFeature: function onEachFeature(feature, layer) {
             console.log(`Feature found! feature.id: ${feature.id}`)
             layerMap[feature.id] = layer;
             var opacity = 0.8
@@ -251,6 +257,9 @@ var MapController = App.controller('MapCtrl', [
                 });
                 BadgeFactory.incUnKnown();
                 break;
+              case 'NOT_EVALUATED':
+
+              break;
                 default:
                 console.log("no status found", feature.properties)
                 break;
@@ -309,6 +318,7 @@ var MapController = App.controller('MapCtrl', [
     };
 
     var handleCurrentStatus = function(layer, status){
+      if (!layer) console.log("Layer null!")
       if ((layer.options.fillColor) && status != 'next') {
         var currentStatus;
         angular.forEach(COLORSTATUS, function(v, k){
@@ -334,21 +344,21 @@ var MapController = App.controller('MapCtrl', [
         var nextId = featureId + 1;
         var found = false;
 
-        //if there is no polygon left
-        if(BadgeFactory.getTotal() == 0){
+        // if there is no polygon left
+        if (BadgeFactory.getTotal() == 0) {
           return -1;
         }
-        while(!found){
+        while (!found) {
           nextLayer = layerMap[nextId];
           //if the next layer is not exist
-          if(!nextLayer){
+          if (!nextLayer) {
             nextId = 0;
             continue;
           }
 
-          if(nextLayer.options.fillColor){
+          if (nextLayer.options.fillColor) {
             nextId++;
-          }else{
+          } else {
             found = true;
           }
         }
@@ -379,13 +389,13 @@ var MapController = App.controller('MapCtrl', [
           var nextLayer = findNextLayer();
           var nextPolygon, currentPolygon;
 
-          if(nextLayer == layerMap[0]){
+          if (nextLayer == layerMap[0]) {
             nextPolygon = new L.LatLng(11.379895, 124.740348);
             currentPolygon = new L.LatLng(11.379895, 124.740348);
-          }else if(nextLayer == -1){
+          } else if (nextLayer == -1) {
             alert("You completed the map!");
             return;
-          }else{
+          } else {
             nextPolygon = new L.LatLng(
               nextLayer.feature.properties.centroid.lat,
               nextLayer.feature.properties.centroid.lng);
@@ -408,7 +418,6 @@ var MapController = App.controller('MapCtrl', [
       setStyle(layer, status);
 
     };
-
     //compile directive on popup open
     $scope.$on('leafletDirectiveMap.map.popupopen', function (event, leafletEvent) {
       var newScope = $scope.$new();

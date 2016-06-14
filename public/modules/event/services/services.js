@@ -4,7 +4,7 @@ App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory
 
   var service = {};
 
-  service.getEvent = function(path){
+  service.getEvent = function getEvent(path) {
     var promise;
     var events = {
       async: function() {
@@ -15,7 +15,7 @@ App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory
               "Authorization": 'Bearer ' + UserFactory.getUserData().data.token,
               "x-username" : UserFactory.getUserData().data.username
             }
-          }).then(function(data){
+          }).then(function onFullfilled(data) {
             return data;
           });
         }

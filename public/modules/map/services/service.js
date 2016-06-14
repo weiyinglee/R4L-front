@@ -79,6 +79,10 @@ App.factory('BadgeFactory', ['$rootScope', 'EventFactory', function($rootScope, 
     this.broadcastUpdate();
   }
 
+  service.incCount = function incCount() {
+    // Needed?
+  }
+
   return service;
 }]);
 
@@ -147,7 +151,7 @@ App.factory('PolygonFactory', ["$rootScope", "$http", "UserFactory", function($r
           promise = $http.get(path,
           {
             params: {
-              "ids" : idList.join(',')
+              "ids" : (idList) ? idList.join(",") : null
             },
             headers: {
               "Content-Type": 'application/json',
