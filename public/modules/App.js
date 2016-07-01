@@ -10,6 +10,13 @@ var App = window.App = angular.module('R4LApp', [
 	]
 );
 
+
+// Set base URL 
+App.value("baseUrl", (function getBaseUrl(){
+	var baseUrl = "http://" + window.location.hostname
+	return baseUrl
+})())
+
 // turn off leaflet login
 App.config(function($logProvider){
   	$logProvider.debugEnabled(false);

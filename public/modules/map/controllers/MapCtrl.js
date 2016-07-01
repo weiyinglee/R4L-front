@@ -13,6 +13,7 @@ var MapController = App.controller('MapCtrl', [
     'PolygonFactory',
     'PolygonRangeFactory',
     'UserFactory',
+    'baseUrl',
   function(
     $scope,
     $rootScope,
@@ -25,7 +26,8 @@ var MapController = App.controller('MapCtrl', [
     EventFactory,
     PolygonFactory,
     PolygonRangeFactory,
-    UserFactory
+    UserFactory,
+    baseUrl
      ){
        console.log(`MapCtrl started`)
     var COLORSTATUS = {
@@ -33,7 +35,10 @@ var MapController = App.controller('MapCtrl', [
       undamage : 'BLUE',
       unknown  : 'PURPLE'
     }
-    var polygonSet = new Set() /* Set of polygons that the client has*/
+    var polygonSet = new Set() /* Set of polygon ids (ints) that the client has*/
+    var LayerSet = {
+      layers = new Set()
+    }
 
     $scope.centroid = JSON.parse(EventFactory.getEventCentroid());
 
@@ -133,9 +138,9 @@ var MapController = App.controller('MapCtrl', [
 
     $scope.username = UserFactory.getUserData().config.data.username;
 
-    //var path = 'http://52.8.54.187:3000/user/' + $scope.username + '/event/' + $scope.eventId;
-    var path = `http://${window.location.hostname}:3000/user/${scope.username}/event/${scope.eventId}`
-    var path_0 = `http://52.8.54.187:3000/user/${ $scope.username }/event/${6}`
+    //var path = 'http://52.8.54.187/user/' + $scope.username + '/event/' + $scope.eventId;
+    var path = `${ baseUrl }:3000/user/${ $scope.username }/event/${ $scope.eventId }`
+    var path_0 = `${ baseUrl }:3000/user/${ $scope.username }/event/${6}`
 
     //get the geojson data from backend API
     PolygonFactory.getGeojson(path).async().then(function polygonFactoryCallback(data) {
@@ -293,7 +298,7 @@ var MapController = App.controller('MapCtrl', [
                 });
 
                 //save the data
-                var path = 'http://52.8.54.187:3000/event/' + $scope.eventId + '/polygon/' + feature.id;
+                var path = `${ baseUrl }:3000/event/` + $scope.eventId + '/polygon/' + feature.id;
                 var data = {
                   username: $scope.username,
                   status: 'NOT_EVALUATED'
@@ -350,6 +355,7 @@ var MapController = App.controller('MapCtrl', [
         }
         while (!found) {
           nextLayer = layerMap[nextId];
+
           //if the next layer is not exist
           if (!nextLayer) {
             nextId = 0;
@@ -358,10 +364,12 @@ var MapController = App.controller('MapCtrl', [
 
           if (nextLayer.options.fillColor) {
             nextId++;
+            console.log(`${ nextId } SKIPPED`)
           } else {
             found = true;
           }
         }
+        console.log(`THIS ID: ${ nextId }`)
         return nextLayer;
       }
 

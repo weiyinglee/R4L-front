@@ -1,6 +1,6 @@
 'use strict';
 
-App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory', function($rootScope, $http, $cookieStore, UserFactory){
+App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory', 'baseUrl', function($rootScope, $http, $cookieStore, UserFactory, baseUrl){
 
   var service = {};
 
@@ -59,7 +59,7 @@ App.factory('EventFactory', ['$rootScope', '$http', '$cookieStore', 'UserFactory
   }
 
   service.delEvent = function(id){
-    $http.delete('http://52.8.54.187:3000/event/' + id, {
+    $http.delete(`${ baseUrl }:3000/event/` + id, {
       headers: {
         "Authorization": "Bearer " + UserFactory.getUserData().data.token,
         "x-username": UserFactory.getUserData().data.username

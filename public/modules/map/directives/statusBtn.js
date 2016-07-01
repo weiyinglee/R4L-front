@@ -9,6 +9,7 @@ App.directive('statusButton', [
   'UserFactory',
   '$rootScope',
   '$http',
+  'baseUrl',
   function(
     $timeout,
     BadgeFactory,
@@ -16,7 +17,8 @@ App.directive('statusButton', [
     PolygonFactory,
     UserFactory,
     $rootScope,
-    $http
+    $http,
+    baseUrl
   ){
     return {
       restrict: 'AEC',
@@ -51,7 +53,7 @@ App.directive('statusButton', [
               status: status
             }
 
-            var path = 'http://52.8.54.187:3000/event/' + eventId + '/polygon/' + polygonId;
+            var path = `${ baseUrl }:3000/event/` + eventId + '/polygon/' + polygonId;
 
             PolygonFactory.savePolygon(path, data);
           }

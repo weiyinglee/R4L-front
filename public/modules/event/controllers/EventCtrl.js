@@ -8,9 +8,10 @@ var EventController = App.controller('EventCtrl', [
 	'EventFactory',
 	'PolygonFactory',
 	'UserFactory',
-	function($scope, $rootScope, $location, $mdDialog, EventFactory, PolygonFactory, UserFactory){
+	'baseUrl',
+	function($scope, $rootScope, $location, $mdDialog, EventFactory, PolygonFactory, UserFactory, baseUrl){
 
-	  EventFactory.getEvent('http://52.8.54.187:3000/event').async().then(function(events){
+	  EventFactory.getEvent(`${ baseUrl }:3000/event`).async().then(function(events){
 	  	$scope.events = events;
 	  });
 
@@ -42,6 +43,7 @@ var EventController = App.controller('EventCtrl', [
 	  }
 
 	  $scope.enterData = function(eventId){
+		console.log(`Event id: ${ eventId }`)
 	  	EventFactory.setEventId(eventId);
 	  	$location.path('/admin');
 	  }

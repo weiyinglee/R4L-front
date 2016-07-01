@@ -1,7 +1,7 @@
 'use strict';
 
-App.factory('UserFactory', ['$rootScope', '$http', '$mdDialog','$resource', "$location", "$cookieStore",
-  function($rootScope, $http, $mdDialog, $resource, $location, $cookieStore){
+App.factory('UserFactory', ['$rootScope', '$http', '$mdDialog','$resource', "$location", "$cookieStore", "baseUrl",
+  function($rootScope, $http, $mdDialog, $resource, $location, $cookieStore, baseUrl){
 
     var service = {}
 
@@ -15,7 +15,7 @@ App.factory('UserFactory', ['$rootScope', '$http', '$mdDialog','$resource', "$lo
 
     //create
     service.userCreate = function(data){
-    	$http.post('http://52.8.54.187:3000/user/create', data).then(function(response){
+    	$http.post(`${ baseUrl }:3000/user/create`, data).then(function(response){
          $cookieStore.put('userData', response);
          var userData = $cookieStore.get('userData');
          if(userData.data.success){
@@ -40,7 +40,7 @@ App.factory('UserFactory', ['$rootScope', '$http', '$mdDialog','$resource', "$lo
 
     //login
     service.userLogin = function(data){
-    	$http.post('http://52.8.54.187:3000/user/login', data).then(function(response){
+    	$http.post(`${ baseUrl }:3000/user/login`, data).then(function(response){
           $cookieStore.put('userData', response);
           var userData = $cookieStore.get('userData');
           if(userData.data.success){
