@@ -1,11 +1,4 @@
 # R4L-front
-Radar for life - front end interface 
+Radar for life
+Front end web interface for an existing web application prototype that is for helping JPL Rapid Natural Disaster Response project.
 
-# Stack
-SASS
-AngularJS
-Leaflet
-Bootstrap UI
-
-//Hello World, testing
-//test push from other contributor
