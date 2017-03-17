@@ -1,10 +1,5 @@
-# R4L-front
-Radar for life - front end interface 
+## R4L-front
+Radar for life Application - front end 
 
-# Stack
-SASS
-AngularJS
-Leaflet
-Bootstrap UI
-
-//Hello World, testing
+# Note
+Code is in `development` branch
